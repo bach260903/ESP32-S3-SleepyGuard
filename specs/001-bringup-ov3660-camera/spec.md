@@ -29,8 +29,10 @@ thái lỗi xác định. Chưa gồm nhận diện, còi hoặc thẻ nhớ.
   cấu hình chung, mặc định 5 giây, độc lập với ngưỡng mất khung hình. Mỗi lượt
   in kết quả thành công/thất bại và số lượt còn lại qua Serial.
 - Q: Cần bằng chứng nào để xác nhận PSRAM hoạt động? → A: Chọn A: xác nhận
-  dung lượng phù hợp cấu hình N16R8, phân biệt dung lượng tổng và dung lượng
-  khả dụng thay vì so khớp một số byte cố định. Trước khi khởi tạo camera,
+  dung lượng phù hợp cấu hình N16R8, phân biệt dung lượng chip do driver báo
+  với heap còn trống. Sau khi in giá trị thô trên board và xác nhận ý nghĩa
+  của API, đối chiếu dung lượng chip với 8 MiB = 8 388 608 byte; không nới
+  dung sai nếu giá trị khác. Trước khi khởi tạo camera,
   kiểm tra ghi–đọc nhiều mẫu trên vùng nhớ ít nhất cỡ một khung hình, không
   quét toàn bộ PSRAM. Thất bại thì dừng lỗi và báo định kỳ, không tự khởi động
   lại. In thêm dung lượng flash với kỳ vọng 16 MB, chỉ để đối chiếu thông tin.
@@ -138,8 +140,8 @@ thông báo lỗi, giới hạn thử lại và một trong hai kết quả cu�
   không báo chạy lại và không tính thời gian ổn định cho đến khung hợp lệ đầu tiên.
 - Serial không có máy tính theo dõi: việc ghi thông tin không được làm camera
   dừng hoặc tự khởi động lại.
-- Dung lượng PSRAM khả dụng thấp hơn dung lượng tổng do phần đã được hệ thống
-  sử dụng: không tự kết luận sai cấu hình chỉ từ dung lượng khả dụng.
+- Heap PSRAM còn trống thấp hơn dung lượng chip do driver báo vì hệ thống đã
+  dùng một phần: không kết luận sai cấu hình chỉ từ heap còn trống.
 - Không cấp được vùng nhớ thử đủ lớn: báo kiểm tra PSRAM thất bại và dừng lỗi,
   không bỏ qua kiểm tra hoặc giảm vùng thử xuống dưới một khung hình.
 

@@ -1,6 +1,6 @@
 # Implementation Plan: Bring-up camera OV3660
 
-**Branch**: 001-bringup-ov3660-camera (định danh feature do script trả về; chưa có Git repository)
+**Branch**: master (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
 **Status**: Bảng chân đã được kiểm chứng lại trên board hiện tại; thiết kế Phase 1 hoàn tất.
@@ -12,10 +12,11 @@ Kiểm tra PSRAM trước camera; lấy khung 320 × 240 và báo số khung h�
 qua USB-UART. Phục hồi có ngân sách hữu hạn và trạng thái lỗi vẫn báo định kỳ.
 Bản này là kế hoạch nghiên cứu; chưa có firmware, kết quả build hoặc đo trên board.
 
-**Công việc đầu tiên — T001 bắt buộc khi tạo tasks.md:** kiểm chứng lại bảng chân
-thực nghiệm dưới đây trên board hiện tại và lưu log mới. Người dùng đã chọn
-phương án xác minh thực tế thay cho đợi tài liệu người bán. Không coi bảng chân
-này là sơ đồ mạch chính thức.
+**Thứ tự triển khai:** cài ESP-IDF v5.5.2, build/nạp khung tối thiểu có
+esp32-camera 2.1.9 và in PSRAM/flash trước; sau đó kiểm chứng lại bảng chân
+với camera 320×240 trên board hiện tại. Người dùng đã chọn phương án xác minh
+thực tế thay cho đợi tài liệu người bán. Không coi bảng chân này là sơ đồ mạch
+chính thức.
 
 ## Technical Context
 
@@ -37,7 +38,7 @@ mất khung và chờ khung phục hồi là hai tham số độc lập; GPIO kh
 **Camera pin mapping**: đã có bằng chứng chạy trên board từ bản sao lưu và
 kiểm chứng lại ngày 2026-11-19 bằng log mới trên COM4.
 
-### T001 — bảng chân đã từng chạy trên board và phép thử lại
+### Bảng chân đã từng chạy trên board và phép thử lại
 
 - Nguồn cấu hình: bản sao lưu ngoài repo
   `D:/ESP32-canh_bao_nguoi_ngu_gat-backup-20261119/firmware/main/camera_utils.cpp`
@@ -68,7 +69,7 @@ kiểm chứng lại ngày 2026-11-19 bằng log mới trên COM4.
   mức 320×240 của feature mới hoặc ESP-IDF v5.5.2.
 - Sau phép thử, đã xóa toàn bộ flash qua COM4; esptool báo xóa thành công
   trong 7,9 giây. Board không còn chạy firmware cũ.
-- T001 đã đóng cho pinout vận hành. Khi triển khai firmware mới, vẫn cần
+- Pinout vận hành đã có bằng chứng. Khi triển khai firmware mới, vẫn cần
   chạy lại phép thử PID/khung/FPS với 320×240 và phiên bản IDF đã ghim.
 
 ### Cấu hình đã có cơ sở nghiên cứu
@@ -114,7 +115,7 @@ sẽ thuộc board_pins.h riêng, không chứa ngưỡng hành vi.
 
 1. Cài ESP-IDF v5.5.2, thêm esp32-camera 2.1.9, build khung tối thiểu và
    nạp thử. Lưu dependency lock, kiểm tra sdkconfig sinh ra.
-2. Xác nhận bảng chân T001 với firmware mới ở 320×240 và console UART qua
+2. Xác nhận bảng chân vận hành với firmware mới ở 320×240 và console UART qua
    cổng USB-UART/CH343; không giả định số COM cố định.
 3. Logic trong `components/bringup_logic/` nhận thời điểm làm tham số.
    Test PC dùng đồng hồ giả cho 4 999/5 000 ms và 59 999/60 000 ms;
@@ -132,7 +133,7 @@ Chi tiết nghiên cứu trong [research.md](research.md).
 | Nguyên tắc | Trước Phase 0 | Sau Phase 1 |
 |---|---|---|
 | I: cảnh báo độc lập tính năng phụ | Phạm vi bring-up, không SD/mạng | PASS: không có tính năng phụ trong thiết kế |
-| II: lỗi tường minh, phục hồi hữu hạn | Serial ngay khi lỗi và định kỳ | PASS với ngoại lệ phạm vi còi do người dùng chốt cho feature 001 |
+| II: lỗi tường minh, phục hồi hữu hạn | Serial ngay khi lỗi và định kỳ | PASS: D-007 và constitution v2.0.0 quy định Serial cho firmware chẩn đoán feature 001; mẫu bíp thuộc thiết bị hoàn chỉnh |
 | III: kiểm thử board thật | Cần log trên board | PASS thiết kế: quickstart yêu cầu log mới 320×240 |
 | IV: cấu hình tập trung | Một file cho tham số ứng dụng | PASS: data-model định nghĩa ngưỡng riêng |
 | V: riêng tư | Chỉ metadata qua Serial | PASS: serial contract không có ảnh |
@@ -146,35 +147,37 @@ board hiện tại. Còn gate kiểm thử firmware mới ở giai đoạn tri�
 
 ### Documentation (this feature)
 
-- plan.md — bản kế hoạch đang chờ T001.
+- plan.md — bản kế hoạch hiện tại; T001 là bước build khung tối thiểu.
 - research.md — kết quả nghiên cứu và điều kiện còn thiếu.
 - spec.md và checklists/requirements.md — đầu vào đã có.
 - data-model.md, contracts/serial.md, quickstart.md — thiết kế Phase 1.
-- tasks.md — dự kiến lệnh speckit-tasks sau khi plan hoàn tất; T001 đứng đầu.
+- tasks.md — danh sách task đã sinh; bắt đầu bằng kiểm chứng toolchain.
 
 ### Source Code (repository root)
 
 Cấu trúc đề xuất, chưa tạo mã nguồn:
 - CMakeLists.txt, sdkconfig.defaults, dependencies.lock
-- main/app_main.c, main/bringup_config.h, main/board_pins.h
+- main/bringup_main.c, main/bringup_config.h, main/board_pins.h
 - main/idf_component.yml
 - components/bringup_logic/ — logic thời gian, ngân sách và trạng thái thuần
 - components/board_io/ — PSRAM, camera owner, Serial
-- tests/host/ — các ranh giới 3 lỗi, 5 giây, 60 giây và ngân sách
-- tests/hardware/ — kịch bản lỗi có kiểm soát và thu thập metadata
+- tests/host/ — CMake, smoke test và các ranh giới 3 lỗi, 5 giây, 60 giây
+- tools/capture_serial.py — thu log Serial không tương tác bằng pyserial
+- main/Kconfig.projbuild và components/board_io/ — kịch bản lỗi có kiểm soát
 - reports/001-camera/ — log và kết quả kiểm thử board sau triển khai
 
 **Structure Decision**: một firmware ESP-IDF ở gốc; tách logic thuần để kiểm thử PC.
-Không đưa bảng chân vào source trước khi T001 được đóng.
+Không đưa bảng chân vào source trước khi khung ESP-IDF đã build và nạp được.
 
 ## Complexity Tracking
 
 | Điểm cần giải thích | Lý do | Phương án không chọn |
 |---|---|---|
-| Chưa có bíp lỗi theo constitution II | Người dùng loại còi khỏi feature 001; chỉ là bản chẩn đoán Serial | Thêm còi sẽ vượt phạm vi đã yêu cầu |
+| Chưa có bíp lỗi trong feature 001 | D-007 và constitution II giới hạn feature này ở chẩn đoán Serial trên bàn thử | Mẫu bíp được chốt ở feature còi cho thiết bị hoàn chỉnh |
 | Camera worker và deadline supervisor dự kiến | fb_get chặn đến 4 giây; deadline 5 giây cần được quan sát độc lập | Vòng đọc đồng bộ có thể vượt deadline khi lần đọc bắt đầu gần mốc 5 giây |
 
-**Constitution Check sau Phase 1:** thiết kế đáp ứng các nguyên tắc I, III–VII;
-ngoại lệ Serial thay còi chỉ áp dụng cho firmware chẩn đoán feature 001 theo
-phạm vi người dùng đã chốt. Bằng chứng chạy firmware mới vẫn là gate triển khai.
+**Constitution Check sau Phase 1:** thiết kế đáp ứng các nguyên tắc I–VII theo
+D-007 và constitution v2.0.0. Firmware chẩn đoán feature 001 báo lỗi qua Serial;
+mẫu bíp là yêu cầu của thiết bị hoàn chỉnh. Bằng chứng chạy firmware mới vẫn là
+gate triển khai.
 

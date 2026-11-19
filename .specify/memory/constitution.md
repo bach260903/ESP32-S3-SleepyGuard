@@ -1,13 +1,3 @@
-<!--
-Sync Impact Report
-- Version change: unversioned Spec Kit template → 1.0.0 (initial adoption).
-- Modified principles: template placeholders → seven project principles I–VII,
-  derived from accepted decisions D-002, D-003, D-005–D-012, D-014, D-015.
-- Added sections: Additional Constraints; Development Workflow.
-- Removed sections: none.
-- Follow-up TODOs: none.
--->
-
 # ESP32-S3 Cảnh báo tài xế ngủ gật Constitution
 
 Các nguyên tắc này dựa trên các quyết định đã chấp nhận trong `docs/DECISIONS.md`.
@@ -23,9 +13,12 @@ lặp phát hiện. Đường cảnh báo là chức năng cốt lõi của thi�
 
 ### II. Lỗi camera được báo tường minh (D-007)
 
-Lỗi khởi tạo, mất khung hình và hình bất thường MUST tạo cảnh báo bằng mẫu bíp riêng.
-Thiết bị MUST thử khởi tạo lại với giới hạn và MUST báo định kỳ nếu không phục hồi.
-Spec của feature liên quan MUST xác định số lần thử, khoảng chờ và mẫu bíp.
+Lỗi khởi tạo, mất khung hình và hình bất thường MUST được báo tường minh. Firmware
+chẩn đoán camera feature 001 chỉ chạy trên bàn thử MUST in mã lỗi qua Serial và
+báo định kỳ nếu không phục hồi; feature này không phát còi. Thiết bị cảnh báo
+hoàn chỉnh MUST tạo mẫu bíp riêng cho lỗi camera. Thiết bị MUST thử khởi tạo lại
+có giới hạn. Spec camera MUST xác định số lần thử và khoảng chờ; spec feature còi
+MUST xác định mẫu bíp lỗi trước khi tích hợp thiết bị hoàn chỉnh.
 
 ### III. Kiểm thử trên board thật (D-008)
 
@@ -86,4 +79,4 @@ PATCH cho làm rõ câu chữ không đổi nghĩa. Khi rà soát mỗi feature,
 spec, plan, tasks và kết quả thực hiện có tuân thủ các nguyên tắc liên quan hay
 không; ngoại lệ cần một quyết định mới được chấp nhận.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-19 | **Last Amended**: 2026-11-19
+**Version**: 2.0.0 | **Ratified**: 2026-11-19 | **Last Amended**: 2026-11-19

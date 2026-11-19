@@ -75,6 +75,9 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Quyết định:** Lỗi camera (khởi tạo thất bại, mất khung hình, hình bất thường)
   không được xử lý trong im lặng. Thiết bị báo cho tài xế bằng mẫu bíp riêng, thử
   khởi tạo lại có giới hạn, và nếu không phục hồi thì tiếp tục báo định kỳ.
+- **Phạm vi feature 001 (2026-11-19):** firmware chẩn đoán camera trên bàn thử
+  chỉ báo lỗi có mã và định kỳ qua Serial; không phát còi. Mẫu bíp lỗi vẫn là
+  yêu cầu của thiết bị cảnh báo hoàn chỉnh và được chốt trong feature còi.
 - **Open:** Số lần thử lại, khoảng chờ, mẫu bíp cụ thể – chốt trong spec của feature liên quan.
 
 ## D-008 – Kiểm thử
