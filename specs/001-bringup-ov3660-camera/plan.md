@@ -3,14 +3,15 @@
 **Branch**: master (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
-**Status**: Bảng chân đã được kiểm chứng lại trên board hiện tại; thiết kế Phase 1 hoàn tất.
+**Status**: Setup triển khai T001–T004 hoàn tất trên board; các phase còn lại chưa làm.
 
 ## Summary
 
 Dùng ESP-IDF v5.5.2, target esp32s3 và component espressif/esp32-camera ==2.1.9.
 Kiểm tra PSRAM trước camera; lấy khung 320 × 240 và báo số khung hợp lệ/lỗi, FPS
 qua USB-UART. Phục hồi có ngân sách hữu hạn và trạng thái lỗi vẫn báo định kỳ.
-Bản này là kế hoạch nghiên cứu; chưa có firmware, kết quả build hoặc đo trên board.
+Firmware probe đã build và chạy trên board; bằng chứng tại
+`reports/001-camera/02-phase1-check.md`. Logic FPS/phục hồi còn ở các phase sau.
 
 **Thứ tự triển khai:** cài ESP-IDF v5.5.2, build/nạp khung tối thiểu có
 esp32-camera 2.1.9 và in PSRAM/flash trước; sau đó kiểm chứng lại bảng chân
@@ -69,8 +70,11 @@ kiểm chứng lại ngày 2026-11-19 bằng log mới trên COM4.
   mức 320×240 của feature mới hoặc ESP-IDF v5.5.2.
 - Sau phép thử, đã xóa toàn bộ flash qua COM4; esptool báo xóa thành công
   trong 7,9 giây. Board không còn chạy firmware cũ.
-- Pinout vận hành đã có bằng chứng. Khi triển khai firmware mới, vẫn cần
-  chạy lại phép thử PID/khung/FPS với 320×240 và phiên bản IDF đã ghim.
+- Pinout vận hành đã có bằng chứng; phép đo FPS liên tục với cấu hình mới
+  vẫn thuộc US1.
+- Ngày 2026-11-20, firmware probe ESP-IDF v5.5.2 + esp32-camera 2.1.9 đã nhận
+  OV3660 PID 0x3660 và ba khung RGB565 320×240 dài 153 600 byte qua USB-UART.
+  Log tại `reports/001-camera/02-camera-probe.log`. FPS liên tục vẫn cần US1.
 
 ### Cấu hình đã có cơ sở nghiên cứu
 

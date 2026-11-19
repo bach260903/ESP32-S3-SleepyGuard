@@ -18,6 +18,9 @@
    `idf.py build`, rồi `idf.py -p <PORT_NAP> flash`.
 2. Mở console trên `<PORT_LOG>` ở 115200 baud bằng `idf.py -p <PORT_LOG> monitor`
    nếu cùng cổng nạp, hoặc serial monitor tương đương nếu khác cổng.
+   Để lưu log không tương tác, dùng Python của môi trường ESP-IDF:
+   `python tools/capture_serial.py --port <PORT_LOG> --seconds 125 --output reports/001-camera/capture.log`.
+   Script tự gắn timestamp và tạo thư mục output; thay thời lượng theo ca thử.
 3. Kiểm tra thứ tự BOOT_INFO → PSRAM_TEST PASS → CAMERA_INIT thành công.
    Lưu nguyên giá trị `esp_psram_get_size()` theo byte ở BOOT_INFO và đối
    chiếu với 8 388 608 byte; nếu khác, dừng để cập nhật plan theo log board.

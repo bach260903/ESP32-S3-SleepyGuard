@@ -1,0 +1,73 @@
+# capture port=COM5 baud=115200 seconds=15.0 started_utc=2026-11-19T17:13:13+00:00
+2026-11-19T17:13:13.623+00:00 | ESP-ROM:esp32s3-20210327
+2026-11-19T17:13:13.631+00:00 | Build:Mar 27 2021
+2026-11-19T17:13:13.637+00:00 | rst:0x1 (POWERON),boot:0x28 (SPI_FAST_FLASH_BOOT)
+2026-11-19T17:13:13.637+00:00 | SPIWP:0xee
+2026-11-19T17:13:13.637+00:00 | mode:DIO, clock div:1
+2026-11-19T17:13:13.642+00:00 | load:0x3fce2820,len:0x158c
+2026-11-19T17:13:13.642+00:00 | load:0x403c8700,len:0xd24
+2026-11-19T17:13:13.642+00:00 | load:0x403cb700,len:0x2f34
+2026-11-19T17:13:13.644+00:00 | entry 0x403c8924
+2026-11-19T17:13:13.650+00:00 | I (24) boot: ESP-IDF v5.5.2 2nd stage bootloader
+2026-11-19T17:13:13.655+00:00 | I (25) boot: compile time Nov 19 2026 23:47:53
+2026-11-19T17:13:13.661+00:00 | I (25) boot: Multicore bootloader
+2026-11-19T17:13:13.661+00:00 | I (25) boot: chip revision: v0.2
+2026-11-19T17:13:13.666+00:00 | I (28) boot: efuse block revision: v1.4
+2026-11-19T17:13:13.666+00:00 | I (31) boot.esp32s3: Boot SPI Speed : 80MHz
+2026-11-19T17:13:13.672+00:00 | I (35) boot.esp32s3: SPI Mode       : DIO
+2026-11-19T17:13:13.677+00:00 | I (39) boot.esp32s3: SPI Flash Size : 16MB
+2026-11-19T17:13:13.683+00:00 | I (43) boot: Enabling RNG early entropy source...
+2026-11-19T17:13:13.683+00:00 | I (47) boot: Partition Table:
+2026-11-19T17:13:13.689+00:00 | I (50) boot: ## Label            Usage          Type ST Offset   Length
+2026-11-19T17:13:13.694+00:00 | I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+2026-11-19T17:13:13.705+00:00 | I (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+2026-11-19T17:13:13.711+00:00 | I (69) boot:  2 factory          factory app      00 00 00010000 00100000
+2026-11-19T17:13:13.711+00:00 | I (76) boot: End of partition table
+2026-11-19T17:13:13.722+00:00 | I (79) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0a3dch ( 41948) map
+2026-11-19T17:13:13.727+00:00 | I (94) esp_image: segment 1: paddr=0001a404 vaddr=3fc92e00 size=02df4h ( 11764) load
+2026-11-19T17:13:13.733+00:00 | I (97) esp_image: segment 2: paddr=0001d200 vaddr=40374000 size=02e18h ( 11800) load
+2026-11-19T17:13:13.740+00:00 | I (104) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=13260h ( 78432) map
+2026-11-19T17:13:13.750+00:00 | I (123) esp_image: segment 4: paddr=00033288 vaddr=40376e18 size=0befch ( 48892) load
+2026-11-19T17:13:13.764+00:00 | I (134) esp_image: segment 5: paddr=0003f18c vaddr=50000000 size=00020h (    32) load
+2026-11-19T17:13:13.770+00:00 | I (140) boot: Loaded app from partition at offset 0x10000
+2026-11-19T17:13:13.770+00:00 | I (140) boot: Disabling RNG early entropy source...
+2026-11-19T17:13:13.777+00:00 | I (151) octal_psram: vendor id    : 0x0d (AP)
+2026-11-19T17:13:13.782+00:00 | I (152) octal_psram: dev id       : 0x02 (generation 3)
+2026-11-19T17:13:13.788+00:00 | I (152) octal_psram: density      : 0x03 (64 Mbit)
+2026-11-19T17:13:13.793+00:00 | I (154) octal_psram: good-die     : 0x01 (Pass)
+2026-11-19T17:13:13.793+00:00 | I (158) octal_psram: Latency      : 0x01 (Fixed)
+2026-11-19T17:13:13.799+00:00 | I (162) octal_psram: VCC          : 0x01 (3V)
+2026-11-19T17:13:13.804+00:00 | I (166) octal_psram: SRF          : 0x01 (Fast Refresh)
+2026-11-19T17:13:13.810+00:00 | I (171) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+2026-11-19T17:13:13.815+00:00 | I (176) octal_psram: BurstLen     : 0x01 (32 Byte)
+2026-11-19T17:13:13.821+00:00 | I (181) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+2026-11-19T17:13:13.821+00:00 | I (186) octal_psram: DriveStrength: 0x00 (1/1)
+2026-11-19T17:13:13.827+00:00 | I (190) esp_psram: Found 8MB PSRAM device
+2026-11-19T17:13:13.831+00:00 | I (194) esp_psram: Speed: 40MHz
+2026-11-19T17:13:13.831+00:00 | I (197) cpu_start: Multicore app
+2026-11-19T17:13:13.842+00:00 | I (211) cpu_start: GPIO 44 and 43 are used as console UART I/O pins
+2026-11-19T17:13:13.842+00:00 | I (212) cpu_start: Pro cpu start user code
+2026-11-19T17:13:13.847+00:00 | I (212) cpu_start: cpu freq: 160000000 Hz
+2026-11-19T17:13:13.853+00:00 | I (213) app_init: Application information:
+2026-11-19T17:13:13.853+00:00 | I (217) app_init: Project name:     ov3660_bringup
+2026-11-19T17:13:13.858+00:00 | I (222) app_init: App version:      1c4edea-dirty
+2026-11-19T17:13:13.864+00:00 | I (226) app_init: Compile time:     Nov 19 2026 23:47:09
+2026-11-19T17:13:13.870+00:00 | I (231) app_init: ELF file SHA256:  e307ae992...
+2026-11-19T17:13:13.875+00:00 | I (235) app_init: ESP-IDF:          v5.5.2
+2026-11-19T17:13:13.875+00:00 | I (239) efuse_init: Min chip rev:     v0.0
+2026-11-19T17:13:13.881+00:00 | I (243) efuse_init: Max chip rev:     v0.99
+2026-11-19T17:13:13.886+00:00 | I (247) efuse_init: Chip rev:         v0.2
+2026-11-19T17:13:13.892+00:00 | I (251) heap_init: Initializing. RAM available for dynamic allocation:
+2026-11-19T17:13:13.897+00:00 | I (257) heap_init: At 3FC964E8 len 00053228 (332 KiB): RAM
+2026-11-19T17:13:13.903+00:00 | I (262) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+2026-11-19T17:13:13.908+00:00 | I (267) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+2026-11-19T17:13:13.914+00:00 | I (273) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+2026-11-19T17:13:13.920+00:00 | I (278) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+2026-11-19T17:13:13.920+00:00 | I (285) spi_flash: detected chip: boya
+2026-11-19T17:13:13.925+00:00 | I (288) spi_flash: flash io: dio
+2026-11-19T17:13:13.931+00:00 | I (291) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+2026-11-19T17:13:13.936+00:00 | I (297) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+2026-11-19T17:13:13.942+00:00 | I (304) main_task: Started on CPU0
+2026-11-19T17:13:13.942+00:00 | I (314) main_task: Calling app_main()
+2026-11-19T17:13:13.958+00:00 | I (314) bringup: BOOT_INFO psram_initialized=1 psram_size_raw_bytes=8388608 psram_expected_bytes=8388608 psram_heap_free_bytes=8386196 flash_physical=16777216 flash_expected=16777216
+2026-11-19T17:13:13.961+00:00 | I (324) main_task: Returned from app_main()
