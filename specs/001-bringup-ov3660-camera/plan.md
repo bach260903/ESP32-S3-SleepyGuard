@@ -1,0 +1,180 @@
+# Implementation Plan: Bring-up camera OV3660
+
+**Branch**: 001-bringup-ov3660-camera (định danh feature do script trả về; chưa có Git repository)
+**Date**: 2026-11-19
+**Spec**: [spec.md](spec.md)
+**Status**: Bảng chân đã được kiểm chứng lại trên board hiện tại; thiết kế Phase 1 hoàn tất.
+
+## Summary
+
+Dùng ESP-IDF v5.5.2, target esp32s3 và component espressif/esp32-camera ==2.1.9.
+Kiểm tra PSRAM trước camera; lấy khung 320 × 240 và báo số khung hợp lệ/lỗi, FPS
+qua USB-UART. Phục hồi có ngân sách hữu hạn và trạng thái lỗi vẫn báo định kỳ.
+Bản này là kế hoạch nghiên cứu; chưa có firmware, kết quả build hoặc đo trên board.
+
+**Công việc đầu tiên — T001 bắt buộc khi tạo tasks.md:** kiểm chứng lại bảng chân
+thực nghiệm dưới đây trên board hiện tại và lưu log mới. Người dùng đã chọn
+phương án xác minh thực tế thay cho đợi tài liệu người bán. Không coi bảng chân
+này là sơ đồ mạch chính thức.
+
+## Technical Context
+
+**Language/Version**: C theo toolchain đi kèm ESP-IDF v5.5.2.
+**Primary Dependencies**: ESP-IDF v5.5.2; espressif/esp32-camera ==2.1.9; lưu
+dependencies.lock khi triển khai. Đây là lựa chọn đã đối chiếu nguồn, chưa build.
+**Storage**: RAM nội và PSRAM; không lưu ảnh/video, không dùng SD hay mạng.
+**Testing**: kiểm thử logic thời gian/ngân sách trên PC; kiểm chứng PSRAM, camera,
+thời hạn và Serial trên board thật. Log chỉ chứa metadata, không có ảnh.
+**Target Platform**: ESP32-S3 CAM N16R8, flash 16 MB, PSRAM octal 8 MB, OV3660 FFC;
+cấp nguồn, nạp và xem log qua USB-UART.
+**Project Type**: firmware chẩn đoán trên bàn thử.
+**Performance Goals**: đo FPS thực tế, không cam kết FPS nhận diện; 24 báo cáo
+5 giây trong cửa sổ quan sát 125 giây sau khi camera sẵn sàng;
+không có reset tự động do logic lỗi.
+**Constraints**: PSRAM test trước camera; mọi ngưỡng ở một cấu hình chung; thời hạn
+mất khung và chờ khung phục hồi là hai tham số độc lập; GPIO không được suy đoán.
+**Scale/Scope**: một board, một camera, một luồng khung; không nhận diện hoặc còi.
+**Camera pin mapping**: đã có bằng chứng chạy trên board từ bản sao lưu và
+kiểm chứng lại ngày 2026-11-19 bằng log mới trên COM4.
+
+### T001 — bảng chân đã từng chạy trên board và phép thử lại
+
+- Nguồn cấu hình: bản sao lưu ngoài repo
+  `D:/ESP32-canh_bao_nguoi_ngu_gat-backup-20261119/firmware/main/camera_utils.cpp`
+  dòng 20–36 và `firmware/sdkconfig` dòng 533–548.
+- Bằng chứng lần chạy trước: `firmware/reports/board_selftest.log` trong cùng
+  bản sao lưu, các dòng 181–199 ghi SCCB SDA 4/SCL 5, PID 0x3660, khung
+  240×240 trong PSRAM và camera selftest PASS.
+
+| Tín hiệu | GPIO đã chạy |
+|---|---:|
+| PWDN | -1 (không điều khiển bằng GPIO) |
+| RESET | -1 (không điều khiển bằng GPIO) |
+| XCLK | 15 |
+| SCCB SDA / SCL | 4 / 5 |
+| D0 / D1 / D2 / D3 | 11 / 9 / 8 / 10 |
+| D4 / D5 / D6 / D7 | 12 / 18 / 17 / 16 |
+| VSYNC / HREF / PCLK | 6 / 7 / 13 |
+
+- Cấu hình cũ dùng XCLK 10 MHz, RGB565, 240×240 và 4 framebuffers.
+  Spec mới chọn 320×240 và một framebuffer; cần thử lại mức này, không suy
+  rằng kết quả 240×240 cũ chứng minh 320×240 mới sẽ ổn định.
+- Ngày 2026-11-19, firmware cũ đã nạp thành công lên ESP32-S3 MAC
+  `d8:85:ac:ca:1b:e4` qua CH343 COM5 và xác minh hash. Sau khi cắm lại,
+  USB Serial/JTAG COM4 đã cho log mới: `camera healthy=1 sensor=OV3660
+  attempts=1` trong [board-camera-status.log](board-camera-status.log),
+  cùng `FPS=6.2` trong [board-pin-verification.log](board-pin-verification.log).
+  Cấu hình pin hoạt động thực tế với firmware cũ 240×240; chưa chứng minh
+  mức 320×240 của feature mới hoặc ESP-IDF v5.5.2.
+- Sau phép thử, đã xóa toàn bộ flash qua COM4; esptool báo xóa thành công
+  trong 7,9 giây. Board không còn chạy firmware cũ.
+- T001 đã đóng cho pinout vận hành. Khi triển khai firmware mới, vẫn cần
+  chạy lại phép thử PID/khung/FPS với 320×240 và phiên bản IDF đã ghim.
+
+### Cấu hình đã có cơ sở nghiên cứu
+
+Phiên bản IDF được ghim trong docs/DECISIONS.md, không tự dùng v5.3 đang có sẵn
+trên máy. Việc cài toolchain v5.5.2 sẽ thuộc triển khai.
+
+sdkconfig.defaults sẽ là nguồn cấu hình build, tạo sdkconfig với target esp32s3:
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y, CONFIG_SPIRAM=y, CONFIG_SPIRAM_MODE_OCT=y,
+CONFIG_SPIRAM_BOOT_INIT=y, CONFIG_SPIRAM_IGNORE_NOTFOUND=y,
+CONFIG_SPIRAM_USE_CAPS_ALLOC=y. Tắt CONFIG_SPIRAM_MEMTEST và các tùy chọn đưa
+BSS/NOINIT/instructions/rodata ra PSRAM. Dùng console UART mặc định qua USB-UART.
+Kiểm tra lại sdkconfig sau khi sinh; không chỉ tin tệp defaults.
+
+Một file main/bringup_config.h dự kiến chứa tất cả tham số ứng dụng:
+- camera 320 × 240, RGB565 dự kiến; một framebuffer đặt trong PSRAM;
+- số lần init ban đầu 3, ngân sách recovery 3;
+- số lỗi liên tiếp 3, mất khung 5000 ms;
+- chờ khung recovery 5000 ms (tham số riêng), ổn định 60000 ms;
+- báo thống kê 5000 ms, báo lỗi cuối 5000 ms (hai tham số riêng);
+- dung lượng kỳ vọng, kích thước vùng PSRAM test suy ra từ cấu hình khung.
+Không sao chép các ngưỡng này vào nhiều module. sdkconfig chứa cấu hình build
+phần cứng, không phải nơi thứ hai định nghĩa ngưỡng ứng dụng. GPIO đã xác minh
+sẽ thuộc board_pins.h riêng, không chứa ngưỡng hành vi.
+
+### Đối chiếu dung lượng PSRAM (FR-001)
+
+- `PSRAM_UNAVAILABLE`: `esp_psram_is_initialized()` trả false.
+- `PSRAM_CONFIG_MISMATCH`: đã khởi tạo nhưng `esp_psram_get_size()` khác
+  **8 MiB = 8 388 608 byte**. So sánh bằng theo hạng dung lượng N16R8,
+  không dùng dung sai phần trăm. Header ESP-IDF v5.5.2 mô tả API này là
+  dung lượng khả dụng của chip; cần kiểm tra giá trị thực tế lúc build với
+  cấu hình ECC/XIP đã tắt trước khi coi phép so sánh này là hợp lệ.
+- Firmware phải in nguyên giá trị `esp_psram_get_size()` theo byte trong
+  `BOOT_INFO` ở lần chạy đầu, cùng giá trị kỳ vọng 8 388 608 byte. Lưu log
+  thực tế trên board trước khi chốt quy tắc so sánh. Nếu hai giá trị khác
+  nhau, ghi nhận và cập nhật plan theo dữ liệu board; không nới dung sai để
+  che khác biệt.
+- Dung lượng heap PSRAM còn trống chỉ in để tham khảo, không dùng phán đoán.
+- Nguồn: https://raw.githubusercontent.com/espressif/esp-idf/v5.5.2/components/esp_psram/include/esp_psram.h
+
+### Việc cần đưa vào tasks
+
+1. Cài ESP-IDF v5.5.2, thêm esp32-camera 2.1.9, build khung tối thiểu và
+   nạp thử. Lưu dependency lock, kiểm tra sdkconfig sinh ra.
+2. Xác nhận bảng chân T001 với firmware mới ở 320×240 và console UART qua
+   cổng USB-UART/CH343; không giả định số COM cố định.
+3. Logic trong `components/bringup_logic/` nhận thời điểm làm tham số.
+   Test PC dùng đồng hồ giả cho 4 999/5 000 ms và 59 999/60 000 ms;
+   board chạy một hoặc hai ca 60 giây thật.
+4. Giả lập lỗi dưới cờ `CONFIG_BRINGUP_FAULT_INJECTION`, mặc định tắt;
+   bản build thường không biên dịch mã giả lập.
+5. Supervisor chỉ phát tín hiệu deadline; camera worker sở hữu driver và
+   tự deinit sau khi thoát `fb_get` và trả frame. Tạo task thử riêng ca
+   đúng hạn 5 giây khi `fb_get` vẫn đang chặn.
+
+Chi tiết nghiên cứu trong [research.md](research.md).
+
+## Constitution Check
+
+| Nguyên tắc | Trước Phase 0 | Sau Phase 1 |
+|---|---|---|
+| I: cảnh báo độc lập tính năng phụ | Phạm vi bring-up, không SD/mạng | PASS: không có tính năng phụ trong thiết kế |
+| II: lỗi tường minh, phục hồi hữu hạn | Serial ngay khi lỗi và định kỳ | PASS với ngoại lệ phạm vi còi do người dùng chốt cho feature 001 |
+| III: kiểm thử board thật | Cần log trên board | PASS thiết kế: quickstart yêu cầu log mới 320×240 |
+| IV: cấu hình tập trung | Một file cho tham số ứng dụng | PASS: data-model định nghĩa ngưỡng riêng |
+| V: riêng tư | Chỉ metadata qua Serial | PASS: serial contract không có ảnh |
+| VI: phạm vi/giới hạn | Bàn thử, ban ngày, USB | PASS: quickstart giới hạn bàn thử |
+| VII: feature nhỏ, IDF ghim | v5.5.2 và tài liệu | PASS: pin đã ghi DECISIONS, kiểm chứng gắn với feature 001 |
+
+**Gate kết thúc nghiên cứu: PASS.** Nguồn GPIO thực nghiệm có log mới trên
+board hiện tại. Còn gate kiểm thử firmware mới ở giai đoạn triển khai.
+
+## Project Structure
+
+### Documentation (this feature)
+
+- plan.md — bản kế hoạch đang chờ T001.
+- research.md — kết quả nghiên cứu và điều kiện còn thiếu.
+- spec.md và checklists/requirements.md — đầu vào đã có.
+- data-model.md, contracts/serial.md, quickstart.md — thiết kế Phase 1.
+- tasks.md — dự kiến lệnh speckit-tasks sau khi plan hoàn tất; T001 đứng đầu.
+
+### Source Code (repository root)
+
+Cấu trúc đề xuất, chưa tạo mã nguồn:
+- CMakeLists.txt, sdkconfig.defaults, dependencies.lock
+- main/app_main.c, main/bringup_config.h, main/board_pins.h
+- main/idf_component.yml
+- components/bringup_logic/ — logic thời gian, ngân sách và trạng thái thuần
+- components/board_io/ — PSRAM, camera owner, Serial
+- tests/host/ — các ranh giới 3 lỗi, 5 giây, 60 giây và ngân sách
+- tests/hardware/ — kịch bản lỗi có kiểm soát và thu thập metadata
+- reports/001-camera/ — log và kết quả kiểm thử board sau triển khai
+
+**Structure Decision**: một firmware ESP-IDF ở gốc; tách logic thuần để kiểm thử PC.
+Không đưa bảng chân vào source trước khi T001 được đóng.
+
+## Complexity Tracking
+
+| Điểm cần giải thích | Lý do | Phương án không chọn |
+|---|---|---|
+| Chưa có bíp lỗi theo constitution II | Người dùng loại còi khỏi feature 001; chỉ là bản chẩn đoán Serial | Thêm còi sẽ vượt phạm vi đã yêu cầu |
+| Camera worker và deadline supervisor dự kiến | fb_get chặn đến 4 giây; deadline 5 giây cần được quan sát độc lập | Vòng đọc đồng bộ có thể vượt deadline khi lần đọc bắt đầu gần mốc 5 giây |
+
+**Constitution Check sau Phase 1:** thiết kế đáp ứng các nguyên tắc I, III–VII;
+ngoại lệ Serial thay còi chỉ áp dụng cho firmware chẩn đoán feature 001 theo
+phạm vi người dùng đã chốt. Bằng chứng chạy firmware mới vẫn là gate triển khai.
+

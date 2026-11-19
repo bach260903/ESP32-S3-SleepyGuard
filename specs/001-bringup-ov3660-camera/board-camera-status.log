@@ -1,0 +1,8 @@
+drowsy cam
+
+camera healthy=1 sensor=OV3660 attempts=1 last_error=not_started
+
+drowsy> 
+
+drowsy> [0;32mI (14122) app: FPS=6.2 state=0 face=0 mode=WAIT sys=NORMAL ear=0.00 mar=0.00 perclos=0% fatigue=0.00 lost_ms=0 ack=0 led=0 buzzer=0 face_ms=147 pfld_ms=0 free_heap=5637792[0m
+
