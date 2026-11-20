@@ -2,6 +2,75 @@
 
 #include <stddef.h>
 
+static void startup_enter_fault(bringup_startup_t *startup, const char *code,
+                                const char *reason, uint64_t now_ms)
+{
+    startup->state = BRINGUP_STATE_FAULT;
+    startup->fault_code = code;
+    startup->fault_reason = reason;
+    startup->fault_since_ms = now_ms;
+    startup->last_fault_report_ms = now_ms;
+    startup->fault_reported = false;
+}
+
+void bringup_startup_init(bringup_startup_t *startup, unsigned max_attempts)
+{
+    if (startup != NULL) {
+        *startup = (bringup_startup_t){ .state = BRINGUP_STATE_INIT,
+                                        .max_attempts = max_attempts };
+    }
+}
+
+unsigned bringup_startup_begin_attempt(bringup_startup_t *startup)
+{
+    if (startup == NULL || startup->state != BRINGUP_STATE_INIT ||
+        startup->attempts_used >= startup->max_attempts) {
+        return 0U;
+    }
+    return ++startup->attempts_used;
+}
+
+void bringup_startup_camera_result(bringup_startup_t *startup, bool success,
+                                   uint64_t now_ms)
+{
+    if (startup == NULL || startup->state != BRINGUP_STATE_INIT ||
+        startup->attempts_used == 0U) {
+        return;
+    }
+    if (success) {
+        startup->state = BRINGUP_STATE_RUNNING;
+    } else if (startup->attempts_used >= startup->max_attempts) {
+        startup_enter_fault(startup, "RECOVERY_EXHAUSTED",
+                            "camera_init_exhausted", now_ms);
+    }
+}
+
+void bringup_startup_psram_failure(bringup_startup_t *startup,
+                                   const char *code, const char *reason,
+                                   uint64_t now_ms)
+{
+    if (startup != NULL && startup->state == BRINGUP_STATE_INIT) {
+        startup_enter_fault(startup, code, reason, now_ms);
+    }
+}
+
+bool bringup_startup_fault_due(bringup_startup_t *startup, uint64_t now_ms,
+                               uint32_t period_ms)
+{
+    if (startup == NULL || startup->state != BRINGUP_STATE_FAULT ||
+        now_ms < startup->fault_since_ms) {
+        return false;
+    }
+    if (!startup->fault_reported ||
+        (now_ms >= startup->last_fault_report_ms &&
+         now_ms - startup->last_fault_report_ms >= period_ms)) {
+        startup->last_fault_report_ms = now_ms;
+        startup->fault_reported = true;
+        return true;
+    }
+    return false;
+}
+
 void bringup_measurement_start(bringup_measurement_t *window, uint64_t now_ms,
                                uint16_t width, uint16_t height)
 {

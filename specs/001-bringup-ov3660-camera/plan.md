@@ -3,7 +3,7 @@
 **Branch**: main (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
-**Status**: Setup, foundation và US1 (T001–T013) hoàn tất; US2/US3 chưa làm.
+**Status**: Setup, foundation, US1 và US2 (T001–T018) hoàn tất; US3 chưa làm.
 
 ## Summary
 

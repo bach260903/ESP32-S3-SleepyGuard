@@ -26,3 +26,9 @@ if ($LASTEXITCODE -ne 0) { throw 'Host smoke execution failed' }
 & $Compiler -std=c11 -Wall -Wextra -Werror -I $logicInclude -c $logicSource -o $logicObject
 if ($LASTEXITCODE -ne 0) { throw 'Host logic compilation failed' }
 Write-Output 'HOST_LOGIC_COMPILE PASS'
+& $Compiler -std=c11 -Wall -Wextra -Werror -I $logicInclude -I (Join-Path $testDir '../../main') `
+    (Join-Path $testDir 'test_startup_faults.c') $logicSource `
+    -o (Join-Path $outputDir 'test_startup_faults.exe')
+if ($LASTEXITCODE -ne 0) { throw 'Startup fault test compilation failed' }
+& (Join-Path $outputDir 'test_startup_faults.exe')
+if ($LASTEXITCODE -ne 0) { throw 'Startup fault test failed' }

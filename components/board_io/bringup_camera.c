@@ -3,8 +3,10 @@
 #include <stdbool.h>
 
 #include "esp_camera.h"
+#include "esp_log.h"
 #include "esp_timer.h"
 #include "freertos/task.h"
+#include "sdkconfig.h"
 #include "board_pins.h"
 #include "bringup_config.h"
 #include "bringup_log.h"
@@ -21,9 +23,9 @@ static void send_event(const bringup_camera_event_t *event)
     xQueueSend(camera_events, event, portMAX_DELAY);
 }
 
-static void camera_worker(void *unused)
+static void camera_worker(void *argument)
 {
-    (void)unused;
+    const unsigned attempt = (unsigned)(uintptr_t)argument;
     const camera_config_t config = {
         .pin_pwdn = CAM_PIN_PWDN,
         .pin_reset = CAM_PIN_RESET,
@@ -52,11 +54,21 @@ static void camera_worker(void *unused)
         .grab_mode = BRINGUP_CAMERA_GRAB_MODE,
     };
 
+#if CONFIG_BRINGUP_FAULT_INJECTION && CONFIG_BRINGUP_FAULT_SCENARIO_CAMERA_INIT
+    ESP_LOGW("bringup", "FAULT_SCENARIO name=CAMERA_INIT attempt=%u", attempt);
+    bringup_log_camera_init(attempt, false, NULL, ESP_FAIL);
+    const bringup_camera_event_t injected_failure = {
+        .kind = BRINGUP_CAMERA_INIT_FAILED, .at_ms = now_ms(), .raw_error = ESP_FAIL,
+    };
+    send_event(&injected_failure);
+    vTaskDelete(NULL);
+    return;
+#endif
     const esp_err_t result = esp_camera_init(&config);
     sensor_t *sensor = result == ESP_OK ? esp_camera_sensor_get() : NULL;
     if (result != ESP_OK || sensor == NULL || sensor->id.PID != OV3660_PID) {
         const int raw_error = result != ESP_OK ? result : (sensor == NULL ? -1 : sensor->id.PID);
-        bringup_log_camera_init(1U, false, NULL, raw_error);
+        bringup_log_camera_init(attempt, false, NULL, raw_error);
         if (result == ESP_OK) {
             esp_camera_deinit();
         }
@@ -68,7 +80,7 @@ static void camera_worker(void *unused)
         return;
     }
 
-    bringup_log_camera_init(1U, true, "OV3660", 0);
+    bringup_log_camera_init(attempt, true, "OV3660", 0);
     const bringup_camera_event_t ready = { .kind = BRINGUP_CAMERA_READY, .at_ms = now_ms() };
     send_event(&ready);
 
@@ -88,20 +100,21 @@ static void camera_worker(void *unused)
     }
 }
 
-QueueHandle_t bringup_camera_start(void)
+QueueHandle_t bringup_camera_start(unsigned attempt)
 {
-    if (camera_events != NULL) {
+    if (attempt == 0U) {
         return NULL;
     }
-    camera_events = xQueueCreate(BRINGUP_CAMERA_EVENT_QUEUE_DEPTH,
-                                 sizeof(bringup_camera_event_t));
     if (camera_events == NULL) {
-        return NULL;
+        camera_events = xQueueCreate(BRINGUP_CAMERA_EVENT_QUEUE_DEPTH,
+                                     sizeof(bringup_camera_event_t));
+        if (camera_events == NULL) {
+            return NULL;
+        }
     }
     if (xTaskCreate(camera_worker, "camera_worker", BRINGUP_CAMERA_WORKER_STACK_BYTES,
-                    NULL, BRINGUP_CAMERA_WORKER_PRIORITY, NULL) != pdPASS) {
-        vQueueDelete(camera_events);
-        camera_events = NULL;
+                    (void *)(uintptr_t)attempt, BRINGUP_CAMERA_WORKER_PRIORITY,
+                    NULL) != pdPASS) {
         return NULL;
     }
     return camera_events;

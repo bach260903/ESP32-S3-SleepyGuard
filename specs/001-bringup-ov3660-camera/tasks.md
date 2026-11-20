@@ -51,11 +51,11 @@
 **Goal**: Lỗi PSRAM/init có mã rõ, init tối đa ba lần, FAULT báo định kỳ và không reboot.
 **Independent Test**: Giả lập riêng từng lỗi PSRAM và init; PSRAM lỗi không khởi tạo camera; sau ba lần init lỗi, FAULT lặp mỗi 5 giây trong ít nhất 60 giây.
 
-- [ ] T014 [US2] Viết test PC trước triển khai cho ba lần init tính cả lần đầu, FAULT, nhịp báo lỗi >=5 000 ms và không thử camera/reboot thêm trong `tests/host/test_startup_faults.c`; chạy qua `tests/host/run_tests.ps1`.
-- [ ] T015 [US2] Cài nhánh INIT/FAULT của máy trạng thái trong `components/bringup_logic/bringup_logic.c`, API `components/bringup_logic/include/bringup_logic.h` theo FR-004/005/014; giữ đồng hồ `now_ms` do caller truyền.
-- [ ] T016 [US2] Thêm `CONFIG_BRINGUP_FAULT_INJECTION` mặc định tắt và choice `BRINGUP_FAULT_SCENARIO` mặc định NONE tại `main/Kconfig.projbuild`; tạo điểm giả lập PSRAM unavailable/mismatch/allocate/readback và camera init failure trong `components/board_io/bringup_psram.c`, `components/board_io/bringup_camera.c`, chỉ biên dịch khi cờ bật.
-- [ ] T017 [US2] Nối tối đa ba lượt init, mã/giai đoạn/raw error và FAULT định kỳ trong `main/bringup_main.c`; chênh flash chỉ báo thông tin, không chuyển FAULT.
-- [ ] T018 [US2] Chạy `tests/host/run_tests.ps1`, build/nạp từng scenario US2 và thu log không tương tác bằng `tools/capture_serial.py`; lưu từng `reports/001-camera/05-us2-*.log`, bản `reports/001-camera/05-us2-*-sdkconfig.txt` và kết luận SC-003/004 ở `reports/001-camera/05-us2-check.md` sau khi đọc Serial.
+- [X] T014 [US2] Viết test PC trước triển khai cho ba lần init tính cả lần đầu, FAULT, nhịp báo lỗi >=5 000 ms và không thử camera/reboot thêm trong `tests/host/test_startup_faults.c`; chạy qua `tests/host/run_tests.ps1`.
+- [X] T015 [US2] Cài nhánh INIT/FAULT của máy trạng thái trong `components/bringup_logic/bringup_logic.c`, API `components/bringup_logic/include/bringup_logic.h` theo FR-004/005/014; giữ đồng hồ `now_ms` do caller truyền.
+- [X] T016 [US2] Thêm `CONFIG_BRINGUP_FAULT_INJECTION` mặc định tắt và choice `BRINGUP_FAULT_SCENARIO` mặc định NONE tại `main/Kconfig.projbuild`; tạo điểm giả lập PSRAM unavailable/mismatch/allocate/readback và camera init failure trong `components/board_io/bringup_psram.c`, `components/board_io/bringup_camera.c`, chỉ biên dịch khi cờ bật.
+- [X] T017 [US2] Nối tối đa ba lượt init, mã/giai đoạn/raw error và FAULT định kỳ trong `main/bringup_main.c`; chênh flash chỉ báo thông tin, không chuyển FAULT.
+- [X] T018 [US2] Chạy `tests/host/run_tests.ps1`, build/nạp từng scenario US2 và thu log không tương tác bằng `tools/capture_serial.py`; lưu từng `reports/001-camera/05-us2-*.log`, bản `reports/001-camera/05-us2-*-sdkconfig.txt` và kết luận SC-003/004 ở `reports/001-camera/05-us2-check.md` sau khi đọc Serial.
 
 **Checkpoint**: Có log board cho từng lỗi US2, bao gồm 60 giây FAULT, trước khi làm US3.
 

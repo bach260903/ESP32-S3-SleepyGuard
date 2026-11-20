@@ -1,0 +1,5 @@
+PASS path=reports/001-camera/05-us2-psram-unavailable.log boots=1 camera_attempts=0 fault_code=PSRAM_UNAVAILABLE fault_lines=14 fault_span_ms=65000 gap_min_ms=5000 gap_max_ms=5000
+PASS path=reports/001-camera/05-us2-psram-mismatch.log boots=1 camera_attempts=0 fault_code=PSRAM_CONFIG_MISMATCH fault_lines=14 fault_span_ms=65000 gap_min_ms=5000 gap_max_ms=5000
+PASS path=reports/001-camera/05-us2-psram-allocate.log boots=1 camera_attempts=0 fault_code=PSRAM_TEST_FAILED fault_lines=14 fault_span_ms=65000 gap_min_ms=5000 gap_max_ms=5000
+PASS path=reports/001-camera/05-us2-psram-readback.log boots=1 camera_attempts=0 fault_code=PSRAM_TEST_FAILED fault_lines=14 fault_span_ms=65000 gap_min_ms=5000 gap_max_ms=5000
+PASS path=reports/001-camera/05-us2-camera-init.log boots=1 camera_attempts=3 fault_code=RECOVERY_EXHAUSTED fault_lines=14 fault_span_ms=65010 gap_min_ms=5000 gap_max_ms=5010

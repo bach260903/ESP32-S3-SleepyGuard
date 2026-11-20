@@ -12,6 +12,27 @@ typedef enum {
 } bringup_state_t;
 
 typedef struct {
+    bringup_state_t state;
+    unsigned attempts_used;
+    unsigned max_attempts;
+    const char *fault_code;
+    const char *fault_reason;
+    uint64_t fault_since_ms;
+    uint64_t last_fault_report_ms;
+    bool fault_reported;
+} bringup_startup_t;
+
+void bringup_startup_init(bringup_startup_t *startup, unsigned max_attempts);
+unsigned bringup_startup_begin_attempt(bringup_startup_t *startup);
+void bringup_startup_camera_result(bringup_startup_t *startup, bool success,
+                                   uint64_t now_ms);
+void bringup_startup_psram_failure(bringup_startup_t *startup,
+                                   const char *code, const char *reason,
+                                   uint64_t now_ms);
+bool bringup_startup_fault_due(bringup_startup_t *startup, uint64_t now_ms,
+                               uint32_t period_ms);
+
+typedef struct {
     uint64_t at_ms;
     bool valid;
     uint16_t width;

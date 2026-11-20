@@ -2,6 +2,6 @@
 #define BRINGUP_PSRAM_H
 
 /* Returns NULL on success, otherwise a stable Serial error code. */
-const char *bringup_psram_check(void);
+const char *bringup_psram_check(const char **reason);
 
 #endif

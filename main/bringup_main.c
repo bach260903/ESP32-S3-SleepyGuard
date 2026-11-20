@@ -22,6 +22,23 @@ static uint64_t now_ms(void)
     return (uint64_t)(esp_timer_get_time() / 1000);
 }
 
+static QueueHandle_t start_camera_attempt(bringup_startup_t *startup)
+{
+    while (startup->state == BRINGUP_STATE_INIT) {
+        const unsigned attempt = bringup_startup_begin_attempt(startup);
+        if (attempt == 0U) {
+            break;
+        }
+        QueueHandle_t events = bringup_camera_start(attempt);
+        if (events != NULL) {
+            return events;
+        }
+        bringup_log_camera_init(attempt, false, NULL, ESP_ERR_NO_MEM);
+        bringup_startup_camera_result(startup, false, now_ms());
+    }
+    return NULL;
+}
+
 void app_main(void)
 {
     const bool psram_initialized = esp_psram_is_initialized();
@@ -38,33 +55,35 @@ void app_main(void)
         ESP_LOGE(TAG, "BOOT_INFO flash_error=%s", esp_err_to_name(flash_result));
     }
 
-    const char *psram_error = bringup_psram_check();
+    bringup_startup_t startup;
+    bringup_startup_init(&startup, BRINGUP_INITIAL_INIT_ATTEMPTS);
+
+    const char *psram_reason = NULL;
+    const char *psram_error = bringup_psram_check(&psram_reason);
     if (psram_error != NULL) {
-        bringup_log_fault(psram_error, "psram_check", 0U);
-        return;
+        bringup_startup_psram_failure(&startup, psram_error, psram_reason, now_ms());
     }
 
-    QueueHandle_t camera_events = bringup_camera_start();
-    if (camera_events == NULL) {
-        ESP_LOGE(TAG, "CAM_INIT_FAILED stage=worker_start raw_error=0x0");
-        return;
-    }
+    QueueHandle_t camera_events = startup.state == BRINGUP_STATE_INIT
+                                      ? start_camera_attempt(&startup) : NULL;
 
-    bool running = false;
     bringup_measurement_t window;
     for (;;) {
         bringup_camera_event_t event;
-        if (xQueueReceive(camera_events, &event,
+        if (camera_events != NULL &&
+            xQueueReceive(camera_events, &event,
                           pdMS_TO_TICKS(BRINGUP_SUPERVISOR_POLL_MS)) == pdTRUE) {
             if (event.kind == BRINGUP_CAMERA_READY) {
+                bringup_startup_camera_result(&startup, true, event.at_ms);
                 bringup_measurement_start(&window, event.at_ms,
                                           BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
-                running = true;
             } else if (event.kind == BRINGUP_CAMERA_INIT_FAILED) {
-                ESP_LOGE(TAG, "FAULT code=CAM_INIT_FAILED reason=camera_init raw_error=0x%x",
-                         (unsigned)event.raw_error);
-                return;
-            } else if (running && event.kind == BRINGUP_CAMERA_FRAME) {
+                bringup_startup_camera_result(&startup, false, event.at_ms);
+                if (startup.state == BRINGUP_STATE_INIT) {
+                    camera_events = start_camera_attempt(&startup);
+                }
+            } else if (startup.state == BRINGUP_STATE_RUNNING &&
+                       event.kind == BRINGUP_CAMERA_FRAME) {
                 const bringup_frame_observation_t frame = {
                     .at_ms = event.at_ms,
                     .valid = event.valid,
@@ -78,9 +97,16 @@ void app_main(void)
                                                   0);
                 }
             }
+        } else if (camera_events == NULL) {
+            vTaskDelay(pdMS_TO_TICKS(BRINGUP_SUPERVISOR_POLL_MS));
         }
-        if (running && bringup_measurement_due(&window, now_ms(),
-                                                BRINGUP_FRAME_REPORT_PERIOD_MS)) {
+        if (bringup_startup_fault_due(&startup, now_ms(),
+                                      BRINGUP_FAULT_REPORT_PERIOD_MS)) {
+            bringup_log_fault(startup.fault_code, startup.fault_reason, 0U);
+        }
+        if (startup.state == BRINGUP_STATE_RUNNING &&
+            bringup_measurement_due(&window, now_ms(),
+                                    BRINGUP_FRAME_REPORT_PERIOD_MS)) {
             bringup_measurement_t report;
             if (bringup_measurement_finish(&window, now_ms(), &report)) {
                 bringup_log_frame_report(report.width, report.height, report.valid,

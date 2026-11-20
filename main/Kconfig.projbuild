@@ -1,0 +1,35 @@
+menu "Camera bring-up diagnostics"
+
+config BRINGUP_FAULT_INJECTION
+    bool "Compile controlled bring-up fault scenarios"
+    default n
+    help
+        Bench-only fault injection for US2/US3 validation. Keep disabled in
+        normal firmware builds.
+
+choice BRINGUP_FAULT_SCENARIO
+    prompt "Fault scenario"
+    depends on BRINGUP_FAULT_INJECTION
+    default BRINGUP_FAULT_SCENARIO_NONE
+
+config BRINGUP_FAULT_SCENARIO_NONE
+    bool "No fault"
+
+config BRINGUP_FAULT_SCENARIO_PSRAM_UNAVAILABLE
+    bool "Simulate unavailable PSRAM"
+
+config BRINGUP_FAULT_SCENARIO_PSRAM_MISMATCH
+    bool "Simulate PSRAM capacity mismatch"
+
+config BRINGUP_FAULT_SCENARIO_PSRAM_ALLOCATE
+    bool "Simulate PSRAM test allocation failure"
+
+config BRINGUP_FAULT_SCENARIO_PSRAM_READBACK
+    bool "Simulate PSRAM test readback mismatch"
+
+config BRINGUP_FAULT_SCENARIO_CAMERA_INIT
+    bool "Simulate every camera init attempt failing"
+
+endchoice
+
+endmenu
