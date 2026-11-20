@@ -65,6 +65,25 @@ int main(void)
            BRINGUP_RECOVERY_ACTION_REQUEST_STOP);
     assert(r.phase == BRINGUP_RECOVERY_PHASE_STOPPING);
 
+    bringup_measurement_t window;
+    bringup_measurement_start(&window, 0, BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
+    const bringup_frame_observation_t single_invalid = {
+        .at_ms = 100, .valid = false,
+        .width = BRINGUP_FRAME_WIDTH, .height = BRINGUP_FRAME_HEIGHT,
+    };
+    bringup_measurement_record(&window, &single_invalid);
+    assert(window.invalid == 1);
+    assert(!bringup_measurement_due(&window, 4999, BRINGUP_FRAME_REPORT_PERIOD_MS));
+    assert(bringup_measurement_due(&window, 5000, BRINGUP_FRAME_REPORT_PERIOD_MS));
+
+    bringup_startup_t fault;
+    bringup_startup_init(&fault, 1);
+    bringup_startup_psram_failure(&fault, "TEST", "period", 0);
+    assert(bringup_startup_fault_due(&fault, 0, 3000));
+    assert(!bringup_startup_fault_due(&fault, 2999, 3000));
+    assert(bringup_startup_fault_due(&fault, 3000, 3000));
+    assert(!bringup_measurement_due(&window, 3000, BRINGUP_FRAME_REPORT_PERIOD_MS));
+
     puts("RECOVERY_LOGIC PASS");
     return 0;
 }

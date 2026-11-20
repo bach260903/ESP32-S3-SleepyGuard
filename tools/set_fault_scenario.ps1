@@ -1,8 +1,12 @@
 param(
     [Parameter(Mandatory = $true)]
     [ValidateSet('NONE', 'PSRAM_UNAVAILABLE', 'PSRAM_MISMATCH',
-                 'PSRAM_ALLOCATE', 'PSRAM_READBACK', 'CAMERA_INIT')]
-    [string]$Scenario
+                 'PSRAM_ALLOCATE', 'PSRAM_READBACK', 'CAMERA_INIT',
+                 'SINGLE_INVALID', 'THREE_INVALID', 'NO_FRAMES',
+                 'WORKER_DELAY', 'HOLD_FRAME', 'RECOVERY_INIT', 'INIT_NO_FRAME')]
+    [string]$Scenario,
+    [ValidateRange(0,100)][int]$WorkerIndex = 1,
+    [ValidateRange(0,3600)][int]$AfterFirstValidS = 0
 )
 
 $ErrorActionPreference = 'Stop'
@@ -19,6 +23,8 @@ if ($Scenario -eq 'NONE') {
 } else {
     $configLines += 'CONFIG_BRINGUP_FAULT_INJECTION=y'
     $configLines += "CONFIG_BRINGUP_FAULT_SCENARIO_${Scenario}=y"
+    $configLines += "CONFIG_BRINGUP_FAULT_WORKER_INDEX=$WorkerIndex"
+    $configLines += "CONFIG_BRINGUP_FAULT_AFTER_FIRST_VALID_S=$AfterFirstValidS"
 }
 Set-Content -LiteralPath $configPath -Value $configLines -Encoding utf8
 Write-Output "Selected fault scenario: $Scenario"

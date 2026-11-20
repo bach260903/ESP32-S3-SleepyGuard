@@ -30,6 +30,39 @@ config BRINGUP_FAULT_SCENARIO_PSRAM_READBACK
 config BRINGUP_FAULT_SCENARIO_CAMERA_INIT
     bool "Simulate every camera init attempt failing"
 
+config BRINGUP_FAULT_SCENARIO_SINGLE_INVALID
+    bool "One invalid frame after a real capture"
+
+config BRINGUP_FAULT_SCENARIO_THREE_INVALID
+    bool "Three consecutive invalid frames after real captures"
+
+config BRINGUP_FAULT_SCENARIO_NO_FRAMES
+    bool "Pause frame events after a valid frame"
+
+config BRINGUP_FAULT_SCENARIO_WORKER_DELAY
+    bool "Delay worker after returning a frame"
+
+config BRINGUP_FAULT_SCENARIO_HOLD_FRAME
+    bool "Hold a real frame before returning it"
+
+config BRINGUP_FAULT_SCENARIO_RECOVERY_INIT
+    bool "Fail selected recovery worker after real driver init"
+
+config BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
+    bool "Initialize driver then pause frame delivery"
+
 endchoice
+
+config BRINGUP_FAULT_WORKER_INDEX
+    int "Apply fault to worker index (0 for every worker)"
+    depends on BRINGUP_FAULT_INJECTION
+    range 0 100
+    default 1
+
+config BRINGUP_FAULT_AFTER_FIRST_VALID_S
+    int "Seconds after first valid frame before triggering fault"
+    depends on BRINGUP_FAULT_INJECTION
+    range 0 3600
+    default 0
 
 endmenu

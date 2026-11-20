@@ -22,6 +22,58 @@ static uint64_t now_ms(void)
     return (uint64_t)(esp_timer_get_time() / 1000);
 }
 
+static const bringup_recovery_config_t recovery_config = {
+    .recovery_attempts = BRINGUP_RECOVERY_ATTEMPTS,
+    .invalid_frame_limit = BRINGUP_CONSECUTIVE_INVALID_LIMIT,
+    .frame_loss_timeout_ms = BRINGUP_FRAME_LOSS_TIMEOUT_MS,
+    .first_frame_timeout_ms = BRINGUP_RECOVERY_FIRST_FRAME_TIMEOUT_MS,
+    .stable_reset_ms = BRINGUP_STABLE_RESET_MS,
+    .stop_wait_limit_ms = BRINGUP_STOP_WAIT_LIMIT_MS,
+    .recovery_wait_period_ms = BRINGUP_RECOVERY_WAIT_PERIOD_MS,
+};
+
+static void apply_recovery_action(bringup_recovery_t *recovery,
+                                  bringup_recovery_action_t action,
+                                  uint64_t at_ms, const char *reason)
+{
+    if (action & BRINGUP_RECOVERY_ACTION_FAILURE) {
+        bringup_log_recovery("failure", recovery->remaining, reason);
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_REQUEST_STOP) {
+        bringup_log_recovery("start", recovery->remaining, reason);
+        bringup_camera_request_stop();
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_REPORT_WAIT) {
+        ESP_LOGW(TAG, "RECOVERY_WAIT phase=stopping waited_ms=%llu budget_remaining=%u",
+                 (unsigned long long)(at_ms - recovery->stop_requested_ms),
+                 recovery->remaining);
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_START_WORKER) {
+        const unsigned attempt = recovery->config.recovery_attempts -
+                                 recovery->remaining;
+        QueueHandle_t started = bringup_camera_start(attempt);
+        if (started == NULL) {
+            bringup_log_camera_init(attempt, false, NULL, ESP_ERR_NO_MEM);
+            const bringup_recovery_action_t failure =
+                bringup_recovery_on_worker_done(recovery,
+                                               BRINGUP_WORKER_DONE_INIT_FAILED,
+                                               at_ms);
+            apply_recovery_action(recovery, failure, at_ms, "worker_start_failed");
+        }
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_SUCCESS) {
+        bringup_log_recovery("success", recovery->remaining, "valid_frame");
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_BUDGET_RESET) {
+        bringup_log_recovery("budget_reset", recovery->remaining, "stable_60s");
+    }
+    if (action & BRINGUP_RECOVERY_ACTION_FAULT &&
+        recovery->fault_code != NULL &&
+        recovery->fault_code[0] == 'R') {
+        bringup_log_recovery("exhausted", recovery->remaining, "budget_empty");
+    }
+}
+
 static QueueHandle_t start_camera_attempt(bringup_startup_t *startup)
 {
     while (startup->state == BRINGUP_STATE_INIT) {
@@ -68,20 +120,46 @@ void app_main(void)
                                       ? start_camera_attempt(&startup) : NULL;
 
     bringup_measurement_t window;
+    bringup_recovery_t recovery = {0};
+    bool recovery_active = false;
+    bool recovery_fault_reported = false;
+    uint64_t recovery_fault_last_report_ms = 0;
     for (;;) {
         bringup_camera_event_t event;
         if (camera_events != NULL &&
             xQueueReceive(camera_events, &event,
                           pdMS_TO_TICKS(BRINGUP_SUPERVISOR_POLL_MS)) == pdTRUE) {
             if (event.kind == BRINGUP_CAMERA_READY) {
-                bringup_startup_camera_result(&startup, true, event.at_ms);
-                bringup_measurement_start(&window, event.at_ms,
-                                          BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
-            } else if (event.kind == BRINGUP_CAMERA_INIT_FAILED) {
-                bringup_startup_camera_result(&startup, false, event.at_ms);
                 if (startup.state == BRINGUP_STATE_INIT) {
-                    camera_events = start_camera_attempt(&startup);
+                    bringup_startup_camera_result(&startup, true, event.at_ms);
+                    bringup_measurement_start(&window, event.at_ms,
+                                              BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
+                    bringup_recovery_init(&recovery, &recovery_config, event.at_ms);
+                    recovery_active = true;
+                } else if (recovery_active) {
+                    (void)bringup_recovery_on_worker_ready(&recovery, event.at_ms);
                 }
+            } else if (event.kind == BRINGUP_CAMERA_INIT_FAILED) {
+                if (startup.state == BRINGUP_STATE_INIT) {
+                    bringup_startup_camera_result(&startup, false, event.at_ms);
+                    if (startup.state == BRINGUP_STATE_INIT) {
+                        camera_events = start_camera_attempt(&startup);
+                    }
+                } else if (recovery_active) {
+                    const bringup_recovery_action_t action =
+                        bringup_recovery_on_worker_done(&recovery,
+                                                       BRINGUP_WORKER_DONE_INIT_FAILED,
+                                                       event.at_ms);
+                    apply_recovery_action(&recovery, action, event.at_ms,
+                                          "camera_init_failed");
+                }
+            } else if (event.kind == BRINGUP_CAMERA_STOPPED && recovery_active) {
+                const bringup_recovery_action_t action =
+                    bringup_recovery_on_worker_done(&recovery,
+                                                   BRINGUP_WORKER_DONE_STOPPED,
+                                                   event.at_ms);
+                apply_recovery_action(&recovery, action, event.at_ms,
+                                      "worker_stopped");
             } else if (startup.state == BRINGUP_STATE_RUNNING &&
                        event.kind == BRINGUP_CAMERA_FRAME) {
                 const bringup_frame_observation_t frame = {
@@ -90,11 +168,31 @@ void app_main(void)
                     .width = event.width,
                     .height = event.height,
                 };
-                bringup_measurement_record(&window, &frame);
-                if (!event.valid) {
-                    bringup_log_frame_unavailable("running",
-                                                  event.bytes == 0U ? "empty_frame" : "invalid_frame",
-                                                  0);
+                const bringup_recovery_phase_t prior_phase = recovery.phase;
+                if (prior_phase == BRINGUP_RECOVERY_PHASE_RUNNING) {
+                    bringup_measurement_record(&window, &frame);
+                }
+                if (prior_phase == BRINGUP_RECOVERY_PHASE_RUNNING ||
+                    prior_phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) {
+                    if (!event.valid) {
+                        bringup_log_frame_unavailable(
+                            prior_phase == BRINGUP_RECOVERY_PHASE_RUNNING ? "running" : "recovering",
+                            event.reason == BRINGUP_FRAME_REASON_FB_GET_NULL ? "fb_get_null" : "invalid_size",
+                            event.raw_error);
+                    }
+                    const bringup_recovery_action_t action =
+                        bringup_recovery_on_frame(&recovery, event.valid, event.at_ms);
+                    if (action & BRINGUP_RECOVERY_ACTION_SUCCESS) {
+                        bringup_measurement_start(&window, event.at_ms,
+                                                  BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
+                        bringup_measurement_record(&window, &frame);
+                    }
+                    apply_recovery_action(&recovery, action, event.at_ms,
+                                          prior_phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME
+                                              ? "first_frame_timeout"
+                                              : (recovery.consecutive_invalid >=
+                                                 recovery.config.invalid_frame_limit
+                                                     ? "invalid_frames" : "frame_timeout"));
                 }
             }
         } else if (camera_events == NULL) {
@@ -104,7 +202,27 @@ void app_main(void)
                                       BRINGUP_FAULT_REPORT_PERIOD_MS)) {
             bringup_log_fault(startup.fault_code, startup.fault_reason, 0U);
         }
-        if (startup.state == BRINGUP_STATE_RUNNING &&
+        if (recovery_active) {
+            const uint64_t tick_ms = now_ms();
+            const bringup_recovery_action_t action =
+                bringup_recovery_on_tick(&recovery, tick_ms);
+            apply_recovery_action(&recovery, action, tick_ms,
+                                  recovery.phase == BRINGUP_RECOVERY_PHASE_STOPPING &&
+                                          recovery.worker_ready_ms > recovery.running_since_ms
+                                      ? "first_frame_timeout" : "frame_timeout");
+            if (recovery.phase == BRINGUP_RECOVERY_PHASE_FAULT &&
+                (!recovery_fault_reported ||
+                 (tick_ms >= recovery_fault_last_report_ms &&
+                  tick_ms - recovery_fault_last_report_ms >=
+                      BRINGUP_FAULT_REPORT_PERIOD_MS))) {
+                bringup_log_fault(recovery.fault_code, recovery.fault_code,
+                                  recovery.remaining);
+                recovery_fault_last_report_ms = tick_ms;
+                recovery_fault_reported = true;
+            }
+        }
+        if (startup.state == BRINGUP_STATE_RUNNING && recovery_active &&
+            recovery.phase == BRINGUP_RECOVERY_PHASE_RUNNING &&
             bringup_measurement_due(&window, now_ms(),
                                     BRINGUP_FRAME_REPORT_PERIOD_MS)) {
             bringup_measurement_t report;

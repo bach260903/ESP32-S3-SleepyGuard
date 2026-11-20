@@ -174,7 +174,8 @@ bringup_recovery_action_t bringup_recovery_on_frame(bringup_recovery_t *recovery
     if (recovery->phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) {
         if (now_ms < recovery->worker_ready_ms ||
             now_ms - recovery->worker_ready_ms >= recovery->config.first_frame_timeout_ms) {
-            return recovery_enter_stopping(recovery, now_ms);
+            return BRINGUP_RECOVERY_ACTION_FAILURE |
+                   recovery_enter_stopping(recovery, now_ms);
         }
         if (valid) {
             recovery->phase = BRINGUP_RECOVERY_PHASE_RUNNING;
@@ -186,7 +187,8 @@ bringup_recovery_action_t bringup_recovery_on_frame(bringup_recovery_t *recovery
             return BRINGUP_RECOVERY_ACTION_SUCCESS;
         }
         if (++recovery->consecutive_invalid >= recovery->config.invalid_frame_limit) {
-            return recovery_enter_stopping(recovery, now_ms);
+            return BRINGUP_RECOVERY_ACTION_FAILURE |
+                   recovery_enter_stopping(recovery, now_ms);
         }
     } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_RUNNING) {
         if (now_ms < recovery->last_valid_ms ||
@@ -223,7 +225,8 @@ bringup_recovery_action_t bringup_recovery_on_tick(bringup_recovery_t *recovery,
     } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) {
         if (now_ms >= recovery->worker_ready_ms &&
             now_ms - recovery->worker_ready_ms >= recovery->config.first_frame_timeout_ms) {
-            return recovery_enter_stopping(recovery, now_ms);
+            return BRINGUP_RECOVERY_ACTION_FAILURE |
+                   recovery_enter_stopping(recovery, now_ms);
         }
     } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_STOPPING) {
         if (now_ms >= recovery->stop_requested_ms &&
