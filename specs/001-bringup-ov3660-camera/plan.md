@@ -133,9 +133,16 @@ sẽ thuộc board_pins.h riêng, không chứa ngưỡng hành vi.
    board chạy một hoặc hai ca 60 giây thật.
 4. Giả lập lỗi dưới cờ `CONFIG_BRINGUP_FAULT_INJECTION`, mặc định tắt;
    bản build thường không biên dịch mã giả lập.
-5. Supervisor chỉ phát tín hiệu deadline; camera worker sở hữu driver và
-   tự deinit sau khi thoát `fb_get` và trả frame. Tạo task thử riêng ca
-   đúng hạn 5 giây khi `fb_get` vẫn đang chặn.
+5. Supervisor chỉ phát tín hiệu deadline và yêu cầu dừng; camera worker sở
+   hữu driver, trả frame rồi tự deinit sau khi thoát `fb_get`, sau đó phát
+   `BRINGUP_CAMERA_STOPPED`. Đường init lỗi phát `INIT_FAILED` sau cleanup;
+   đây cũng là sự kiện kết thúc worker. Supervisor tiếp tục rút queue, bỏ
+   FRAME/READY cũ và báo `RECOVERY_WAIT` mỗi 5 giây trong lúc chờ; chỉ init
+   lượt kế tiếp sau sự kiện kết thúc. Chờ quá 15 giây thì FAULT
+   `WORKER_STOP_TIMEOUT`, không deinit hoặc reboot. Đo thời gian `fb_get` thật
+   trên board, tách khỏi ca trì hoãn
+   worker giả lập 6 giây. `fb_get` NULL có nghỉ 20 ms và được log khác khung
+   sai kích thước. Tạo task thử riêng deadline khi worker còn đang chặn.
 
 Chi tiết nghiên cứu trong [research.md](research.md).
 
