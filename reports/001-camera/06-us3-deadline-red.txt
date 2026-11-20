@@ -1,0 +1,1 @@
+Assertion failed: bringup_recovery_on_tick(&r, 5000) & BRINGUP_RECOVERY_ACTION_REQUEST_STOP, file tests/host/test_deadline_decision.c, line 27

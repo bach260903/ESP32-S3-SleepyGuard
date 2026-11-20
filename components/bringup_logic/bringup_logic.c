@@ -119,8 +119,36 @@ bool bringup_measurement_finish(bringup_measurement_t *window,
     return true;
 }
 
-/* The transition bodies intentionally return NONE until the US3 red tests
- * define the boundary behavior. */
+static bringup_recovery_action_t recovery_enter_stopping(bringup_recovery_t *recovery,
+                                                         uint64_t now_ms)
+{
+    recovery->phase = BRINGUP_RECOVERY_PHASE_STOPPING;
+    recovery->stop_requested_ms = now_ms;
+    recovery->last_wait_report_ms = now_ms;
+    recovery->wait_reported = true;
+    recovery->stable_timer_active = false;
+    return BRINGUP_RECOVERY_ACTION_REQUEST_STOP |
+           BRINGUP_RECOVERY_ACTION_REPORT_WAIT;
+}
+
+static bringup_recovery_action_t recovery_enter_fault(bringup_recovery_t *recovery,
+                                                      const char *code)
+{
+    recovery->phase = BRINGUP_RECOVERY_PHASE_FAULT;
+    recovery->fault_code = code;
+    return BRINGUP_RECOVERY_ACTION_FAULT;
+}
+
+static bringup_recovery_action_t recovery_start_next(bringup_recovery_t *recovery)
+{
+    if (recovery->remaining == 0U) {
+        return recovery_enter_fault(recovery, "RECOVERY_EXHAUSTED");
+    }
+    --recovery->remaining;
+    recovery->phase = BRINGUP_RECOVERY_PHASE_STARTING;
+    return BRINGUP_RECOVERY_ACTION_START_WORKER;
+}
+
 void bringup_recovery_init(bringup_recovery_t *recovery,
                            const bringup_recovery_config_t *config,
                            uint64_t now_ms)
@@ -140,25 +168,85 @@ void bringup_recovery_init(bringup_recovery_t *recovery,
 bringup_recovery_action_t bringup_recovery_on_frame(bringup_recovery_t *recovery,
                                                     bool valid, uint64_t now_ms)
 {
-    (void)recovery;
-    (void)valid;
-    (void)now_ms;
+    if (recovery == NULL) {
+        return BRINGUP_RECOVERY_ACTION_NONE;
+    }
+    if (recovery->phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) {
+        if (now_ms < recovery->worker_ready_ms ||
+            now_ms - recovery->worker_ready_ms >= recovery->config.first_frame_timeout_ms) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+        if (valid) {
+            recovery->phase = BRINGUP_RECOVERY_PHASE_RUNNING;
+            recovery->running_since_ms = now_ms;
+            recovery->last_valid_ms = now_ms;
+            recovery->stable_since_ms = now_ms;
+            recovery->stable_timer_active = true;
+            recovery->consecutive_invalid = 0U;
+            return BRINGUP_RECOVERY_ACTION_SUCCESS;
+        }
+        if (++recovery->consecutive_invalid >= recovery->config.invalid_frame_limit) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+    } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_RUNNING) {
+        if (now_ms < recovery->last_valid_ms ||
+            now_ms - recovery->last_valid_ms >= recovery->config.frame_loss_timeout_ms) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+        if (valid) {
+            recovery->last_valid_ms = now_ms;
+            recovery->consecutive_invalid = 0U;
+        } else if (++recovery->consecutive_invalid >= recovery->config.invalid_frame_limit) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+    }
     return BRINGUP_RECOVERY_ACTION_NONE;
 }
 
 bringup_recovery_action_t bringup_recovery_on_tick(bringup_recovery_t *recovery,
                                                    uint64_t now_ms)
 {
-    (void)recovery;
-    (void)now_ms;
+    if (recovery == NULL) {
+        return BRINGUP_RECOVERY_ACTION_NONE;
+    }
+    if (recovery->phase == BRINGUP_RECOVERY_PHASE_RUNNING) {
+        if (now_ms >= recovery->last_valid_ms &&
+            now_ms - recovery->last_valid_ms >= recovery->config.frame_loss_timeout_ms) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+        if (recovery->stable_timer_active && now_ms >= recovery->stable_since_ms &&
+            now_ms - recovery->stable_since_ms >= recovery->config.stable_reset_ms) {
+            recovery->remaining = recovery->config.recovery_attempts;
+            recovery->stable_timer_active = false;
+            return BRINGUP_RECOVERY_ACTION_BUDGET_RESET;
+        }
+    } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) {
+        if (now_ms >= recovery->worker_ready_ms &&
+            now_ms - recovery->worker_ready_ms >= recovery->config.first_frame_timeout_ms) {
+            return recovery_enter_stopping(recovery, now_ms);
+        }
+    } else if (recovery->phase == BRINGUP_RECOVERY_PHASE_STOPPING) {
+        if (now_ms >= recovery->stop_requested_ms &&
+            now_ms - recovery->stop_requested_ms >= recovery->config.stop_wait_limit_ms) {
+            return recovery_enter_fault(recovery, "WORKER_STOP_TIMEOUT");
+        }
+        if (now_ms >= recovery->last_wait_report_ms &&
+            now_ms - recovery->last_wait_report_ms >= recovery->config.recovery_wait_period_ms) {
+            recovery->last_wait_report_ms = now_ms;
+            return BRINGUP_RECOVERY_ACTION_REPORT_WAIT;
+        }
+    }
     return BRINGUP_RECOVERY_ACTION_NONE;
 }
 
 bringup_recovery_action_t bringup_recovery_on_worker_ready(bringup_recovery_t *recovery,
                                                            uint64_t now_ms)
 {
-    (void)recovery;
-    (void)now_ms;
+    if (recovery != NULL && recovery->phase == BRINGUP_RECOVERY_PHASE_STARTING) {
+        recovery->phase = BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME;
+        recovery->worker_ready_ms = now_ms;
+        recovery->consecutive_invalid = 0U;
+    }
     return BRINGUP_RECOVERY_ACTION_NONE;
 }
 
@@ -166,8 +254,18 @@ bringup_recovery_action_t bringup_recovery_on_worker_done(bringup_recovery_t *re
                                                           bringup_worker_done_t done,
                                                           uint64_t now_ms)
 {
-    (void)recovery;
-    (void)done;
     (void)now_ms;
+    if (recovery == NULL) {
+        return BRINGUP_RECOVERY_ACTION_NONE;
+    }
+    if (recovery->phase == BRINGUP_RECOVERY_PHASE_STOPPING) {
+        (void)done;
+        return recovery_start_next(recovery);
+    }
+    if ((recovery->phase == BRINGUP_RECOVERY_PHASE_STARTING ||
+         recovery->phase == BRINGUP_RECOVERY_PHASE_WAITING_FIRST_FRAME) &&
+        done == BRINGUP_WORKER_DONE_INIT_FAILED) {
+        return BRINGUP_RECOVERY_ACTION_FAILURE | recovery_start_next(recovery);
+    }
     return BRINGUP_RECOVERY_ACTION_NONE;
 }

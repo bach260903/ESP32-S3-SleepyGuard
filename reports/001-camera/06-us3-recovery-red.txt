@@ -1,0 +1,1 @@
+Assertion failed: r.consecutive_invalid == 1, file tests/host/test_recovery_logic.c, line 27

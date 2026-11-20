@@ -32,3 +32,11 @@ Write-Output 'HOST_LOGIC_COMPILE PASS'
 if ($LASTEXITCODE -ne 0) { throw 'Startup fault test compilation failed' }
 & (Join-Path $outputDir 'test_startup_faults.exe')
 if ($LASTEXITCODE -ne 0) { throw 'Startup fault test failed' }
+foreach ($testName in @('recovery_logic', 'deadline_decision')) {
+    $testExe = Join-Path $outputDir "test_$testName.exe"
+    & $Compiler -std=c11 -Wall -Wextra -Werror -I $logicInclude -I (Join-Path $testDir '../../main') `
+        (Join-Path $testDir "test_$testName.c") $logicSource -o $testExe
+    if ($LASTEXITCODE -ne 0) { throw "$testName compilation failed" }
+    & $testExe
+    if ($LASTEXITCODE -ne 0) { throw "$testName assertions failed" }
+}
