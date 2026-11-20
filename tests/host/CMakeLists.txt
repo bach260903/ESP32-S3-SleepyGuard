@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.16)
+project(bringup_host_tests C)
+set(CMAKE_C_STANDARD 11)
+enable_testing()
+add_library(bringup_logic STATIC ../../components/bringup_logic/bringup_logic.c)
+target_include_directories(bringup_logic PUBLIC ../../components/bringup_logic/include)
+add_executable(test_smoke test_smoke.c)
+add_test(NAME smoke COMMAND test_smoke)

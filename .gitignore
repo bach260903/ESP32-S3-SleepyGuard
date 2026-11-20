@@ -2,4 +2,5 @@
 /managed_components/
 /sdkconfig
 /sdkconfig.old
+/tests/host/.build/
 !dependencies.lock

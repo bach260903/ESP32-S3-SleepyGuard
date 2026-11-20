@@ -1,17 +1,18 @@
 # Implementation Plan: Bring-up camera OV3660
 
-**Branch**: master (feature 001-bringup-ov3660-camera)
+**Branch**: main (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
-**Status**: Setup triển khai T001–T004 hoàn tất trên board; các phase còn lại chưa làm.
+**Status**: Setup, foundation và US1 (T001–T013) hoàn tất; US2/US3 chưa làm.
 
 ## Summary
 
 Dùng ESP-IDF v5.5.2, target esp32s3 và component espressif/esp32-camera ==2.1.9.
 Kiểm tra PSRAM trước camera; lấy khung 320 × 240 và báo số khung hợp lệ/lỗi, FPS
 qua USB-UART. Phục hồi có ngân sách hữu hạn và trạng thái lỗi vẫn báo định kỳ.
-Firmware probe đã build và chạy trên board; bằng chứng tại
-`reports/001-camera/02-phase1-check.md`. Logic FPS/phục hồi còn ở các phase sau.
+Firmware probe và US1 đã build, chạy trên board; bằng chứng tại
+`reports/001-camera/02-phase1-check.md` và `04-us1-check.md`. Logic phục hồi
+còn ở phase sau.
 
 **Thứ tự triển khai:** cài ESP-IDF v5.5.2, build/nạp khung tối thiểu có
 esp32-camera 2.1.9 và in PSRAM/flash trước; sau đó kiểm chứng lại bảng chân
@@ -23,7 +24,7 @@ chính thức.
 
 **Language/Version**: C theo toolchain đi kèm ESP-IDF v5.5.2.
 **Primary Dependencies**: ESP-IDF v5.5.2; espressif/esp32-camera ==2.1.9; lưu
-dependencies.lock khi triển khai. Đây là lựa chọn đã đối chiếu nguồn, chưa build.
+dependencies.lock. Cặp phiên bản đã build và chạy trên board trong Phase 1.
 **Storage**: RAM nội và PSRAM; không lưu ảnh/video, không dùng SD hay mạng.
 **Testing**: kiểm thử logic thời gian/ngân sách trên PC; kiểm chứng PSRAM, camera,
 thời hạn và Serial trên board thật. Log chỉ chứa metadata, không có ảnh.

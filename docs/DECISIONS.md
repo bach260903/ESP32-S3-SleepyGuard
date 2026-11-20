@@ -28,6 +28,12 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
   firmware cũ trên chính board và đọc COM4: `healthy=1 sensor=OV3660`, FPS 6,2.
   Chi tiết GPIO và log mới ghi trong plan feature 001. Phép thử này dùng
   firmware cũ 240×240, chưa xác nhận firmware mới 320×240.
+- **Đo trên board với firmware mới (2026-11-19):** `esp_psram_is_initialized()`
+  trả `1`, `esp_psram_get_size()` trả thô **8 388 608 byte**; heap PSRAM còn
+  trống **8 386 196 byte**. Flash vật lý báo **16 777 216 byte** (16 MB).
+  Bằng chứng trong `reports/001-camera/01-psram-flash.log` và
+  `reports/001-camera/02-phase1-check.md`. Probe mới nhận OV3660 PID `0x3660`
+  và ba khung RGB565 320×240 hợp lệ trong `02-camera-probe.log`.
 - **Hệ quả:** Phải bật PSRAM chế độ octal và cấu hình flash 16 MB. Các chân GPIO
   mà PSRAM octal chiếm (khoảng GPIO35–37) không dùng được cho việc khác. Khi chọn
   chân cho còi, tránh các chân strapping (GPIO0, 3, 45, 46).
@@ -42,8 +48,9 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Quyết định:** ESP-IDF, cài qua tiện ích Espressif IDF cho VS Code.
 - **Phiên bản ghim cho feature 001 (2026-11-19):** ESP-IDF **v5.5.2**,
   target `esp32s3`; component `espressif/esp32-camera` **==2.1.9**.
-  Lưu `dependencies.lock` khi triển khai. Đây là pin phục vụ kế hoạch,
-  chưa xác nhận bằng build hoặc chạy board với cặp phiên bản này.
+  `dependencies.lock` đã được lưu. **ESP-IDF v5.5.2 và esp32-camera 2.1.9
+  đã xác nhận bằng build và chạy thật (2026-11-19)**; xem
+  `reports/001-camera/01-build.txt` và `02-camera-probe.log`.
   Nguồn: https://github.com/espressif/esp-idf/releases/tag/v5.5.2 và
   https://components.espressif.com/components/espressif/esp32-camera/versions/2.1.9/dependencies.
 - **Lý do:** Hỗ trợ camera, PSRAM và các thư viện AI của Espressif tốt nhất; build

@@ -22,11 +22,11 @@
 
 **Goal**: Có compiler host, smoke test chạy được và API logic thuần không phụ thuộc ESP-IDF.
 
-- [ ] T005 Đặt toàn bộ ngưỡng, số lượt, QVGA/RGB565, dung lượng PSRAM kỳ vọng và kích thước vùng thử vào `main/bringup_config.h` theo `data-model.md`; giữ ngưỡng mất khung 5 giây và chờ khung recovery 5 giây là hai tham số riêng.
-- [ ] T006 [P] Kiểm tra GCC host MSYS2 ở `C:/msys64/mingw64/bin/gcc.exe` (đã thấy v15.2.0 nhưng chưa nằm trong PATH); nếu không chạy được thì cài/khôi phục toolchain host; tạo `tests/host/CMakeLists.txt`, `tests/host/test_smoke.c` và `tests/host/run_tests.ps1`, biên dịch/chạy smoke test trước mọi test logic, lưu output ở `reports/001-camera/03-host-smoke.txt`; không dùng compiler Xtensa/RISC-V để chạy test PC.
-- [ ] T007 [P] Tạo kiểu dữ liệu, API nhận sự kiện khung và Measurement Window trong `components/bringup_logic/include/bringup_logic.h`, `components/bringup_logic/bringup_logic.c`; hàm quyết định nhận `now_ms` từ caller và không `#include` header ESP-IDF. Chưa cài nhánh INIT/FAULT hay Recovery Budget của US2/US3.
-- [ ] T008 [P] Tạo logger Serial và mã sự kiện tại `components/board_io/include/bringup_log.h`, `components/board_io/bringup_log.c` theo `contracts/serial.md`; BOOT_INFO có `psram_size_raw_bytes`, `psram_expected_bytes`, `psram_heap_free_bytes` và flash, không xuất dữ liệu ảnh.
-- [ ] T009 Tạo `components/bringup_logic/CMakeLists.txt`, `components/board_io/CMakeLists.txt`, nối `main/CMakeLists.txt`, build firmware và chạy lại `tests/host/run_tests.ps1`; lưu `reports/001-camera/03-foundation-build.txt`. Xác nhận `dependencies.lock` và `sdkconfig.defaults` được Git theo dõi.
+- [X] T005 Đặt toàn bộ ngưỡng, số lượt, QVGA/RGB565, dung lượng PSRAM kỳ vọng và kích thước vùng thử vào `main/bringup_config.h` theo `data-model.md`; giữ ngưỡng mất khung 5 giây và chờ khung recovery 5 giây là hai tham số riêng.
+- [X] T006 [P] Kiểm tra GCC host MSYS2 ở `C:/msys64/mingw64/bin/gcc.exe` (đã thấy v15.2.0 nhưng chưa nằm trong PATH); nếu không chạy được thì cài/khôi phục toolchain host; tạo `tests/host/CMakeLists.txt`, `tests/host/test_smoke.c` và `tests/host/run_tests.ps1`, biên dịch/chạy smoke test trước mọi test logic, lưu output ở `reports/001-camera/03-host-smoke.txt`; không dùng compiler Xtensa/RISC-V để chạy test PC.
+- [X] T007 [P] Tạo kiểu dữ liệu, API nhận sự kiện khung và Measurement Window trong `components/bringup_logic/include/bringup_logic.h`, `components/bringup_logic/bringup_logic.c`; hàm quyết định nhận `now_ms` từ caller và không `#include` header ESP-IDF. Chưa cài nhánh INIT/FAULT hay Recovery Budget của US2/US3.
+- [X] T008 [P] Tạo logger Serial và mã sự kiện tại `components/board_io/include/bringup_log.h`, `components/board_io/bringup_log.c` theo `contracts/serial.md`; BOOT_INFO có `psram_size_raw_bytes`, `psram_expected_bytes`, `psram_heap_free_bytes` và flash, không xuất dữ liệu ảnh.
+- [X] T009 Tạo `components/bringup_logic/CMakeLists.txt`, `components/board_io/CMakeLists.txt`, nối `main/CMakeLists.txt`, build firmware và chạy lại `tests/host/run_tests.ps1`; lưu `reports/001-camera/03-foundation-build.txt`. Xác nhận `dependencies.lock` và `sdkconfig.defaults` được Git theo dõi.
 
 **Checkpoint**: Smoke test host và build firmware đều chạy; T006/T007/T008 độc lập file và có thể làm song song sau T005.
 
@@ -37,10 +37,10 @@
 **Goal**: PSRAM test trước camera, lấy khung liên tục và báo kích thước/FPS/khung lỗi mỗi 5 giây.
 **Independent Test**: Trên board, BOOT_INFO → PSRAM_TEST PASS → CAMERA_INIT; trong 125 giây có ít nhất 24 FRAME_REPORT 320×240 với valid >0, fps >0.
 
-- [ ] T010 [US1] Cài kiểm tra PSRAM trong `components/board_io/bringup_psram.c`, `components/board_io/include/bringup_psram.h`: dùng raw size từ `esp_psram_get_size()` sau gate T003, đối chiếu dung lượng đã xác nhận trên board, cấp vùng >=153 600 byte, ghi/đọc mẫu theo địa chỉ và đảo bit, giải phóng trước camera, log mã FR-001/FR-012.
-- [ ] T011 [US1] Chuyển probe T004 thành camera worker sở hữu driver trong `components/board_io/bringup_camera.c`, `components/board_io/include/bringup_camera.h`; xác thực buffer/kích thước 320×240, trả mọi framebuffer, không lưu ảnh hoặc dùng SD/mạng.
-- [ ] T012 [US1] Tích hợp boot PSRAM → camera → RUNNING và Measurement Window 5 giây trong `main/bringup_main.c` bằng T007/T008; FPS = khung hợp lệ/thời gian thực, khung lỗi đơn lẻ cũng được đếm đúng một lần.
-- [ ] T013 [US1] Build/nạp US1, dùng `tools/capture_serial.py` thu 125 giây tại `reports/001-camera/04-us1-stream-125s.log`, lưu `reports/001-camera/04-sdkconfig.txt`, đọc và ghi đối chiếu SC-001/SC-002 tại `reports/001-camera/04-us1-check.md`.
+- [X] T010 [US1] Cài kiểm tra PSRAM trong `components/board_io/bringup_psram.c`, `components/board_io/include/bringup_psram.h`: dùng raw size từ `esp_psram_get_size()` sau gate T003, đối chiếu dung lượng đã xác nhận trên board, cấp vùng >=153 600 byte, ghi/đọc mẫu theo địa chỉ và đảo bit, giải phóng trước camera, log mã FR-001/FR-012.
+- [X] T011 [US1] Chuyển probe T004 thành camera worker sở hữu driver trong `components/board_io/bringup_camera.c`, `components/board_io/include/bringup_camera.h`; xác thực buffer/kích thước 320×240, trả mọi framebuffer, không lưu ảnh hoặc dùng SD/mạng.
+- [X] T012 [US1] Tích hợp boot PSRAM → camera → RUNNING và Measurement Window 5 giây trong `main/bringup_main.c` bằng T007/T008; FPS = khung hợp lệ/thời gian thực, khung lỗi đơn lẻ cũng được đếm đúng một lần.
+- [X] T013 [US1] Build/nạp US1, dùng `tools/capture_serial.py` thu 125 giây tại `reports/001-camera/04-us1-stream-125s.log`, lưu `reports/001-camera/04-sdkconfig.txt`, đọc và ghi đối chiếu SC-001/SC-002 tại `reports/001-camera/04-us1-check.md`.
 
 **Checkpoint**: Có log board US1 được đọc và xác nhận trước khi làm US2.
 
