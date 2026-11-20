@@ -66,6 +66,16 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Open:** Chưa chọn mô hình. Ứng viên: các thư viện ESP-DL / ESP-WHO của Espressif
   hoặc mô hình tự huấn luyện. Cần một spike nghiên cứu với tiêu chí: FPS tối thiểu và
   độ chính xác trên chính board này.
+- **Hiệu năng camera ở 320×240 RGB565 (2026-11-20):** cấu hình ban đầu (một
+  framebuffer, XCLK 10 MHz, PSRAM 40 MHz) đo 2,36–2,78 FPS. Sau khi tăng lần
+  lượt XCLK, số framebuffer và tốc độ PSRAM, cấu hình XCLK 24 MHz, hai
+  framebuffer, PSRAM octal 80 MHz đo 14,17–14,81 FPS trong 125 giây,
+  `invalid=0`. `grab_mode` vẫn là `CAMERA_GRAB_WHEN_EMPTY`. Log cũ tại
+  `reports/001-camera/04-us1-stream-125s.log`; chuỗi thử tại
+  `09-fps-optimization.md` và log xác nhận 125 giây tại
+  `04b-us1-tuned-125s.log`. Thử thêm buffer thứ ba không tăng FPS đo được;
+  giữ hai buffer. Xem `04b-us1-tuned-check.md`.
+  FPS này chưa gồm thời gian chạy mô hình.
 
 ## D-005 – Ngưỡng X
 - **Trạng thái:** Accepted (giá trị khởi đầu) · 2026-11-19

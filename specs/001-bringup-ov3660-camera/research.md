@@ -64,19 +64,24 @@ Các kết luận dưới đây là nghiên cứu nguồn, không phải kết q
 
 ## R4 — Khung hình và thời hạn
 
-- Decision: đề xuất QVGA RGB565, một framebuffer PSRAM, không Wi-Fi.
-- Rationale: raw frame có kích thước xác định 153600 byte, phù hợp phép đo/test
-  bộ nhớ. Đây là điểm khởi đầu để đo; không hứa hẹn FPS hay độ chính xác nhận diện.
-- Alternatives considered: JPEG/multiple buffers — thêm biến thiên kích thước,
-  không cần cho bring-up này. Espressif cảnh báo RGB/YUV có thể mất dữ liệu khi
-  áp lực PSRAM; phải ghi nhận kết quả trên board.
+- Decision ban đầu: QVGA RGB565, một framebuffer PSRAM, không Wi-Fi. Phép đo
+  board đạt 2,36–2,78 FPS trong `04-us1-stream-125s.log`.
+- Sau phép thử từng tham số ngày 2026-11-20: chọn QVGA RGB565, hai framebuffer
+  PSRAM, XCLK 24 MHz và PSRAM octal 80 MHz, giữ `CAMERA_GRAB_WHEN_EMPTY`.
+  Mỗi buffer 153 600 byte; log xác nhận `04b-us1-tuned-125s.log` có 24 báo cáo,
+  1 796 khung hợp lệ, `invalid=0`, FPS ổn định 14,81. Các bước thử và log
+  tương ứng ở `reports/001-camera/09-fps-optimization.md`.
+- Espressif khuyến cáo nhiều buffer chủ yếu cho JPEG vì RGB/YUV gây tải bộ
+  nhớ; kết quả 125 giây trên board này chưa thay thế thử độ bền khi thêm mô hình.
 - Source:
   https://components.espressif.com/components/espressif/esp32-camera/versions/2.1.9/readme
 
 - Decision: đề xuất một camera worker sở hữu driver và một supervisor quan sát
   deadline. Không gọi deinit khi fb_get đang chạy hoặc còn giữ framebuffer.
-- Rationale: fb_get không có tham số timeout công khai, dùng thời gian chờ 4000 ms.
-  Gọi đọc lần hai gần deadline có thể khiến vòng đồng bộ vượt mốc 5 giây.
+- Rationale: `esp_camera_fb_get()` trong component 2.1.9 ghim vẫn gọi
+  `cam_take()` với timeout 4000 ms. Hai buffer tạo luồng liên tục và hàng đợi
+  frame khác một buffer; không suy rằng `fb_get` luôn chờ cùng thời gian như
+  trước. Gọi đọc gần deadline vẫn có thể làm vòng đồng bộ vượt mốc 5 giây.
 - Quy tắc cần thiết kế: tại deadline supervisor chốt thất bại đúng một lần,
   từ chối kết quả đến muộn; chờ worker trả lại frame/kết thúc trước cleanup và
   lần init sau. Thời gian cleanup không được biến thành thời gian chờ khung mới.

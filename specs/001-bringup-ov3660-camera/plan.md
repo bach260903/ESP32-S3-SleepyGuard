@@ -60,8 +60,12 @@ kiểm chứng lại ngày 2026-11-19 bằng log mới trên COM4.
 | VSYNC / HREF / PCLK | 6 / 7 / 13 |
 
 - Cấu hình cũ dùng XCLK 10 MHz, RGB565, 240×240 và 4 framebuffers.
-  Spec mới chọn 320×240 và một framebuffer; cần thử lại mức này, không suy
-  rằng kết quả 240×240 cũ chứng minh 320×240 mới sẽ ổn định.
+  Cấu hình bring-up ban đầu chọn 320×240 và một framebuffer; US1 đo
+  2,36–2,78 FPS. Sau khi thử từng tham số, cấu hình hiện chọn XCLK 24 MHz,
+  hai framebuffer, PSRAM octal 80 MHz và `CAMERA_GRAB_WHEN_EMPTY`. Phép đo
+  125 giây ban đầu ghi 14,17–14,81 FPS, `invalid=0`; xem
+  `reports/001-camera/09-fps-optimization.md` và log xác nhận
+  `04b-us1-tuned-125s.log`. Thử ba buffer không tăng FPS; giữ hai buffer.
 - Ngày 2026-11-19, firmware cũ đã nạp thành công lên ESP32-S3 MAC
   `d8:85:ac:ca:1b:e4` qua CH343 COM5 và xác minh hash. Sau khi cắm lại,
   USB Serial/JTAG COM4 đã cho log mới: `camera healthy=1 sensor=OV3660
@@ -84,13 +88,15 @@ trên máy. Việc cài toolchain v5.5.2 sẽ thuộc triển khai.
 
 sdkconfig.defaults sẽ là nguồn cấu hình build, tạo sdkconfig với target esp32s3:
 CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y, CONFIG_SPIRAM=y, CONFIG_SPIRAM_MODE_OCT=y,
-CONFIG_SPIRAM_BOOT_INIT=y, CONFIG_SPIRAM_IGNORE_NOTFOUND=y,
+CONFIG_SPIRAM_SPEED_80M=y, CONFIG_SPIRAM_BOOT_INIT=y,
+CONFIG_SPIRAM_IGNORE_NOTFOUND=y,
 CONFIG_SPIRAM_USE_CAPS_ALLOC=y. Tắt CONFIG_SPIRAM_MEMTEST và các tùy chọn đưa
 BSS/NOINIT/instructions/rodata ra PSRAM. Dùng console UART mặc định qua USB-UART.
 Kiểm tra lại sdkconfig sau khi sinh; không chỉ tin tệp defaults.
 
 Một file main/bringup_config.h dự kiến chứa tất cả tham số ứng dụng:
-- camera 320 × 240, RGB565 dự kiến; một framebuffer đặt trong PSRAM;
+- camera 320 × 240, RGB565; hai framebuffer trong PSRAM (mỗi cái 153 600 byte),
+  XCLK 24 MHz, `CAMERA_GRAB_WHEN_EMPTY`;
 - số lần init ban đầu 3, ngân sách recovery 3;
 - số lỗi liên tiếp 3, mất khung 5000 ms;
 - chờ khung recovery 5000 ms (tham số riêng), ổn định 60000 ms;
@@ -179,7 +185,7 @@ Không đưa bảng chân vào source trước khi khung ESP-IDF đã build và 
 | Điểm cần giải thích | Lý do | Phương án không chọn |
 |---|---|---|
 | Chưa có bíp lỗi trong feature 001 | D-007 và constitution II giới hạn feature này ở chẩn đoán Serial trên bàn thử | Mẫu bíp được chốt ở feature còi cho thiết bị hoàn chỉnh |
-| Camera worker và deadline supervisor dự kiến | fb_get chặn đến 4 giây; deadline 5 giây cần được quan sát độc lập | Vòng đọc đồng bộ có thể vượt deadline khi lần đọc bắt đầu gần mốc 5 giây |
+| Camera worker và deadline supervisor dự kiến | Driver vẫn dùng timeout `fb_get` 4 giây ở bản ghim; hai buffer hoạt động liên tục nên thời điểm trả frame có thể khác cấu hình ban đầu. Deadline 5 giây cần được quan sát độc lập | Vòng đọc đồng bộ có thể vượt deadline khi lần đọc bắt đầu gần mốc 5 giây |
 
 **Constitution Check sau Phase 1:** thiết kế đáp ứng các nguyên tắc I–VII theo
 D-007 và constitution v2.0.0. Firmware chẩn đoán feature 001 báo lỗi qua Serial;

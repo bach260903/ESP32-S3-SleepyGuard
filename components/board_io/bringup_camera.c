@@ -49,7 +49,7 @@ static void camera_worker(void *unused)
         .jpeg_quality = BRINGUP_CAMERA_JPEG_QUALITY,
         .fb_count = BRINGUP_CAMERA_FB_COUNT,
         .fb_location = CAMERA_FB_IN_PSRAM,
-        .grab_mode = CAMERA_GRAB_WHEN_EMPTY,
+        .grab_mode = BRINGUP_CAMERA_GRAB_MODE,
     };
 
     const esp_err_t result = esp_camera_init(&config);
