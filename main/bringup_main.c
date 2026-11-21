@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "esp_flash.h"
 #include "esp_heap_caps.h"
@@ -49,6 +50,15 @@ static void apply_recovery_action(bringup_recovery_t *recovery,
                                   bringup_recovery_action_t action,
                                   uint64_t at_ms, const char *reason)
 {
+    if (action & (BRINGUP_RECOVERY_ACTION_FAILURE |
+                  BRINGUP_RECOVERY_ACTION_REQUEST_STOP)) {
+        recovery->last_cause = reason;
+    }
+    if ((action & BRINGUP_RECOVERY_ACTION_FAULT) &&
+        recovery->fault_code != NULL &&
+        strcmp(recovery->fault_code, "WORKER_STOP_TIMEOUT") == 0) {
+        recovery->last_cause = "worker_stop_timeout";
+    }
     if (action & BRINGUP_RECOVERY_ACTION_FAILURE) {
         const unsigned result_remaining = recovery->remaining +
             ((action & BRINGUP_RECOVERY_ACTION_START_WORKER) ? 1U : 0U);
@@ -70,9 +80,10 @@ static void apply_recovery_action(bringup_recovery_t *recovery,
         bringup_log_recovery("attempt_start", recovery->remaining, reason);
         const unsigned attempt = recovery->config.recovery_attempts -
                                  recovery->remaining;
-        QueueHandle_t started = bringup_camera_start(attempt);
+        QueueHandle_t started = bringup_camera_start(attempt, true);
         if (started == NULL) {
-            bringup_log_camera_init(attempt, false, NULL, ESP_ERR_NO_MEM);
+            bringup_log_camera_init("recovery", 0U, attempt, false,
+                                    NULL, ESP_ERR_NO_MEM);
             const bringup_recovery_action_t failure =
                 bringup_recovery_on_worker_done(recovery,
                                                BRINGUP_WORKER_DONE_INIT_FAILED,
@@ -100,11 +111,12 @@ static QueueHandle_t start_camera_attempt(bringup_startup_t *startup)
         if (attempt == 0U) {
             break;
         }
-        QueueHandle_t events = bringup_camera_start(attempt);
+        QueueHandle_t events = bringup_camera_start(attempt, false);
         if (events != NULL) {
             return events;
         }
-        bringup_log_camera_init(attempt, false, NULL, ESP_ERR_NO_MEM);
+        bringup_log_camera_init("boot", 0U, attempt, false,
+                                NULL, ESP_ERR_NO_MEM);
         bringup_startup_camera_result(startup, false, now_ms());
     }
     return NULL;
@@ -223,7 +235,8 @@ void app_main(void)
         }
         if (bringup_startup_fault_due(&startup, now_ms(),
                                       BRINGUP_FAULT_REPORT_PERIOD_MS)) {
-            bringup_log_fault(startup.fault_code, startup.fault_reason, 0U);
+            bringup_log_fault(startup.fault_code, startup.fault_reason,
+                              startup.fault_reason, 0U);
         }
         if (recovery_active) {
             const uint64_t tick_ms = now_ms();
@@ -242,6 +255,8 @@ void app_main(void)
                   tick_ms - recovery_fault_last_report_ms >=
                       BRINGUP_FAULT_REPORT_PERIOD_MS))) {
                 bringup_log_fault(recovery.fault_code, recovery.fault_code,
+                                  recovery.last_cause != NULL
+                                      ? recovery.last_cause : "unknown",
                                   recovery.remaining);
                 recovery_fault_last_report_ms = tick_ms;
                 recovery_fault_reported = true;

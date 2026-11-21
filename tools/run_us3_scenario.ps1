@@ -5,7 +5,7 @@ param(
     [string]$Scenario,
     [Parameter(Mandatory = $true)][string]$Port,
     [Parameter(Mandatory = $true)][string]$Slug,
-    [ValidateRange(10,300)][int]$Seconds = 40,
+    [ValidateRange(10,3600)][int]$Seconds = 40,
     [ValidateRange(0,100)][int]$WorkerIndex = 1,
     [ValidateRange(0,3600)][int]$AfterFirstValidS = 0,
     [ValidateRange(1000,60000)][int]$HoldMs = 6000

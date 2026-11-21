@@ -14,8 +14,8 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Board thực tế (xác nhận qua ảnh 2026-11-19):** board ESP32-S3 CAM có chữ in
   "ESP32-S3 WROOM", module ESP32-S3-N16R8, camera OV3660 cắm bằng đầu nối FFC,
   có khe thẻ nhớ (SD Card), hai cổng USB-C (USB-UART và USB-OTG). Nạp code và
-  xem log qua cổng USB-UART. Bảng chân chính thức: chưa xác nhận, lấy từ tài
-  liệu của người bán.
+  xem log qua cổng USB-UART. Bảng chân chính thức từ người bán vẫn chưa xác
+  nhận; bảng chân vận hành bên dưới dựa trên phép thử với firmware thật.
 - **Link sản phẩm do người dùng cung cấp:** https://vn.shp.ee/95xYYkgm
   → https://shopee.vn/product/1240998350/54851568148.
   Ngày 2026-11-19: đã xác định URL đích; Shopee chặn truy cập tự động nên
@@ -34,6 +34,10 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
   Bằng chứng trong `reports/001-camera/01-psram-flash.log` và
   `reports/001-camera/02-phase1-check.md`. Probe mới nhận OV3660 PID `0x3660`
   và ba khung RGB565 320×240 hợp lệ trong `02-camera-probe.log`.
+- **Luồng camera và phục hồi trên board (2026-11-21):** bản firmware feature 001
+  chạy OV3660 320×240 qua USB-UART/CH343; log US1 125 giây và các ca US3 có
+  khung hợp lệ thật sau deinit → init. Xem `reports/001-camera/04b-us1-tuned-125s.log`
+  và `reports/001-camera/06-us3-check.md`.
 - **Hệ quả:** Phải bật PSRAM chế độ octal và cấu hình flash 16 MB. Các chân GPIO
   mà PSRAM octal chiếm (khoảng GPIO35–37) không dùng được cho việc khác. Khi chọn
   chân cho còi, tránh các chân strapping (GPIO0, 3, 45, 46).
@@ -50,7 +54,10 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
   target `esp32s3`; component `espressif/esp32-camera` **==2.1.9**.
   `dependencies.lock` đã được lưu. **ESP-IDF v5.5.2 và esp32-camera 2.1.9
   đã xác nhận bằng build và chạy thật (2026-11-19)**; xem
-  `reports/001-camera/01-build.txt` và `02-camera-probe.log`.
+  `reports/001-camera/01-build.txt` và `02-camera-probe.log`. Bản thường sau
+  US3 build sạch với fault injection tắt và không có chuỗi scenario trong
+  `.elf`/`.map`; xem `reports/001-camera/07-production-build.txt` và
+  `07-production-binary-check.txt`.
   Nguồn: https://github.com/espressif/esp-idf/releases/tag/v5.5.2 và
   https://components.espressif.com/components/espressif/esp32-camera/versions/2.1.9/dependencies.
 - **Lý do:** Hỗ trợ camera, PSRAM và các thư viện AI của Espressif tốt nhất; build
@@ -95,7 +102,18 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Phạm vi feature 001 (2026-11-19):** firmware chẩn đoán camera trên bàn thử
   chỉ báo lỗi có mã và định kỳ qua Serial; không phát còi. Mẫu bíp lỗi vẫn là
   yêu cầu của thiết bị cảnh báo hoàn chỉnh và được chốt trong feature còi.
-- **Open:** Số lần thử lại, khoảng chờ, mẫu bíp cụ thể – chốt trong spec của feature liên quan.
+- **Bằng chứng feature 001 (2026-11-21):** mất khung được chốt sau 3 khung lỗi
+  liên tiếp hoặc 5 giây không có khung hợp lệ; ngân sách phục hồi là 3 lượt,
+  cấp lại sau 60 giây ổn định. Worker cũ không dừng trong 15 giây sau yêu cầu
+  dừng thì báo `WORKER_STOP_TIMEOUT`; supervisor vẫn nhận sự kiện muộn nhưng
+  không khởi tạo lại. Xem `reports/001-camera/06-us3-check.md`.
+- **Khoảng không giám sát được:** ca phục hồi nhanh quan sát khoảng 5 giây để
+  phát hiện mất khung cộng khoảng 0,8 giây phục hồi, xấp xỉ **6 giây** không
+  có khung hợp lệ mới. Ca worker chậm có thể dài hơn. Feature còi phải coi
+  toàn bộ khoảng này là lỗi camera cần báo cho tài xế bằng mẫu bíp riêng;
+  không chờ phục hồi xong rồi mới báo.
+- **Open:** Mẫu bíp lỗi camera cụ thể cho thiết bị hoàn chỉnh sẽ chốt trong
+  feature còi.
 
 ## D-008 – Kiểm thử
 - **Trạng thái:** Accepted · 2026-11-19
@@ -151,4 +169,4 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
   vẫn cần tài liệu chính thức của người bán (D-001).
 - Mô hình nhận diện mắt nào đạt FPS và độ chính xác chấp nhận được? (D-004)
 - Giá trị X cuối cùng, và tỷ lệ báo nhầm chấp nhận được mỗi giờ?
-- Số lần thử lại và mẫu bíp khi lỗi camera? (D-007)
+- Mẫu bíp khi lỗi camera cho thiết bị hoàn chỉnh? (D-007)

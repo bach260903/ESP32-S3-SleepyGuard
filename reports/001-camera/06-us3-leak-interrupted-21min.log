@@ -1,0 +1,1024 @@
+# capture port=COM5 baud=115200 seconds=2100.0 started_utc=2026-11-21T12:46:16+00:00
+2026-11-21T12:46:16.240+00:00 | �ɕ�ͱinverse result=PASS
+2026-11-21T12:46:16.246+00:00 | I (474) bringup: FA�ESP-ROM:esp32s3-20210327
+2026-11-21T12:46:16.255+00:00 | Build:Mar 27 2021
+2026-11-21T12:46:16.260+00:00 | rst:0x1 (POWERON),boot:0x2a (SPI_FAST_FLASH_BOOT)
+2026-11-21T12:46:16.260+00:00 | SPIWP:0xee
+2026-11-21T12:46:16.260+00:00 | mode:DIO, clock div:1
+2026-11-21T12:46:16.266+00:00 | load:0x3fce2820,len:0x158c
+2026-11-21T12:46:16.266+00:00 | load:0x403c8700,len:0xd24
+2026-11-21T12:46:16.266+00:00 | load:0x403cb700,len:0x2f34
+2026-11-21T12:46:16.267+00:00 | entry 0x403c8924
+2026-11-21T12:46:16.273+00:00 | I (24) boot: ESP-IDF v5.5.2 2nd stage bootloader
+2026-11-21T12:46:16.279+00:00 | I (25) boot: compile time Nov 19 2026 23:47:53
+2026-11-21T12:46:16.284+00:00 | I (25) boot: Multicore bootloader
+2026-11-21T12:46:16.284+00:00 | I (25) boot: chip revision: v0.2
+2026-11-21T12:46:16.290+00:00 | I (28) boot: efuse block revision: v1.4
+2026-11-21T12:46:16.290+00:00 | I (31) boot.esp32s3: Boot SPI Speed : 80MHz
+2026-11-21T12:46:16.295+00:00 | I (35) boot.esp32s3: SPI Mode       : DIO
+2026-11-21T12:46:16.301+00:00 | I (39) boot.esp32s3: SPI Flash Size : 16MB
+2026-11-21T12:46:16.306+00:00 | I (43) boot: Enabling RNG early entropy source...
+2026-11-21T12:46:16.306+00:00 | I (47) boot: Partition Table:
+2026-11-21T12:46:16.312+00:00 | I (50) boot: ## Label            Usage          Type ST Offset   Length
+2026-11-21T12:46:16.318+00:00 | I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+2026-11-21T12:46:16.329+00:00 | I (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+2026-11-21T12:46:16.334+00:00 | I (69) boot:  2 factory          factory app      00 00 00010000 00100000
+2026-11-21T12:46:16.334+00:00 | I (76) boot: End of partition table
+2026-11-21T12:46:16.341+00:00 | I (79) esp_image: segment 0: paddr=00010020 vaddr=3c030020 size=0f70ch ( 63244) map
+2026-11-21T12:46:16.352+00:00 | I (98) esp_image: segment 1: paddr=0001f734 vaddr=3fc94800 size=008e4h (  2276) load
+2026-11-21T12:46:16.356+00:00 | I (98) esp_image: segment 2: paddr=00020020 vaddr=42000020 size=27fdch (163804) map
+2026-11-21T12:46:16.384+00:00 | I (130) esp_image: segment 3: paddr=00048004 vaddr=3fc950e4 size=05020h ( 20512) load
+2026-11-21T12:46:16.389+00:00 | I (135) esp_image: segment 4: paddr=0004d02c vaddr=40374000 size=106f4h ( 67316) load
+2026-11-21T12:46:16.404+00:00 | I (150) esp_image: segment 5: paddr=0005d728 vaddr=50000000 size=00020h (    32) load
+2026-11-21T12:46:16.409+00:00 | I (157) boot: Loaded app from partition at offset 0x10000
+2026-11-21T12:46:16.410+00:00 | I (157) boot: Disabling RNG early entropy source...
+2026-11-21T12:46:16.416+00:00 | I (167) octal_psram: vendor id    : 0x0d (AP)
+2026-11-21T12:46:16.422+00:00 | I (168) octal_psram: dev id       : 0x02 (generation 3)
+2026-11-21T12:46:16.427+00:00 | I (168) octal_psram: density      : 0x03 (64 Mbit)
+2026-11-21T12:46:16.433+00:00 | I (170) octal_psram: good-die     : 0x01 (Pass)
+2026-11-21T12:46:16.433+00:00 | I (174) octal_psram: Latency      : 0x01 (Fixed)
+2026-11-21T12:46:16.438+00:00 | I (178) octal_psram: VCC          : 0x01 (3V)
+2026-11-21T12:46:16.444+00:00 | I (182) octal_psram: SRF          : 0x01 (Fast Refresh)
+2026-11-21T12:46:16.450+00:00 | I (187) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+2026-11-21T12:46:16.455+00:00 | I (192) octal_psram: BurstLen     : 0x01 (32 Byte)
+2026-11-21T12:46:16.461+00:00 | I (197) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+2026-11-21T12:46:16.461+00:00 | I (202) octal_psram: DriveStrength: 0x00 (1/1)
+2026-11-21T12:46:16.466+00:00 | I (206) MSPI Timing: Enter psram timing tuning
+2026-11-21T12:46:16.472+00:00 | I (211) esp_psram: Found 8MB PSRAM device
+2026-11-21T12:46:16.472+00:00 | I (214) esp_psram: Speed: 80MHz
+2026-11-21T12:46:16.474+00:00 | I (217) cpu_start: Multicore app
+2026-11-21T12:46:16.486+00:00 | I (231) cpu_start: GPIO 44 and 43 are used as console UART I/O pins
+2026-11-21T12:46:16.486+00:00 | I (232) cpu_start: Pro cpu start user code
+2026-11-21T12:46:16.491+00:00 | I (232) cpu_start: cpu freq: 160000000 Hz
+2026-11-21T12:46:16.497+00:00 | I (234) app_init: Application information:
+2026-11-21T12:46:16.497+00:00 | I (237) app_init: Project name:     ov3660_bringup
+2026-11-21T12:46:16.502+00:00 | I (242) app_init: App version:      d17df04-dirty
+2026-11-21T12:46:16.508+00:00 | I (246) app_init: Compile time:     Nov 21 2026 19:45:25
+2026-11-21T12:46:16.513+00:00 | I (251) app_init: ELF file SHA256:  4c0f1ef61...
+2026-11-21T12:46:16.519+00:00 | I (256) app_init: ESP-IDF:          v5.5.2
+2026-11-21T12:46:16.519+00:00 | I (259) efuse_init: Min chip rev:     v0.0
+2026-11-21T12:46:16.524+00:00 | I (263) efuse_init: Max chip rev:     v0.99
+2026-11-21T12:46:16.530+00:00 | I (267) efuse_init: Chip rev:         v0.2
+2026-11-21T12:46:16.536+00:00 | I (271) heap_init: Initializing. RAM available for dynamic allocation:
+2026-11-21T12:46:16.541+00:00 | I (278) heap_init: At 3FC9B310 len 0004E400 (313 KiB): RAM
+2026-11-21T12:46:16.547+00:00 | I (283) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+2026-11-21T12:46:16.552+00:00 | I (288) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+2026-11-21T12:46:16.558+00:00 | I (293) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+2026-11-21T12:46:16.563+00:00 | I (298) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+2026-11-21T12:46:16.563+00:00 | I (306) spi_flash: detected chip: boya
+2026-11-21T12:46:16.569+00:00 | I (308) spi_flash: flash io: dio
+2026-11-21T12:46:16.574+00:00 | I (311) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+2026-11-21T12:46:16.580+00:00 | I (318) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+2026-11-21T12:46:16.585+00:00 | I (324) main_task: Started on CPU0
+2026-11-21T12:46:16.585+00:00 | I (334) main_task: Calling app_main()
+2026-11-21T12:46:16.601+00:00 | I (334) bringup: BOOT_INFO psram_initialized=1 psram_size_raw_bytes=8388608 psram_expected_bytes=8388608 psram_heap_free_bytes=8386196 flash_physical=16777216 flash_expected=16777216
+2026-11-21T12:46:16.725+00:00 | I (474) bringup: PSRAM_TEST test_bytes=153600 patterns=address,inverse result=PASS
+2026-11-21T12:46:16.731+00:00 | I (474) bringup: FAULT_SCENARIO worker=1 selected=1 after_first_valid_s=65
+2026-11-21T12:46:16.737+00:00 | I (474) s3 ll_cam: DMA Channel=0
+2026-11-21T12:46:16.737+00:00 | I (474) cam_hal: cam init ok
+2026-11-21T12:46:16.742+00:00 | I (474) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:46:16.742+00:00 | I (484) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:46:16.748+00:00 | I (494) ov3640: Mismatch PID=0x3660
+2026-11-21T12:46:16.753+00:00 | I (494) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:46:16.753+00:00 | I (494) camera: Detected OV3660 camera
+2026-11-21T12:46:16.757+00:00 | I (494) camera: Detected camera at address=0x3c
+2026-11-21T12:46:17.048+00:00 | I (804) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:46:17.054+00:00 | I (804) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:46:17.065+00:00 | I (804) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:46:17.076+00:00 | I (804) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:46:17.082+00:00 | I (814) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:46:17.087+00:00 | I (824) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:46:17.087+00:00 | I (834) cam_hal: cam config ok
+2026-11-21T12:46:17.099+00:00 | I (844) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:46:17.118+00:00 | I (864) bringup: CAMERA_INIT phase=boot worker=1 attempt=1 result=success sensor=OV3660
+2026-11-21T12:46:17.124+00:00 | I (864) bringup: HEAP stage=init_success worker=1 psram_heap_free_bytes=8077744 internal_heap_free_bytes=323136
+2026-11-21T12:46:22.126+00:00 | I (5874) bringup: FRAME_REPORT width=320 height=240 valid=71 invalid=0 elapsed_ms=5004 fps=14.19
+2026-11-21T12:46:27.192+00:00 | I (10934) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:32.257+00:00 | I (16004) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:37.323+00:00 | I (21064) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:42.389+00:00 | I (26134) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:47.454+00:00 | I (31194) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:52.520+00:00 | I (36264) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:46:57.585+00:00 | I (41324) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:02.651+00:00 | I (46394) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:07.717+00:00 | I (51454) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:12.782+00:00 | I (56524) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:17.848+00:00 | I (61584) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:22.443+00:00 | W (66184) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=1 remaining=2
+2026-11-21T12:47:22.446+00:00 | E (66184) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:47:22.511+00:00 | W (66244) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=1 remaining=1
+2026-11-21T12:47:22.514+00:00 | E (66244) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:47:22.578+00:00 | W (66314) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=1 remaining=0
+2026-11-21T12:47:22.584+00:00 | E (66314) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:47:22.595+00:00 | I (66314) bringup: FRAME_REPORT width=320 height=240 valid=67 invalid=3 elapsed_ms=4727 fps=14.17
+2026-11-21T12:47:22.600+00:00 | W (66324) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:47:22.606+00:00 | I (66334) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:47:22.612+00:00 | I (66344) bringup: WORKER_EVENT stop_requested at_ms=66045
+2026-11-21T12:47:22.618+00:00 | W (66344) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:47:22.640+00:00 | I (66384) bringup: WORKER_EVENT fb_returned at_ms=66085
+2026-11-21T12:47:22.646+00:00 | I (66384) bringup: WORKER_EVENT late_frame_discarded at_ms=66085
+2026-11-21T12:47:22.657+00:00 | I (66384) bringup: WORKER_EVENT deinit_done at_ms=66086 result=ESP_OK
+2026-11-21T12:47:22.657+00:00 | I (66384) bringup: WORKER_EVENT terminal=STOPPED at_ms=66091
+2026-11-21T12:47:22.668+00:00 | W (66394) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:47:22.674+00:00 | I (66404) bringup: FAULT_SCENARIO worker=2 selected=1 after_first_valid_s=65
+2026-11-21T12:47:22.679+00:00 | I (66404) s3 ll_cam: DMA Channel=0
+2026-11-21T12:47:22.679+00:00 | I (66414) cam_hal: cam init ok
+2026-11-21T12:47:22.685+00:00 | I (66414) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:47:22.685+00:00 | I (66414) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:47:22.690+00:00 | I (66434) ov3640: Mismatch PID=0x3660
+2026-11-21T12:47:22.696+00:00 | I (66434) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:47:22.701+00:00 | I (66434) camera: Detected OV3660 camera
+2026-11-21T12:47:22.701+00:00 | I (66434) camera: Detected camera at address=0x3c
+2026-11-21T12:47:22.986+00:00 | I (66734) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:47:22.992+00:00 | I (66734) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:47:23.003+00:00 | I (66734) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:47:23.014+00:00 | I (66744) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:47:23.019+00:00 | I (66754) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:47:23.025+00:00 | I (66754) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:47:23.026+00:00 | I (66764) cam_hal: cam config ok
+2026-11-21T12:47:23.038+00:00 | I (66774) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:47:23.057+00:00 | I (66794) bringup: CAMERA_INIT phase=recovery worker=2 attempt=1 result=success sensor=OV3660
+2026-11-21T12:47:23.064+00:00 | I (66794) bringup: HEAP stage=init_success worker=2 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:47:23.332+00:00 | W (67074) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:47:28.400+00:00 | I (72144) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:47:33.466+00:00 | I (77204) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:38.531+00:00 | I (82274) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:43.597+00:00 | I (87334) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:48.663+00:00 | I (92404) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:53.728+00:00 | I (97464) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:47:58.794+00:00 | I (102534) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:03.859+00:00 | I (107594) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:08.925+00:00 | I (112664) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:13.990+00:00 | I (117724) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:19.056+00:00 | I (122794) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:23.376+00:00 | W (127114) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:48:24.121+00:00 | I (127854) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:28.378+00:00 | W (132114) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=2 remaining=2
+2026-11-21T12:48:28.381+00:00 | E (132114) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:48:28.446+00:00 | W (132174) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=2 remaining=1
+2026-11-21T12:48:28.449+00:00 | E (132174) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:48:28.513+00:00 | W (132244) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=2 remaining=0
+2026-11-21T12:48:28.519+00:00 | E (132244) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:48:28.530+00:00 | I (132244) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:48:28.535+00:00 | W (132254) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:48:28.541+00:00 | I (132264) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:48:28.546+00:00 | I (132274) bringup: WORKER_EVENT stop_requested at_ms=131974
+2026-11-21T12:48:28.553+00:00 | W (132274) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:48:28.575+00:00 | I (132314) bringup: WORKER_EVENT fb_returned at_ms=132013
+2026-11-21T12:48:28.581+00:00 | I (132314) bringup: WORKER_EVENT late_frame_discarded at_ms=132014
+2026-11-21T12:48:28.592+00:00 | I (132314) bringup: WORKER_EVENT deinit_done at_ms=132014 result=ESP_OK
+2026-11-21T12:48:28.597+00:00 | I (132314) bringup: WORKER_EVENT terminal=STOPPED at_ms=132020
+2026-11-21T12:48:28.603+00:00 | W (132324) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:48:28.608+00:00 | I (132334) bringup: FAULT_SCENARIO worker=3 selected=1 after_first_valid_s=65
+2026-11-21T12:48:28.614+00:00 | I (132334) s3 ll_cam: DMA Channel=0
+2026-11-21T12:48:28.614+00:00 | I (132344) cam_hal: cam init ok
+2026-11-21T12:48:28.620+00:00 | I (132344) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:48:28.620+00:00 | I (132344) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:48:28.625+00:00 | I (132364) ov3640: Mismatch PID=0x3660
+2026-11-21T12:48:28.631+00:00 | I (132364) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:48:28.636+00:00 | I (132364) camera: Detected OV3660 camera
+2026-11-21T12:48:28.637+00:00 | I (132364) camera: Detected camera at address=0x3c
+2026-11-21T12:48:28.922+00:00 | I (132664) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:48:28.928+00:00 | I (132664) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:48:28.939+00:00 | I (132664) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:48:28.950+00:00 | I (132674) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:48:28.956+00:00 | I (132684) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:48:28.961+00:00 | I (132684) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:48:28.963+00:00 | I (132694) cam_hal: cam config ok
+2026-11-21T12:48:28.975+00:00 | I (132704) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:48:28.994+00:00 | I (132724) bringup: CAMERA_INIT phase=recovery worker=3 attempt=1 result=success sensor=OV3660
+2026-11-21T12:48:29.001+00:00 | I (132724) bringup: HEAP stage=init_success worker=3 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:48:29.268+00:00 | W (133004) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:48:34.336+00:00 | I (138064) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:48:39.401+00:00 | I (143134) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:44.466+00:00 | I (148194) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:49.532+00:00 | I (153264) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:54.597+00:00 | I (158324) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:48:59.663+00:00 | I (163394) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:04.728+00:00 | I (168454) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:09.793+00:00 | I (173524) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:14.859+00:00 | I (178584) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:19.924+00:00 | I (183654) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:24.990+00:00 | I (188714) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:29.310+00:00 | W (193044) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:49:30.055+00:00 | I (193784) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:34.312+00:00 | W (198034) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=3 remaining=2
+2026-11-21T12:49:34.315+00:00 | E (198034) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:49:34.380+00:00 | W (198104) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=3 remaining=1
+2026-11-21T12:49:34.383+00:00 | E (198104) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:49:34.447+00:00 | W (198174) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=3 remaining=0
+2026-11-21T12:49:34.453+00:00 | E (198174) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:49:34.464+00:00 | I (198174) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:49:34.469+00:00 | W (198184) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:49:34.475+00:00 | I (198194) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:49:34.480+00:00 | I (198204) bringup: WORKER_EVENT stop_requested at_ms=197903
+2026-11-21T12:49:34.487+00:00 | W (198204) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:49:34.509+00:00 | I (198244) bringup: WORKER_EVENT fb_returned at_ms=197943
+2026-11-21T12:49:34.515+00:00 | I (198244) bringup: WORKER_EVENT late_frame_discarded at_ms=197943
+2026-11-21T12:49:34.526+00:00 | I (198244) bringup: WORKER_EVENT deinit_done at_ms=197944 result=ESP_OK
+2026-11-21T12:49:34.531+00:00 | I (198244) bringup: WORKER_EVENT terminal=STOPPED at_ms=197949
+2026-11-21T12:49:34.537+00:00 | W (198254) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:49:34.542+00:00 | I (198264) bringup: FAULT_SCENARIO worker=4 selected=1 after_first_valid_s=65
+2026-11-21T12:49:34.548+00:00 | I (198264) s3 ll_cam: DMA Channel=0
+2026-11-21T12:49:34.548+00:00 | I (198274) cam_hal: cam init ok
+2026-11-21T12:49:34.554+00:00 | I (198274) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:49:34.554+00:00 | I (198274) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:49:34.559+00:00 | I (198294) ov3640: Mismatch PID=0x3660
+2026-11-21T12:49:34.565+00:00 | I (198294) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:49:34.571+00:00 | I (198294) camera: Detected OV3660 camera
+2026-11-21T12:49:34.572+00:00 | I (198294) camera: Detected camera at address=0x3c
+2026-11-21T12:49:34.857+00:00 | I (198594) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:49:34.863+00:00 | I (198594) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:49:34.874+00:00 | I (198594) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:49:34.885+00:00 | I (198604) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:49:34.891+00:00 | I (198614) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:49:34.896+00:00 | I (198614) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:49:34.898+00:00 | I (198624) cam_hal: cam config ok
+2026-11-21T12:49:34.910+00:00 | I (198634) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:49:34.928+00:00 | I (198654) bringup: CAMERA_INIT phase=recovery worker=4 attempt=1 result=success sensor=OV3660
+2026-11-21T12:49:34.936+00:00 | I (198654) bringup: HEAP stage=init_success worker=4 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:49:35.203+00:00 | W (198934) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:49:40.271+00:00 | I (203994) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:49:45.336+00:00 | I (209064) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:50.401+00:00 | I (214124) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:49:55.466+00:00 | I (219194) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:00.532+00:00 | I (224254) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:05.597+00:00 | I (229324) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:10.663+00:00 | I (234384) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:15.728+00:00 | I (239454) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:20.794+00:00 | I (244514) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:25.859+00:00 | I (249584) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:30.925+00:00 | I (254644) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:35.245+00:00 | W (258974) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:50:35.990+00:00 | I (259714) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:40.247+00:00 | W (263964) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=4 remaining=2
+2026-11-21T12:50:40.250+00:00 | E (263964) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:50:40.314+00:00 | W (264034) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=4 remaining=1
+2026-11-21T12:50:40.318+00:00 | E (264034) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:50:40.382+00:00 | W (264104) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=4 remaining=0
+2026-11-21T12:50:40.388+00:00 | E (264104) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:50:40.399+00:00 | I (264104) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:50:40.404+00:00 | W (264114) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:50:40.410+00:00 | I (264124) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:50:40.415+00:00 | I (264134) bringup: WORKER_EVENT stop_requested at_ms=263833
+2026-11-21T12:50:40.422+00:00 | W (264134) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:50:40.444+00:00 | I (264174) bringup: WORKER_EVENT fb_returned at_ms=263873
+2026-11-21T12:50:40.450+00:00 | I (264174) bringup: WORKER_EVENT late_frame_discarded at_ms=263873
+2026-11-21T12:50:40.461+00:00 | I (264174) bringup: WORKER_EVENT deinit_done at_ms=263874 result=ESP_OK
+2026-11-21T12:50:40.466+00:00 | I (264174) bringup: WORKER_EVENT terminal=STOPPED at_ms=263879
+2026-11-21T12:50:40.472+00:00 | W (264184) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:50:40.477+00:00 | I (264194) bringup: FAULT_SCENARIO worker=5 selected=1 after_first_valid_s=65
+2026-11-21T12:50:40.483+00:00 | I (264194) s3 ll_cam: DMA Channel=0
+2026-11-21T12:50:40.483+00:00 | I (264204) cam_hal: cam init ok
+2026-11-21T12:50:40.489+00:00 | I (264204) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:50:40.489+00:00 | I (264204) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:50:40.494+00:00 | I (264224) ov3640: Mismatch PID=0x3660
+2026-11-21T12:50:40.500+00:00 | I (264224) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:50:40.506+00:00 | I (264224) camera: Detected OV3660 camera
+2026-11-21T12:50:40.506+00:00 | I (264224) camera: Detected camera at address=0x3c
+2026-11-21T12:50:40.792+00:00 | I (264524) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:50:40.798+00:00 | I (264524) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:50:40.809+00:00 | I (264524) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:50:40.820+00:00 | I (264534) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:50:40.826+00:00 | I (264544) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:50:40.831+00:00 | I (264544) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:50:40.833+00:00 | I (264554) cam_hal: cam config ok
+2026-11-21T12:50:40.845+00:00 | I (264564) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:50:40.863+00:00 | I (264584) bringup: CAMERA_INIT phase=recovery worker=5 attempt=1 result=success sensor=OV3660
+2026-11-21T12:50:40.871+00:00 | I (264584) bringup: HEAP stage=init_success worker=5 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:50:41.138+00:00 | W (264864) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:50:46.205+00:00 | I (269924) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:50:51.271+00:00 | I (274994) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:50:56.336+00:00 | I (280054) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:01.401+00:00 | I (285124) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:06.467+00:00 | I (290184) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:11.532+00:00 | I (295254) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:16.598+00:00 | I (300314) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:21.663+00:00 | I (305384) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:26.729+00:00 | I (310444) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:31.794+00:00 | I (315514) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:36.859+00:00 | I (320574) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:41.180+00:00 | W (324904) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:51:41.925+00:00 | I (325644) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:51:46.182+00:00 | W (329894) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=5 remaining=2
+2026-11-21T12:51:46.185+00:00 | E (329894) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:51:46.249+00:00 | W (329964) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=5 remaining=1
+2026-11-21T12:51:46.252+00:00 | E (329964) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:51:46.317+00:00 | W (330034) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=5 remaining=0
+2026-11-21T12:51:46.322+00:00 | E (330034) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:51:46.334+00:00 | I (330034) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:51:46.339+00:00 | W (330044) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:51:46.345+00:00 | I (330054) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:51:46.350+00:00 | I (330064) bringup: WORKER_EVENT stop_requested at_ms=329763
+2026-11-21T12:51:46.357+00:00 | W (330064) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:51:46.379+00:00 | I (330104) bringup: WORKER_EVENT fb_returned at_ms=329803
+2026-11-21T12:51:46.384+00:00 | I (330104) bringup: WORKER_EVENT late_frame_discarded at_ms=329803
+2026-11-21T12:51:46.396+00:00 | I (330104) bringup: WORKER_EVENT deinit_done at_ms=329804 result=ESP_OK
+2026-11-21T12:51:46.401+00:00 | I (330104) bringup: WORKER_EVENT terminal=STOPPED at_ms=329809
+2026-11-21T12:51:46.407+00:00 | W (330114) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:51:46.412+00:00 | I (330124) bringup: FAULT_SCENARIO worker=6 selected=1 after_first_valid_s=65
+2026-11-21T12:51:46.418+00:00 | I (330124) s3 ll_cam: DMA Channel=0
+2026-11-21T12:51:46.418+00:00 | I (330134) cam_hal: cam init ok
+2026-11-21T12:51:46.423+00:00 | I (330134) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:51:46.423+00:00 | I (330134) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:51:46.429+00:00 | I (330154) ov3640: Mismatch PID=0x3660
+2026-11-21T12:51:46.435+00:00 | I (330154) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:51:46.440+00:00 | I (330154) camera: Detected OV3660 camera
+2026-11-21T12:51:46.441+00:00 | I (330154) camera: Detected camera at address=0x3c
+2026-11-21T12:51:46.727+00:00 | I (330454) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:51:46.733+00:00 | I (330454) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:51:46.744+00:00 | I (330454) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:51:46.755+00:00 | I (330464) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:51:46.760+00:00 | I (330474) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:51:46.766+00:00 | I (330474) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:51:46.768+00:00 | I (330484) cam_hal: cam config ok
+2026-11-21T12:51:46.779+00:00 | I (330494) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:51:46.798+00:00 | I (330514) bringup: CAMERA_INIT phase=recovery worker=6 attempt=1 result=success sensor=OV3660
+2026-11-21T12:51:46.805+00:00 | I (330514) bringup: HEAP stage=init_success worker=6 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:51:47.072+00:00 | W (330794) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:51:52.140+00:00 | I (335854) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:51:57.206+00:00 | I (340924) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:02.271+00:00 | I (345984) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:07.336+00:00 | I (351054) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:12.402+00:00 | I (356114) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:17.467+00:00 | I (361184) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:22.532+00:00 | I (366244) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:27.598+00:00 | I (371314) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:32.663+00:00 | I (376374) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:37.729+00:00 | I (381444) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:42.794+00:00 | I (386504) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:47.115+00:00 | W (390834) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:52:47.860+00:00 | I (391574) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:52:52.117+00:00 | W (395824) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=6 remaining=2
+2026-11-21T12:52:52.120+00:00 | E (395824) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:52:52.184+00:00 | W (395894) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=6 remaining=1
+2026-11-21T12:52:52.187+00:00 | E (395894) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:52:52.252+00:00 | W (395964) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=6 remaining=0
+2026-11-21T12:52:52.257+00:00 | E (395964) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:52:52.268+00:00 | I (395964) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:52:52.274+00:00 | W (395974) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:52:52.280+00:00 | I (395984) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:52:52.285+00:00 | I (395994) bringup: WORKER_EVENT stop_requested at_ms=395693
+2026-11-21T12:52:52.292+00:00 | W (395994) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:52:52.314+00:00 | I (396034) bringup: WORKER_EVENT fb_returned at_ms=395733
+2026-11-21T12:52:52.319+00:00 | I (396034) bringup: WORKER_EVENT late_frame_discarded at_ms=395733
+2026-11-21T12:52:52.330+00:00 | I (396034) bringup: WORKER_EVENT deinit_done at_ms=395734 result=ESP_OK
+2026-11-21T12:52:52.336+00:00 | I (396034) bringup: WORKER_EVENT terminal=STOPPED at_ms=395739
+2026-11-21T12:52:52.341+00:00 | W (396044) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:52:52.347+00:00 | I (396054) bringup: FAULT_SCENARIO worker=7 selected=1 after_first_valid_s=65
+2026-11-21T12:52:52.353+00:00 | I (396054) s3 ll_cam: DMA Channel=0
+2026-11-21T12:52:52.353+00:00 | I (396064) cam_hal: cam init ok
+2026-11-21T12:52:52.358+00:00 | I (396064) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:52:52.358+00:00 | I (396064) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:52:52.364+00:00 | I (396084) ov3640: Mismatch PID=0x3660
+2026-11-21T12:52:52.370+00:00 | I (396084) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:52:52.375+00:00 | I (396084) camera: Detected OV3660 camera
+2026-11-21T12:52:52.376+00:00 | I (396084) camera: Detected camera at address=0x3c
+2026-11-21T12:52:52.662+00:00 | I (396384) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:52:52.667+00:00 | I (396384) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:52:52.679+00:00 | I (396384) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:52:52.690+00:00 | I (396394) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:52:52.695+00:00 | I (396404) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:52:52.701+00:00 | I (396404) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:52:52.703+00:00 | I (396414) cam_hal: cam config ok
+2026-11-21T12:52:52.714+00:00 | I (396424) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:52:52.733+00:00 | I (396444) bringup: CAMERA_INIT phase=recovery worker=7 attempt=1 result=success sensor=OV3660
+2026-11-21T12:52:52.740+00:00 | I (396444) bringup: HEAP stage=init_success worker=7 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:52:53.007+00:00 | W (396724) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:52:58.075+00:00 | I (401784) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:53:03.140+00:00 | I (406854) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:08.206+00:00 | I (411914) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:13.271+00:00 | I (416984) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:18.336+00:00 | I (422044) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:23.402+00:00 | I (427114) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:28.467+00:00 | I (432174) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:33.533+00:00 | I (437244) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:38.598+00:00 | I (442304) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:43.664+00:00 | I (447374) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:48.729+00:00 | I (452434) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:53.049+00:00 | W (456764) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:53:53.794+00:00 | I (457504) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:53:58.051+00:00 | W (461754) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=7 remaining=2
+2026-11-21T12:53:58.055+00:00 | E (461754) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:53:58.119+00:00 | W (461824) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=7 remaining=1
+2026-11-21T12:53:58.122+00:00 | E (461824) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:53:58.187+00:00 | W (461894) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=7 remaining=0
+2026-11-21T12:53:58.192+00:00 | E (461894) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:53:58.203+00:00 | I (461894) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:53:58.209+00:00 | W (461904) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:53:58.214+00:00 | I (461914) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:53:58.220+00:00 | I (461924) bringup: WORKER_EVENT stop_requested at_ms=461623
+2026-11-21T12:53:58.227+00:00 | W (461924) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:53:58.249+00:00 | I (461964) bringup: WORKER_EVENT fb_returned at_ms=461663
+2026-11-21T12:53:58.254+00:00 | I (461964) bringup: WORKER_EVENT late_frame_discarded at_ms=461663
+2026-11-21T12:53:58.265+00:00 | I (461964) bringup: WORKER_EVENT deinit_done at_ms=461664 result=ESP_OK
+2026-11-21T12:53:58.271+00:00 | I (461964) bringup: WORKER_EVENT terminal=STOPPED at_ms=461669
+2026-11-21T12:53:58.276+00:00 | W (461974) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:53:58.282+00:00 | I (461984) bringup: FAULT_SCENARIO worker=8 selected=1 after_first_valid_s=65
+2026-11-21T12:53:58.287+00:00 | I (461984) s3 ll_cam: DMA Channel=0
+2026-11-21T12:53:58.288+00:00 | I (461994) cam_hal: cam init ok
+2026-11-21T12:53:58.293+00:00 | I (461994) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:53:58.293+00:00 | I (461994) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:53:58.299+00:00 | I (462014) ov3640: Mismatch PID=0x3660
+2026-11-21T12:53:58.304+00:00 | I (462014) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:53:58.310+00:00 | I (462014) camera: Detected OV3660 camera
+2026-11-21T12:53:58.311+00:00 | I (462014) camera: Detected camera at address=0x3c
+2026-11-21T12:53:58.597+00:00 | I (462314) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:53:58.602+00:00 | I (462314) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:53:58.613+00:00 | I (462314) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:53:58.625+00:00 | I (462324) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:53:58.630+00:00 | I (462334) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:53:58.636+00:00 | I (462334) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:53:58.637+00:00 | I (462344) cam_hal: cam config ok
+2026-11-21T12:53:58.649+00:00 | I (462354) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:53:58.668+00:00 | I (462374) bringup: CAMERA_INIT phase=recovery worker=8 attempt=1 result=success sensor=OV3660
+2026-11-21T12:53:58.675+00:00 | I (462374) bringup: HEAP stage=init_success worker=8 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:53:58.942+00:00 | W (462654) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:54:04.010+00:00 | I (467714) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:54:09.075+00:00 | I (472784) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:14.141+00:00 | I (477844) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:19.206+00:00 | I (482914) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:24.271+00:00 | I (487974) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:29.337+00:00 | I (493044) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:34.402+00:00 | I (498104) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:39.468+00:00 | I (503174) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:44.533+00:00 | I (508234) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:49.598+00:00 | I (513304) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:54.664+00:00 | I (518364) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:54:58.984+00:00 | W (522694) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:54:59.729+00:00 | I (523434) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:03.986+00:00 | W (527684) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=8 remaining=2
+2026-11-21T12:55:03.990+00:00 | E (527684) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:55:04.054+00:00 | W (527754) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=8 remaining=1
+2026-11-21T12:55:04.057+00:00 | E (527754) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:55:04.122+00:00 | W (527824) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=8 remaining=0
+2026-11-21T12:55:04.127+00:00 | E (527824) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:55:04.138+00:00 | I (527824) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:55:04.144+00:00 | W (527834) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:55:04.149+00:00 | I (527844) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:55:04.155+00:00 | I (527854) bringup: WORKER_EVENT stop_requested at_ms=527553
+2026-11-21T12:55:04.162+00:00 | W (527854) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:55:04.184+00:00 | I (527894) bringup: WORKER_EVENT fb_returned at_ms=527593
+2026-11-21T12:55:04.189+00:00 | I (527894) bringup: WORKER_EVENT late_frame_discarded at_ms=527593
+2026-11-21T12:55:04.200+00:00 | I (527894) bringup: WORKER_EVENT deinit_done at_ms=527594 result=ESP_OK
+2026-11-21T12:55:04.206+00:00 | I (527894) bringup: WORKER_EVENT terminal=STOPPED at_ms=527599
+2026-11-21T12:55:04.211+00:00 | W (527904) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:55:04.217+00:00 | I (527914) bringup: FAULT_SCENARIO worker=9 selected=1 after_first_valid_s=65
+2026-11-21T12:55:04.222+00:00 | I (527914) s3 ll_cam: DMA Channel=0
+2026-11-21T12:55:04.222+00:00 | I (527924) cam_hal: cam init ok
+2026-11-21T12:55:04.228+00:00 | I (527924) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:55:04.228+00:00 | I (527924) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:55:04.234+00:00 | I (527944) ov3640: Mismatch PID=0x3660
+2026-11-21T12:55:04.239+00:00 | I (527944) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:55:04.245+00:00 | I (527944) camera: Detected OV3660 camera
+2026-11-21T12:55:04.246+00:00 | I (527944) camera: Detected camera at address=0x3c
+2026-11-21T12:55:04.532+00:00 | I (528244) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:55:04.537+00:00 | I (528244) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:55:04.548+00:00 | I (528244) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:55:04.559+00:00 | I (528254) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:55:04.565+00:00 | I (528264) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:55:04.571+00:00 | I (528264) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:55:04.572+00:00 | I (528274) cam_hal: cam config ok
+2026-11-21T12:55:04.584+00:00 | I (528284) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:55:04.603+00:00 | I (528304) bringup: CAMERA_INIT phase=recovery worker=9 attempt=1 result=success sensor=OV3660
+2026-11-21T12:55:04.610+00:00 | I (528304) bringup: HEAP stage=init_success worker=9 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:55:04.877+00:00 | W (528584) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:55:09.945+00:00 | I (533644) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:55:15.010+00:00 | I (538714) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:20.075+00:00 | I (543774) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:25.141+00:00 | I (548844) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:30.206+00:00 | I (553904) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:35.272+00:00 | I (558974) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:40.337+00:00 | I (564034) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:45.402+00:00 | I (569104) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:50.468+00:00 | I (574164) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:55:55.533+00:00 | I (579234) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:00.599+00:00 | I (584294) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:04.919+00:00 | W (588624) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:56:05.664+00:00 | I (589364) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:09.921+00:00 | W (593614) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=9 remaining=2
+2026-11-21T12:56:09.924+00:00 | E (593614) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:56:09.989+00:00 | W (593684) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=9 remaining=1
+2026-11-21T12:56:09.992+00:00 | E (593684) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:56:10.056+00:00 | W (593754) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=9 remaining=0
+2026-11-21T12:56:10.062+00:00 | E (593754) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:56:10.073+00:00 | I (593754) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:56:10.079+00:00 | W (593764) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:56:10.084+00:00 | I (593774) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:56:10.090+00:00 | I (593784) bringup: WORKER_EVENT stop_requested at_ms=593483
+2026-11-21T12:56:10.097+00:00 | W (593784) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:56:10.118+00:00 | I (593824) bringup: WORKER_EVENT fb_returned at_ms=593523
+2026-11-21T12:56:10.124+00:00 | I (593824) bringup: WORKER_EVENT late_frame_discarded at_ms=593523
+2026-11-21T12:56:10.135+00:00 | I (593824) bringup: WORKER_EVENT deinit_done at_ms=593524 result=ESP_OK
+2026-11-21T12:56:10.141+00:00 | I (593824) bringup: WORKER_EVENT terminal=STOPPED at_ms=593529
+2026-11-21T12:56:10.146+00:00 | W (593834) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:56:10.152+00:00 | I (593844) bringup: FAULT_SCENARIO worker=10 selected=1 after_first_valid_s=65
+2026-11-21T12:56:10.157+00:00 | I (593844) s3 ll_cam: DMA Channel=0
+2026-11-21T12:56:10.157+00:00 | I (593854) cam_hal: cam init ok
+2026-11-21T12:56:10.163+00:00 | I (593854) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:56:10.163+00:00 | I (593854) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:56:10.169+00:00 | I (593874) ov3640: Mismatch PID=0x3660
+2026-11-21T12:56:10.174+00:00 | I (593874) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:56:10.180+00:00 | I (593874) camera: Detected OV3660 camera
+2026-11-21T12:56:10.181+00:00 | I (593874) camera: Detected camera at address=0x3c
+2026-11-21T12:56:10.466+00:00 | I (594174) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:56:10.472+00:00 | I (594174) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:56:10.483+00:00 | I (594174) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:56:10.494+00:00 | I (594184) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:56:10.500+00:00 | I (594194) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:56:10.505+00:00 | I (594194) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:56:10.507+00:00 | I (594204) cam_hal: cam config ok
+2026-11-21T12:56:10.519+00:00 | I (594214) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:56:10.537+00:00 | I (594234) bringup: CAMERA_INIT phase=recovery worker=10 attempt=1 result=success sensor=OV3660
+2026-11-21T12:56:10.545+00:00 | I (594234) bringup: HEAP stage=init_success worker=10 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:56:10.812+00:00 | W (594514) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:56:15.880+00:00 | I (599574) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:56:20.945+00:00 | I (604644) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:26.010+00:00 | I (609704) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:31.076+00:00 | I (614774) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:36.141+00:00 | I (619834) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:41.206+00:00 | I (624904) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:46.272+00:00 | I (629964) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:51.337+00:00 | I (635034) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:56:56.403+00:00 | I (640094) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:01.468+00:00 | I (645164) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:06.534+00:00 | I (650224) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:10.854+00:00 | W (654554) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:57:11.599+00:00 | I (655294) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:15.856+00:00 | W (659544) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=10 remaining=2
+2026-11-21T12:57:15.859+00:00 | E (659544) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:57:15.924+00:00 | W (659614) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=10 remaining=1
+2026-11-21T12:57:15.927+00:00 | E (659614) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:57:15.991+00:00 | W (659684) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=10 remaining=0
+2026-11-21T12:57:15.997+00:00 | E (659684) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:57:16.008+00:00 | I (659684) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:57:16.013+00:00 | W (659694) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:57:16.024+00:00 | I (659704) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:57:16.024+00:00 | I (659714) bringup: WORKER_EVENT stop_requested at_ms=659413
+2026-11-21T12:57:16.032+00:00 | W (659714) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:57:16.053+00:00 | I (659754) bringup: WORKER_EVENT fb_returned at_ms=659453
+2026-11-21T12:57:16.059+00:00 | I (659754) bringup: WORKER_EVENT late_frame_discarded at_ms=659453
+2026-11-21T12:57:16.070+00:00 | I (659754) bringup: WORKER_EVENT deinit_done at_ms=659454 result=ESP_OK
+2026-11-21T12:57:16.075+00:00 | I (659754) bringup: WORKER_EVENT terminal=STOPPED at_ms=659459
+2026-11-21T12:57:16.081+00:00 | W (659764) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:57:16.086+00:00 | I (659774) bringup: FAULT_SCENARIO worker=11 selected=1 after_first_valid_s=65
+2026-11-21T12:57:16.092+00:00 | I (659774) s3 ll_cam: DMA Channel=0
+2026-11-21T12:57:16.092+00:00 | I (659784) cam_hal: cam init ok
+2026-11-21T12:57:16.098+00:00 | I (659784) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:57:16.098+00:00 | I (659784) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:57:16.103+00:00 | I (659804) ov3640: Mismatch PID=0x3660
+2026-11-21T12:57:16.109+00:00 | I (659804) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:57:16.115+00:00 | I (659804) camera: Detected OV3660 camera
+2026-11-21T12:57:16.116+00:00 | I (659804) camera: Detected camera at address=0x3c
+2026-11-21T12:57:16.402+00:00 | I (660104) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:57:16.407+00:00 | I (660104) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:57:16.418+00:00 | I (660104) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:57:16.429+00:00 | I (660114) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:57:16.435+00:00 | I (660124) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:57:16.440+00:00 | I (660124) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:57:16.442+00:00 | I (660134) cam_hal: cam config ok
+2026-11-21T12:57:16.454+00:00 | I (660144) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:57:16.472+00:00 | I (660164) bringup: CAMERA_INIT phase=recovery worker=11 attempt=1 result=success sensor=OV3660
+2026-11-21T12:57:16.480+00:00 | I (660164) bringup: HEAP stage=init_success worker=11 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:57:16.747+00:00 | W (660444) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:57:21.815+00:00 | I (665504) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:57:26.880+00:00 | I (670574) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:31.945+00:00 | I (675634) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:37.011+00:00 | I (680704) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:42.076+00:00 | I (685764) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:47.141+00:00 | I (690834) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:52.207+00:00 | I (695894) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:57:57.272+00:00 | I (700964) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:02.338+00:00 | I (706024) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:07.403+00:00 | I (711094) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:12.468+00:00 | I (716154) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:16.789+00:00 | W (720484) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:58:17.534+00:00 | I (721224) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:21.791+00:00 | W (725474) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=11 remaining=2
+2026-11-21T12:58:21.794+00:00 | E (725474) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:58:21.858+00:00 | W (725544) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=11 remaining=1
+2026-11-21T12:58:21.862+00:00 | E (725544) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:58:21.926+00:00 | W (725614) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=11 remaining=0
+2026-11-21T12:58:21.932+00:00 | E (725614) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:58:21.943+00:00 | I (725614) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:58:21.948+00:00 | W (725624) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:58:21.959+00:00 | I (725634) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:58:21.959+00:00 | I (725644) bringup: WORKER_EVENT stop_requested at_ms=725343
+2026-11-21T12:58:21.966+00:00 | W (725644) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:58:21.988+00:00 | I (725684) bringup: WORKER_EVENT fb_returned at_ms=725383
+2026-11-21T12:58:21.993+00:00 | I (725684) bringup: WORKER_EVENT late_frame_discarded at_ms=725383
+2026-11-21T12:58:22.005+00:00 | I (725684) bringup: WORKER_EVENT deinit_done at_ms=725384 result=ESP_OK
+2026-11-21T12:58:22.010+00:00 | I (725684) bringup: WORKER_EVENT terminal=STOPPED at_ms=725389
+2026-11-21T12:58:22.016+00:00 | W (725694) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:58:22.021+00:00 | I (725704) bringup: FAULT_SCENARIO worker=12 selected=1 after_first_valid_s=65
+2026-11-21T12:58:22.027+00:00 | I (725704) s3 ll_cam: DMA Channel=0
+2026-11-21T12:58:22.027+00:00 | I (725714) cam_hal: cam init ok
+2026-11-21T12:58:22.032+00:00 | I (725714) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:58:22.032+00:00 | I (725714) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:58:22.038+00:00 | I (725734) ov3640: Mismatch PID=0x3660
+2026-11-21T12:58:22.044+00:00 | I (725734) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:58:22.049+00:00 | I (725734) camera: Detected OV3660 camera
+2026-11-21T12:58:22.050+00:00 | I (725734) camera: Detected camera at address=0x3c
+2026-11-21T12:58:22.336+00:00 | I (726034) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:58:22.342+00:00 | I (726034) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:58:22.353+00:00 | I (726034) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:58:22.364+00:00 | I (726044) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:58:22.370+00:00 | I (726054) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:58:22.375+00:00 | I (726054) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:58:22.377+00:00 | I (726064) cam_hal: cam config ok
+2026-11-21T12:58:22.388+00:00 | I (726074) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:58:22.407+00:00 | I (726094) bringup: CAMERA_INIT phase=recovery worker=12 attempt=1 result=success sensor=OV3660
+2026-11-21T12:58:22.415+00:00 | I (726094) bringup: HEAP stage=init_success worker=12 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:58:22.682+00:00 | W (726374) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:58:27.749+00:00 | I (731434) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:58:32.815+00:00 | I (736504) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:37.880+00:00 | I (741564) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:42.945+00:00 | I (746634) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:48.011+00:00 | I (751694) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:53.076+00:00 | I (756764) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:58:58.142+00:00 | I (761824) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:03.207+00:00 | I (766894) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:08.272+00:00 | I (771954) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:13.338+00:00 | I (777024) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:18.403+00:00 | I (782084) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:22.724+00:00 | W (786414) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T12:59:23.469+00:00 | I (787154) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:27.726+00:00 | W (791404) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=12 remaining=2
+2026-11-21T12:59:27.729+00:00 | E (791404) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:59:27.793+00:00 | W (791474) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=12 remaining=1
+2026-11-21T12:59:27.797+00:00 | E (791474) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:59:27.861+00:00 | W (791544) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=12 remaining=0
+2026-11-21T12:59:27.866+00:00 | E (791544) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T12:59:27.878+00:00 | I (791544) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T12:59:27.883+00:00 | W (791554) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T12:59:27.894+00:00 | I (791564) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:59:27.894+00:00 | I (791574) bringup: WORKER_EVENT stop_requested at_ms=791273
+2026-11-21T12:59:27.901+00:00 | W (791574) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:59:27.923+00:00 | I (791614) bringup: WORKER_EVENT fb_returned at_ms=791313
+2026-11-21T12:59:27.928+00:00 | I (791614) bringup: WORKER_EVENT late_frame_discarded at_ms=791313
+2026-11-21T12:59:27.940+00:00 | I (791614) bringup: WORKER_EVENT deinit_done at_ms=791314 result=ESP_OK
+2026-11-21T12:59:27.945+00:00 | I (791614) bringup: WORKER_EVENT terminal=STOPPED at_ms=791319
+2026-11-21T12:59:27.951+00:00 | W (791624) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:59:27.956+00:00 | I (791634) bringup: FAULT_SCENARIO worker=13 selected=1 after_first_valid_s=65
+2026-11-21T12:59:27.962+00:00 | I (791634) s3 ll_cam: DMA Channel=0
+2026-11-21T12:59:27.962+00:00 | I (791644) cam_hal: cam init ok
+2026-11-21T12:59:27.967+00:00 | I (791644) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:59:27.967+00:00 | I (791644) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:59:27.973+00:00 | I (791664) ov3640: Mismatch PID=0x3660
+2026-11-21T12:59:27.979+00:00 | I (791664) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:59:27.984+00:00 | I (791664) camera: Detected OV3660 camera
+2026-11-21T12:59:27.985+00:00 | I (791664) camera: Detected camera at address=0x3c
+2026-11-21T12:59:28.271+00:00 | I (791964) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:59:28.277+00:00 | I (791964) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:59:28.288+00:00 | I (791964) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:59:28.299+00:00 | I (791974) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:59:28.304+00:00 | I (791984) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:59:28.310+00:00 | I (791984) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:59:28.312+00:00 | I (791994) cam_hal: cam config ok
+2026-11-21T12:59:28.324+00:00 | I (792004) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:59:28.342+00:00 | I (792024) bringup: CAMERA_INIT phase=recovery worker=13 attempt=1 result=success sensor=OV3660
+2026-11-21T12:59:28.350+00:00 | I (792024) bringup: HEAP stage=init_success worker=13 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T12:59:28.616+00:00 | W (792304) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T12:59:33.684+00:00 | I (797364) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:59:38.749+00:00 | I (802434) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:43.815+00:00 | I (807494) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:48.880+00:00 | I (812564) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:53.946+00:00 | I (817624) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:59:59.011+00:00 | I (822694) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:04.077+00:00 | I (827754) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:09.142+00:00 | I (832824) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:14.207+00:00 | I (837884) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:19.273+00:00 | I (842954) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:24.338+00:00 | I (848014) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:28.659+00:00 | W (852344) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:00:29.403+00:00 | I (853084) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:33.661+00:00 | W (857334) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=13 remaining=2
+2026-11-21T13:00:33.664+00:00 | E (857334) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:00:33.728+00:00 | W (857404) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=13 remaining=1
+2026-11-21T13:00:33.732+00:00 | E (857404) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:00:33.796+00:00 | W (857474) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=13 remaining=0
+2026-11-21T13:00:33.801+00:00 | E (857474) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:00:33.812+00:00 | I (857474) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T13:00:33.818+00:00 | W (857484) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:00:33.829+00:00 | I (857494) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:00:33.829+00:00 | I (857504) bringup: WORKER_EVENT stop_requested at_ms=857203
+2026-11-21T13:00:33.836+00:00 | W (857504) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:00:33.858+00:00 | I (857544) bringup: WORKER_EVENT fb_returned at_ms=857243
+2026-11-21T13:00:33.863+00:00 | I (857544) bringup: WORKER_EVENT late_frame_discarded at_ms=857243
+2026-11-21T13:00:33.874+00:00 | I (857544) bringup: WORKER_EVENT deinit_done at_ms=857244 result=ESP_OK
+2026-11-21T13:00:33.880+00:00 | I (857544) bringup: WORKER_EVENT terminal=STOPPED at_ms=857249
+2026-11-21T13:00:33.885+00:00 | W (857554) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:00:33.891+00:00 | I (857564) bringup: FAULT_SCENARIO worker=14 selected=1 after_first_valid_s=65
+2026-11-21T13:00:33.897+00:00 | I (857564) s3 ll_cam: DMA Channel=0
+2026-11-21T13:00:33.897+00:00 | I (857574) cam_hal: cam init ok
+2026-11-21T13:00:33.902+00:00 | I (857574) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:00:33.902+00:00 | I (857574) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:00:33.908+00:00 | I (857594) ov3640: Mismatch PID=0x3660
+2026-11-21T13:00:33.914+00:00 | I (857594) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:00:33.919+00:00 | I (857594) camera: Detected OV3660 camera
+2026-11-21T13:00:33.920+00:00 | I (857594) camera: Detected camera at address=0x3c
+2026-11-21T13:00:34.206+00:00 | I (857894) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:00:34.211+00:00 | I (857894) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:00:34.223+00:00 | I (857894) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:00:34.234+00:00 | I (857904) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:00:34.239+00:00 | I (857914) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:00:34.245+00:00 | I (857914) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:00:34.247+00:00 | I (857924) cam_hal: cam config ok
+2026-11-21T13:00:34.258+00:00 | I (857934) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:00:34.277+00:00 | I (857954) bringup: CAMERA_INIT phase=recovery worker=14 attempt=1 result=success sensor=OV3660
+2026-11-21T13:00:34.284+00:00 | I (857954) bringup: HEAP stage=init_success worker=14 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:00:34.551+00:00 | W (858234) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:00:39.619+00:00 | I (863294) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:00:44.684+00:00 | I (868364) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:49.750+00:00 | I (873424) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:54.815+00:00 | I (878494) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:00:59.880+00:00 | I (883554) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:04.946+00:00 | I (888624) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:10.011+00:00 | I (893684) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:15.077+00:00 | I (898754) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:20.142+00:00 | I (903814) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:25.208+00:00 | I (908884) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:30.273+00:00 | I (913944) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:34.593+00:00 | W (918274) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:01:35.338+00:00 | I (919014) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:39.596+00:00 | W (923264) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=14 remaining=2
+2026-11-21T13:01:39.599+00:00 | E (923264) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:01:39.663+00:00 | W (923334) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=14 remaining=1
+2026-11-21T13:01:39.666+00:00 | E (923334) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:01:39.731+00:00 | W (923404) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=14 remaining=0
+2026-11-21T13:01:39.736+00:00 | E (923404) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:01:39.747+00:00 | I (923404) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T13:01:39.753+00:00 | W (923414) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:01:39.764+00:00 | I (923424) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:01:39.764+00:00 | I (923434) bringup: WORKER_EVENT stop_requested at_ms=923133
+2026-11-21T13:01:39.771+00:00 | W (923434) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:01:39.793+00:00 | I (923474) bringup: WORKER_EVENT fb_returned at_ms=923173
+2026-11-21T13:01:39.798+00:00 | I (923474) bringup: WORKER_EVENT late_frame_discarded at_ms=923173
+2026-11-21T13:01:39.809+00:00 | I (923474) bringup: WORKER_EVENT deinit_done at_ms=923174 result=ESP_OK
+2026-11-21T13:01:39.815+00:00 | I (923474) bringup: WORKER_EVENT terminal=STOPPED at_ms=923179
+2026-11-21T13:01:39.820+00:00 | W (923484) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:01:39.826+00:00 | I (923494) bringup: FAULT_SCENARIO worker=15 selected=1 after_first_valid_s=65
+2026-11-21T13:01:39.831+00:00 | I (923494) s3 ll_cam: DMA Channel=0
+2026-11-21T13:01:39.831+00:00 | I (923504) cam_hal: cam init ok
+2026-11-21T13:01:39.837+00:00 | I (923504) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:01:39.837+00:00 | I (923504) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:01:39.843+00:00 | I (923524) ov3640: Mismatch PID=0x3660
+2026-11-21T13:01:39.848+00:00 | I (923524) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:01:39.854+00:00 | I (923524) camera: Detected OV3660 camera
+2026-11-21T13:01:39.855+00:00 | I (923524) camera: Detected camera at address=0x3c
+2026-11-21T13:01:40.141+00:00 | I (923824) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:01:40.146+00:00 | I (923824) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:01:40.157+00:00 | I (923824) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:01:40.169+00:00 | I (923834) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:01:40.174+00:00 | I (923844) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:01:40.180+00:00 | I (923844) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:01:40.181+00:00 | I (923854) cam_hal: cam config ok
+2026-11-21T13:01:40.193+00:00 | I (923864) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:01:40.212+00:00 | I (923884) bringup: CAMERA_INIT phase=recovery worker=15 attempt=1 result=success sensor=OV3660
+2026-11-21T13:01:40.219+00:00 | I (923884) bringup: HEAP stage=init_success worker=15 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:01:40.486+00:00 | W (924164) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:01:45.554+00:00 | I (929224) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:01:50.619+00:00 | I (934294) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:01:55.684+00:00 | I (939354) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:00.750+00:00 | I (944424) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:05.815+00:00 | I (949484) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:10.881+00:00 | I (954554) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:15.946+00:00 | I (959614) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:21.012+00:00 | I (964684) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:26.077+00:00 | I (969744) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:31.142+00:00 | I (974814) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:36.208+00:00 | I (979874) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:40.528+00:00 | W (984204) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:02:41.273+00:00 | I (984944) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:02:45.530+00:00 | W (989194) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=15 remaining=2
+2026-11-21T13:02:45.534+00:00 | E (989194) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:02:45.598+00:00 | W (989264) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=15 remaining=1
+2026-11-21T13:02:45.601+00:00 | E (989264) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:02:45.665+00:00 | W (989334) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=15 remaining=0
+2026-11-21T13:02:45.671+00:00 | E (989334) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:02:45.682+00:00 | I (989334) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T13:02:45.688+00:00 | W (989344) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:02:45.699+00:00 | I (989354) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:02:45.699+00:00 | I (989364) bringup: WORKER_EVENT stop_requested at_ms=989063
+2026-11-21T13:02:45.706+00:00 | W (989364) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:02:45.727+00:00 | I (989404) bringup: WORKER_EVENT fb_returned at_ms=989103
+2026-11-21T13:02:45.733+00:00 | I (989404) bringup: WORKER_EVENT late_frame_discarded at_ms=989103
+2026-11-21T13:02:45.744+00:00 | I (989404) bringup: WORKER_EVENT deinit_done at_ms=989104 result=ESP_OK
+2026-11-21T13:02:45.750+00:00 | I (989404) bringup: WORKER_EVENT terminal=STOPPED at_ms=989109
+2026-11-21T13:02:45.755+00:00 | W (989414) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:02:45.761+00:00 | I (989424) bringup: FAULT_SCENARIO worker=16 selected=1 after_first_valid_s=65
+2026-11-21T13:02:45.766+00:00 | I (989424) s3 ll_cam: DMA Channel=0
+2026-11-21T13:02:45.766+00:00 | I (989434) cam_hal: cam init ok
+2026-11-21T13:02:45.772+00:00 | I (989434) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:02:45.772+00:00 | I (989434) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:02:45.778+00:00 | I (989454) ov3640: Mismatch PID=0x3660
+2026-11-21T13:02:45.783+00:00 | I (989454) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:02:45.789+00:00 | I (989454) camera: Detected OV3660 camera
+2026-11-21T13:02:45.790+00:00 | I (989454) camera: Detected camera at address=0x3c
+2026-11-21T13:02:46.076+00:00 | I (989754) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:02:46.081+00:00 | I (989754) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:02:46.092+00:00 | I (989754) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:02:46.103+00:00 | I (989764) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:02:46.109+00:00 | I (989774) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:02:46.114+00:00 | I (989774) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:02:46.116+00:00 | I (989784) cam_hal: cam config ok
+2026-11-21T13:02:46.128+00:00 | I (989794) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:02:46.147+00:00 | I (989814) bringup: CAMERA_INIT phase=recovery worker=16 attempt=1 result=success sensor=OV3660
+2026-11-21T13:02:46.154+00:00 | I (989814) bringup: HEAP stage=init_success worker=16 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:02:46.421+00:00 | W (990094) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:02:51.489+00:00 | I (995154) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:02:56.554+00:00 | I (1000224) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:01.620+00:00 | I (1005284) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:06.685+00:00 | I (1010354) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:11.750+00:00 | I (1015414) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:16.816+00:00 | I (1020484) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:21.881+00:00 | I (1025544) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:26.947+00:00 | I (1030614) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:32.012+00:00 | I (1035674) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:37.077+00:00 | I (1040744) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:42.143+00:00 | I (1045804) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:46.463+00:00 | W (1050134) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:03:47.208+00:00 | I (1050874) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:03:51.465+00:00 | W (1055124) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=16 remaining=2
+2026-11-21T13:03:51.469+00:00 | E (1055124) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:03:51.533+00:00 | W (1055194) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=16 remaining=1
+2026-11-21T13:03:51.536+00:00 | E (1055194) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:03:51.600+00:00 | W (1055264) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=16 remaining=0
+2026-11-21T13:03:51.606+00:00 | E (1055264) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:03:51.617+00:00 | I (1055264) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4390 fps=14.12
+2026-11-21T13:03:51.622+00:00 | W (1055274) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:03:51.634+00:00 | I (1055284) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:03:51.639+00:00 | I (1055294) bringup: WORKER_EVENT stop_requested at_ms=1054993
+2026-11-21T13:03:51.641+00:00 | W (1055294) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:03:51.662+00:00 | I (1055334) bringup: WORKER_EVENT fb_returned at_ms=1055033
+2026-11-21T13:03:51.673+00:00 | I (1055334) bringup: WORKER_EVENT late_frame_discarded at_ms=1055033
+2026-11-21T13:03:51.679+00:00 | I (1055334) bringup: WORKER_EVENT deinit_done at_ms=1055034 result=ESP_OK
+2026-11-21T13:03:51.684+00:00 | I (1055334) bringup: WORKER_EVENT terminal=STOPPED at_ms=1055039
+2026-11-21T13:03:51.690+00:00 | W (1055344) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:03:51.696+00:00 | I (1055354) bringup: FAULT_SCENARIO worker=17 selected=1 after_first_valid_s=65
+2026-11-21T13:03:51.701+00:00 | I (1055354) s3 ll_cam: DMA Channel=0
+2026-11-21T13:03:51.701+00:00 | I (1055364) cam_hal: cam init ok
+2026-11-21T13:03:51.707+00:00 | I (1055364) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:03:51.712+00:00 | I (1055364) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:03:51.712+00:00 | I (1055384) ov3640: Mismatch PID=0x3660
+2026-11-21T13:03:51.718+00:00 | I (1055384) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:03:51.723+00:00 | I (1055384) camera: Detected OV3660 camera
+2026-11-21T13:03:51.726+00:00 | I (1055384) camera: Detected camera at address=0x3c
+2026-11-21T13:03:52.010+00:00 | I (1055684) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:03:52.016+00:00 | I (1055684) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:03:52.027+00:00 | I (1055684) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:03:52.038+00:00 | I (1055694) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:03:52.044+00:00 | I (1055704) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:03:52.049+00:00 | I (1055704) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:03:52.052+00:00 | I (1055714) cam_hal: cam config ok
+2026-11-21T13:03:52.063+00:00 | I (1055724) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:03:52.082+00:00 | I (1055744) bringup: CAMERA_INIT phase=recovery worker=17 attempt=1 result=success sensor=OV3660
+2026-11-21T13:03:52.090+00:00 | I (1055744) bringup: HEAP stage=init_success worker=17 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:03:52.355+00:00 | W (1056024) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:03:57.423+00:00 | I (1061084) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:04:02.488+00:00 | I (1066154) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:07.554+00:00 | I (1071214) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:12.619+00:00 | I (1076284) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:17.684+00:00 | I (1081344) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:22.750+00:00 | I (1086414) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:27.815+00:00 | I (1091474) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:32.881+00:00 | I (1096544) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5066 fps=14.80
+2026-11-21T13:04:37.946+00:00 | I (1101604) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:43.011+00:00 | I (1106674) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:48.077+00:00 | I (1111734) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:52.397+00:00 | W (1116064) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:04:53.142+00:00 | I (1116804) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:04:57.399+00:00 | W (1121054) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=17 remaining=2
+2026-11-21T13:04:57.403+00:00 | E (1121054) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:04:57.467+00:00 | W (1121124) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=17 remaining=1
+2026-11-21T13:04:57.470+00:00 | E (1121124) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:04:57.534+00:00 | W (1121194) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=17 remaining=0
+2026-11-21T13:04:57.540+00:00 | E (1121194) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:04:57.551+00:00 | I (1121194) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4389 fps=14.13
+2026-11-21T13:04:57.557+00:00 | W (1121204) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:04:57.568+00:00 | I (1121214) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:04:57.573+00:00 | I (1121224) bringup: WORKER_EVENT stop_requested at_ms=1120923
+2026-11-21T13:04:57.575+00:00 | W (1121224) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:04:57.596+00:00 | I (1121264) bringup: WORKER_EVENT fb_returned at_ms=1120962
+2026-11-21T13:04:57.607+00:00 | I (1121264) bringup: WORKER_EVENT late_frame_discarded at_ms=1120962
+2026-11-21T13:04:57.613+00:00 | I (1121264) bringup: WORKER_EVENT deinit_done at_ms=1120963 result=ESP_OK
+2026-11-21T13:04:57.619+00:00 | I (1121264) bringup: WORKER_EVENT terminal=STOPPED at_ms=1120969
+2026-11-21T13:04:57.624+00:00 | W (1121274) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:04:57.630+00:00 | I (1121284) bringup: FAULT_SCENARIO worker=18 selected=1 after_first_valid_s=65
+2026-11-21T13:04:57.635+00:00 | I (1121284) s3 ll_cam: DMA Channel=0
+2026-11-21T13:04:57.635+00:00 | I (1121294) cam_hal: cam init ok
+2026-11-21T13:04:57.641+00:00 | I (1121294) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:04:57.646+00:00 | I (1121294) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:04:57.646+00:00 | I (1121314) ov3640: Mismatch PID=0x3660
+2026-11-21T13:04:57.652+00:00 | I (1121314) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:04:57.657+00:00 | I (1121314) camera: Detected OV3660 camera
+2026-11-21T13:04:57.660+00:00 | I (1121314) camera: Detected camera at address=0x3c
+2026-11-21T13:04:57.945+00:00 | I (1121614) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:04:57.951+00:00 | I (1121614) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:04:57.962+00:00 | I (1121614) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:04:57.973+00:00 | I (1121624) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:04:57.979+00:00 | I (1121634) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:04:57.984+00:00 | I (1121634) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:04:57.987+00:00 | I (1121644) cam_hal: cam config ok
+2026-11-21T13:04:57.998+00:00 | I (1121654) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:04:58.017+00:00 | I (1121674) bringup: CAMERA_INIT phase=recovery worker=18 attempt=1 result=success sensor=OV3660
+2026-11-21T13:04:58.025+00:00 | I (1121674) bringup: HEAP stage=init_success worker=18 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:04:58.290+00:00 | W (1121954) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:05:03.358+00:00 | I (1127014) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:05:08.423+00:00 | I (1132084) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:13.488+00:00 | I (1137144) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:18.553+00:00 | I (1142214) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:23.618+00:00 | I (1147274) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:28.684+00:00 | I (1152344) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:33.749+00:00 | I (1157404) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:38.814+00:00 | I (1162474) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5066 fps=14.80
+2026-11-21T13:05:43.880+00:00 | I (1167534) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:48.945+00:00 | I (1172604) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:54.010+00:00 | I (1177664) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:05:58.330+00:00 | W (1181994) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:05:59.075+00:00 | I (1182734) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:03.332+00:00 | W (1186984) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=18 remaining=2
+2026-11-21T13:06:03.336+00:00 | E (1186984) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:06:03.400+00:00 | W (1187054) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=18 remaining=1
+2026-11-21T13:06:03.403+00:00 | E (1187054) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:06:03.467+00:00 | W (1187124) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=18 remaining=0
+2026-11-21T13:06:03.473+00:00 | E (1187124) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:06:03.484+00:00 | I (1187124) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4389 fps=14.13
+2026-11-21T13:06:03.489+00:00 | W (1187134) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:06:03.501+00:00 | I (1187144) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:06:03.506+00:00 | I (1187154) bringup: WORKER_EVENT stop_requested at_ms=1186853
+2026-11-21T13:06:03.508+00:00 | W (1187154) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:06:03.529+00:00 | I (1187194) bringup: WORKER_EVENT fb_returned at_ms=1186892
+2026-11-21T13:06:03.540+00:00 | I (1187194) bringup: WORKER_EVENT late_frame_discarded at_ms=1186892
+2026-11-21T13:06:03.546+00:00 | I (1187194) bringup: WORKER_EVENT deinit_done at_ms=1186893 result=ESP_OK
+2026-11-21T13:06:03.551+00:00 | I (1187194) bringup: WORKER_EVENT terminal=STOPPED at_ms=1186899
+2026-11-21T13:06:03.557+00:00 | W (1187204) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:06:03.562+00:00 | I (1187214) bringup: FAULT_SCENARIO worker=19 selected=1 after_first_valid_s=65
+2026-11-21T13:06:03.568+00:00 | I (1187214) s3 ll_cam: DMA Channel=0
+2026-11-21T13:06:03.568+00:00 | I (1187224) cam_hal: cam init ok
+2026-11-21T13:06:03.574+00:00 | I (1187224) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:06:03.579+00:00 | I (1187224) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:06:03.579+00:00 | I (1187244) ov3640: Mismatch PID=0x3660
+2026-11-21T13:06:03.585+00:00 | I (1187244) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:06:03.590+00:00 | I (1187244) camera: Detected OV3660 camera
+2026-11-21T13:06:03.593+00:00 | I (1187244) camera: Detected camera at address=0x3c
+2026-11-21T13:06:03.878+00:00 | I (1187544) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:06:03.884+00:00 | I (1187544) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:06:03.895+00:00 | I (1187544) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:06:03.906+00:00 | I (1187554) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:06:03.911+00:00 | I (1187564) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:06:03.917+00:00 | I (1187564) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:06:03.919+00:00 | I (1187574) cam_hal: cam config ok
+2026-11-21T13:06:03.931+00:00 | I (1187584) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:06:03.950+00:00 | I (1187604) bringup: CAMERA_INIT phase=recovery worker=19 attempt=1 result=success sensor=OV3660
+2026-11-21T13:06:03.958+00:00 | I (1187604) bringup: HEAP stage=init_success worker=19 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:06:04.223+00:00 | W (1187884) bringup: RECOVERY stage=success remaining=2 reason=valid_frame
+2026-11-21T13:06:09.291+00:00 | I (1192944) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T13:06:14.356+00:00 | I (1198014) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:19.421+00:00 | I (1203074) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:24.486+00:00 | I (1208144) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:29.551+00:00 | I (1213204) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:34.617+00:00 | I (1218274) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:39.682+00:00 | I (1223334) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:44.747+00:00 | I (1228404) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5066 fps=14.80
+2026-11-21T13:06:49.812+00:00 | I (1233464) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:54.878+00:00 | I (1238534) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:06:59.943+00:00 | I (1243594) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:07:04.263+00:00 | W (1247924) bringup: RECOVERY stage=budget_reset remaining=3 reason=stable_60s
+2026-11-21T13:07:05.008+00:00 | I (1248664) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T13:07:09.265+00:00 | W (1252914) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=19 remaining=2
+2026-11-21T13:07:09.268+00:00 | E (1252914) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:07:09.333+00:00 | W (1252984) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=19 remaining=1
+2026-11-21T13:07:09.336+00:00 | E (1252984) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:07:09.400+00:00 | W (1253054) bringup: FAULT_SCENARIO name=INVALID_FRAME worker=19 remaining=0
+2026-11-21T13:07:09.406+00:00 | E (1253054) bringup: FRAME_UNAVAILABLE stage=running reason=invalid_size raw_error=0x0
+2026-11-21T13:07:09.417+00:00 | I (1253054) bringup: FRAME_REPORT width=320 height=240 valid=62 invalid=3 elapsed_ms=4389 fps=14.13
+2026-11-21T13:07:09.422+00:00 | W (1253064) bringup: RECOVERY stage=start remaining=3 reason=invalid_frames
+2026-11-21T13:07:09.433+00:00 | I (1253074) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:07:09.439+00:00 | I (1253084) bringup: WORKER_EVENT stop_requested at_ms=1252783
+2026-11-21T13:07:09.441+00:00 | W (1253084) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T13:07:09.462+00:00 | I (1253124) bringup: WORKER_EVENT fb_returned at_ms=1252822
+2026-11-21T13:07:09.473+00:00 | I (1253124) bringup: WORKER_EVENT late_frame_discarded at_ms=1252822
+2026-11-21T13:07:09.479+00:00 | I (1253124) bringup: WORKER_EVENT deinit_done at_ms=1252823 result=ESP_OK
+2026-11-21T13:07:09.484+00:00 | I (1253124) bringup: WORKER_EVENT terminal=STOPPED at_ms=1252829
+2026-11-21T13:07:09.490+00:00 | W (1253134) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T13:07:09.496+00:00 | I (1253144) bringup: FAULT_SCENARIO worker=20 selected=1 after_first_valid_s=65
+2026-11-21T13:07:09.501+00:00 | I (1253144) s3 ll_cam: DMA Channel=0
+2026-11-21T13:07:09.501+00:00 | I (1253154) cam_hal: cam init ok
+2026-11-21T13:07:09.506+00:00 | I (1253154) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T13:07:09.512+00:00 | I (1253154) sccb-ng: sccb_i2c_port=1
+2026-11-21T13:07:09.512+00:00 | I (1253174) ov3640: Mismatch PID=0x3660
+2026-11-21T13:07:09.518+00:00 | I (1253174) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T13:07:09.523+00:00 | I (1253174) camera: Detected OV3660 camera
+2026-11-21T13:07:09.526+00:00 | I (1253174) camera: Detected camera at address=0x3c
+2026-11-21T13:07:09.811+00:00 | I (1253474) cam_hal: PSRAM DMA mode disabled
+2026-11-21T13:07:09.816+00:00 | I (1253474) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T13:07:09.828+00:00 | I (1253474) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T13:07:09.839+00:00 | I (1253484) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T13:07:09.844+00:00 | I (1253494) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:07:09.850+00:00 | I (1253494) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T13:07:09.852+00:00 | I (1253504) cam_hal: cam config ok
+2026-11-21T13:07:09.864+00:00 | I (1253514) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T13:07:09.883+00:00 | I (1253534) bringup: CAMERA_INIT phase=recovery worker=20 attempt=1 result=success sensor=OV3660
+2026-11-21T13:07:09.891+00:00 | I (1253534) bringup: HEAP stage=init_success worker=20 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322916
+2026-11-21T13:07:10.156+00:00 | W (1253814) bringup: RECOVERY stage=success remaining=2 reason=valid_frame

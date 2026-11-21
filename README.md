@@ -1,6 +1,8 @@
 # ESP32-S3 – Cảnh báo tài xế ngủ gật
 
-> **Trạng thái: ý tưởng / khởi đầu.** Chưa có mã nguồn chạy được.
+> **Trạng thái:** Feature 001 đã kiểm chứng camera và phục hồi trên
+> ESP32-S3 CAM N16R8; phép đo cuối 125 giây của bản thường còn chờ cổng CH343
+> hoạt động lại. Nhận diện mắt và còi chưa được triển khai.
 > Mọi quyết định nằm trong [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## Mục tiêu
@@ -25,8 +27,32 @@ dùng trên đường thật.
 | Camera | OV3660 |
 | Còi | Còi chủ động (active buzzer) dạng module có sẵn mạch đệm – dự kiến, cần xác nhận khi có phần cứng |
 
-Chưa xác nhận: board có khe microSD hay không, và chân GPIO nào còn trống
-cho còi (sẽ đối chiếu sơ đồ chân khi bring-up).
+Board thực tế có khe microSD nhưng feature 001 không dùng. Bảng chân camera
+đã chạy trên board; chân còi còn cần xác nhận trước khi đấu phần cứng.
+
+## Chạy feature 001 trên bàn thử
+
+- ESP-IDF **v5.5.2**, target `esp32s3`; `espressif/esp32-camera` **2.1.9**
+  được ghim trong `main/idf_component.yml` và `dependencies.lock`.
+- Gắn sẵn FFC khi chưa cấp điện. Dùng cổng **USB-UART/CH343** để nạp và đọc
+  Serial 115200 baud; số COM có thể thay đổi.
+- Trong terminal đã kích hoạt ESP-IDF v5.5.2, chạy:
+
+```powershell
+idf.py set-target esp32s3
+idf.py build
+idf.py -p COM5 flash
+python tools/capture_serial.py --port COM5 --seconds 125 --output reports/001-camera/local-final.log
+./tests/host/run_tests.ps1
+```
+
+Thay `COM5` bằng cổng hiện tại. Bản thường phải có
+`CONFIG_BRINGUP_FAULT_INJECTION` tắt. Kỳ vọng thứ tự
+`BOOT_INFO` → `PSRAM_TEST result=PASS` → `CAMERA_INIT phase=boot` →
+`FRAME_REPORT` mỗi khoảng 5 giây. Log chỉ ghi metadata, không ghi ảnh.
+Hướng dẫn kiểm tra và giải thích các trường Serial ở
+[`quickstart.md`](specs/001-bringup-ov3660-camera/quickstart.md) và
+[`serial.md`](specs/001-bringup-ov3660-camera/contracts/serial.md).
 
 ## Cách hoạt động (dự kiến)
 
@@ -65,5 +91,7 @@ README.md
 docs/DECISIONS.md      # nhật ký quyết định
 .specify/              # Spec Kit (constitution, template)
 specs/                 # mỗi feature một thư mục
-main/, components/     # mã nguồn ESP-IDF (tạo khi bắt đầu feature 001)
+main/, components/     # firmware ESP-IDF và logic thuần
+tests/host/            # test PC cho máy trạng thái
+reports/001-camera/    # bằng chứng build, cấu hình và Serial trên board
 ```

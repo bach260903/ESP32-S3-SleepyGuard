@@ -18,6 +18,7 @@ static atomic_bool stop_requested = ATOMIC_VAR_INIT(false);
 static atomic_bool worker_active = ATOMIC_VAR_INIT(false);
 static unsigned worker_sequence;
 static unsigned active_worker_index;
+static bool active_worker_recovery_phase;
 
 static uint64_t now_ms(void)
 {
@@ -60,6 +61,7 @@ static void camera_worker(void *argument)
 {
     const unsigned attempt = (unsigned)(uintptr_t)argument;
     const unsigned worker_index = active_worker_index;
+    const char *phase = active_worker_recovery_phase ? "recovery" : "boot";
 #if CONFIG_BRINGUP_FAULT_INJECTION
     const bool fault_selected = CONFIG_BRINGUP_FAULT_WORKER_INDEX == 0 ||
                                 (unsigned)CONFIG_BRINGUP_FAULT_WORKER_INDEX == worker_index;
@@ -109,7 +111,7 @@ static void camera_worker(void *argument)
 
 #if CONFIG_BRINGUP_FAULT_INJECTION && CONFIG_BRINGUP_FAULT_SCENARIO_CAMERA_INIT
     ESP_LOGW("bringup", "FAULT_SCENARIO name=CAMERA_INIT attempt=%u", attempt);
-    bringup_log_camera_init(attempt, false, NULL, ESP_FAIL);
+    bringup_log_camera_init(phase, worker_index, attempt, false, NULL, ESP_FAIL);
     worker_finish(BRINGUP_CAMERA_INIT_FAILED, ESP_FAIL, false);
     return;
 #endif
@@ -117,7 +119,7 @@ static void camera_worker(void *argument)
     sensor_t *sensor = result == ESP_OK ? esp_camera_sensor_get() : NULL;
     if (result != ESP_OK || sensor == NULL || sensor->id.PID != OV3660_PID) {
         const int raw_error = result != ESP_OK ? result : (sensor == NULL ? -1 : sensor->id.PID);
-        bringup_log_camera_init(attempt, false, NULL, raw_error);
+        bringup_log_camera_init(phase, worker_index, attempt, false, NULL, raw_error);
         worker_finish(BRINGUP_CAMERA_INIT_FAILED, raw_error, result == ESP_OK);
         return;
     }
@@ -126,12 +128,12 @@ static void camera_worker(void *argument)
     if (fault_selected && worker_index > 1U) {
         ESP_LOGW("bringup", "FAULT_SCENARIO name=RECOVERY_INIT worker=%u", worker_index);
         log_heap("driver_init_before_injected_failure", worker_index);
-        bringup_log_camera_init(attempt, false, NULL, ESP_FAIL);
+        bringup_log_camera_init(phase, worker_index, attempt, false, NULL, ESP_FAIL);
         worker_finish(BRINGUP_CAMERA_INIT_FAILED, ESP_FAIL, true);
         return;
     }
 #endif
-    bringup_log_camera_init(attempt, true, "OV3660", 0);
+    bringup_log_camera_init(phase, worker_index, attempt, true, "OV3660", 0);
     log_heap("init_success", worker_index);
     const bringup_camera_event_t ready = { .kind = BRINGUP_CAMERA_READY, .at_ms = now_ms() };
     send_event(&ready);
@@ -251,7 +253,7 @@ static void camera_worker(void *argument)
     worker_finish(BRINGUP_CAMERA_STOPPED, 0, true);
 }
 
-QueueHandle_t bringup_camera_start(unsigned attempt)
+QueueHandle_t bringup_camera_start(unsigned attempt, bool recovery_phase)
 {
     if (attempt == 0U || atomic_exchange(&worker_active, true)) {
         return NULL;
@@ -266,6 +268,7 @@ QueueHandle_t bringup_camera_start(unsigned attempt)
     }
     atomic_store(&stop_requested, false);
     active_worker_index = ++worker_sequence;
+    active_worker_recovery_phase = recovery_phase;
     if (xTaskCreate(camera_worker, "camera_worker", BRINGUP_CAMERA_WORKER_STACK_BYTES,
                     (void *)(uintptr_t)attempt, BRINGUP_CAMERA_WORKER_PRIORITY,
                     NULL) != pdPASS) {

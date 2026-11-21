@@ -107,6 +107,7 @@ typedef struct {
     bool stable_timer_active;
     bool wait_reported;
     const char *fault_code;
+    const char *last_cause;
 } bringup_recovery_t;
 
 void bringup_recovery_init(bringup_recovery_t *recovery,

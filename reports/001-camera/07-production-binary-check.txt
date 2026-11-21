@@ -1,0 +1,10 @@
+fault_injection_disabled=True
+ov3660_bringup.elf: FAULT_SCENARIO absent=True
+ov3660_bringup.elf: INVALID_FRAME absent=True
+ov3660_bringup.elf: RECOVERY_TRIGGER absent=True
+ov3660_bringup.elf: WORKER_DELAY absent=True
+ov3660_bringup.map: FAULT_SCENARIO absent=True
+ov3660_bringup.map: INVALID_FRAME absent=True
+ov3660_bringup.map: RECOVERY_TRIGGER absent=True
+ov3660_bringup.map: WORKER_DELAY absent=True
+PRODUCTION_BINARY PASS

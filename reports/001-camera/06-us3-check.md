@@ -37,6 +37,26 @@ Worker 1 had 220 more internal free bytes than later workers; the later
 values were stable rather than declining per cycle. This is evidence against
 a monotonic leak over the three observed cycles, not a long-duration leak test.
 
+### Extended run attempted on 2026-11-21
+
+`06-us3-leak-interrupted-21min.log` used `THREE_INVALID`, worker_index=0 and
+after_first_valid_s=65. Its first 19 recovery starts and 19 successful
+recoveries had one boot ROM sequence. At every recovery start, PSRAM free was
+8,077,744 bytes and internal free was 322,916 bytes (spread 0 for both).
+Serial output stopped after worker 20's successful recovery at about 20.9
+minutes. COM5 remained listed, but reopening CH343 failed twice with Windows
+error 31 (device not functioning); restarting the device via PnP was denied
+by Windows. The requested 30-cycle conclusion is therefore **not established**.
+The interrupted capture does not distinguish a firmware stall from a
+USB-UART/driver connection failure. Reconnect CH343 and repeat the full
+30–40-minute run before treating extended operation as validated.
+
+The later `06-us3-fault-fields.log` confirms the Serial format update on
+board: `CAMERA_INIT phase=boot worker=1` differs from
+`phase=recovery worker=2/3/4`; every repeated `RECOVERY_EXHAUSTED` FAULT line
+includes `last_cause=camera_init_failed`. The capture has one boot ROM
+sequence and its own build, flash, and sdkconfig snapshot.
+
 ## Log interpretation
 
 The held-frame captures distinguish measured `fb_get` durations (67–278 ms)

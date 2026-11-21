@@ -32,7 +32,7 @@ typedef struct {
 } bringup_camera_event_t;
 
 /* The worker is the only caller of esp_camera_init/fb_get/fb_return/deinit. */
-QueueHandle_t bringup_camera_start(unsigned attempt);
+QueueHandle_t bringup_camera_start(unsigned attempt, bool recovery_phase);
 void bringup_camera_request_stop(void);
 
 #endif

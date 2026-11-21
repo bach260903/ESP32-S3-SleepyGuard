@@ -29,14 +29,16 @@ void bringup_log_psram_test(size_t test_bytes, const char *patterns, bool passed
     }
 }
 
-void bringup_log_camera_init(unsigned attempt, bool success, const char *sensor,
-                             int raw_error)
+void bringup_log_camera_init(const char *phase, unsigned worker,
+                             unsigned attempt, bool success,
+                             const char *sensor, int raw_error)
 {
     if (success) {
-        ESP_LOGI(TAG, "CAMERA_INIT attempt=%u result=success sensor=%s", attempt, sensor);
+        ESP_LOGI(TAG, "CAMERA_INIT phase=%s worker=%u attempt=%u result=success sensor=%s",
+                 phase, worker, attempt, sensor);
     } else {
-        ESP_LOGE(TAG, "CAMERA_INIT attempt=%u result=failure raw_error=0x%x code=CAM_INIT_FAILED",
-                 attempt, (unsigned)raw_error);
+        ESP_LOGE(TAG, "CAMERA_INIT phase=%s worker=%u attempt=%u result=failure raw_error=0x%x code=CAM_INIT_FAILED",
+                 phase, worker, attempt, (unsigned)raw_error);
     }
 }
 
@@ -60,7 +62,9 @@ void bringup_log_recovery(const char *stage, unsigned remaining, const char *rea
     ESP_LOGW(TAG, "RECOVERY stage=%s remaining=%u reason=%s", stage, remaining, reason);
 }
 
-void bringup_log_fault(const char *code, const char *reason, unsigned remaining)
+void bringup_log_fault(const char *code, const char *reason,
+                       const char *last_cause, unsigned remaining)
 {
-    ESP_LOGE(TAG, "FAULT code=%s reason=%s remaining=%u", code, reason, remaining);
+    ESP_LOGE(TAG, "FAULT code=%s reason=%s last_cause=%s remaining=%u",
+             code, reason, last_cause, remaining);
 }
