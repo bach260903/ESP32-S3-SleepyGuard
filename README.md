@@ -1,8 +1,9 @@
 # ESP32-S3 – Cảnh báo tài xế ngủ gật
 
-> **Trạng thái:** Feature 001 đã kiểm chứng camera và phục hồi trên
-> ESP32-S3 CAM N16R8; phép đo cuối 125 giây của bản thường còn chờ cổng CH343
-> hoạt động lại. Nhận diện mắt và còi chưa được triển khai.
+> **Trạng thái:** Feature 001 bring-up OV3660 đã hoàn tất trên
+> ESP32-S3 CAM N16R8; bản thường có log xác nhận 125 giây tại
+> [`07-final-check.md`](reports/001-camera/07-final-check.md).
+> Nhận diện mắt và còi chưa được triển khai.
 > Mọi quyết định nằm trong [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## Mục tiêu

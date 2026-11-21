@@ -92,8 +92,8 @@
 **Goal**: Bản build thường không chứa mã giả lập, có log xác nhận cuối và tài liệu đã cập nhật.
 
 - [X] T027 Tắt `CONFIG_BRINGUP_FAULT_INJECTION`, chọn NONE trong `sdkconfig.defaults`/`sdkconfig`; build sạch, kiểm tra bằng build output/map rằng mã scenario không biên dịch vào bản thường; lưu `reports/001-camera/07-production-build.txt` và `reports/001-camera/07-sdkconfig.txt`.
-- [ ] T028 Nạp bản thường, chạy `tools/capture_serial.py` trong 125 giây, lưu `reports/001-camera/07-final-125s.log`, `reports/001-camera/07-final-sdkconfig.txt`, đọc và đối chiếu FR/SC tại `reports/001-camera/07-final-check.md`; xác nhận không xuất ảnh, SD, mạng hoặc còi.
-- [ ] T029 Cập nhật `README.md`, `specs/001-bringup-ov3660-camera/quickstart.md` và `docs/DECISIONS.md`: ghi cách build/nạp/thu log, giới hạn chỉ dùng trên bàn thử, phiên bản IDF/component đã xác nhận bằng build ở D-003 và bằng chứng pin/board ở D-001; đối chiếu phạm vi Serial-only đã chốt ở D-007 và constitution v2.0.0 trước khi coi feature hoàn tất.
+- [X] T028 Nạp bản thường, chạy `tools/capture_serial.py` trong 125 giây, lưu `reports/001-camera/07-final-125s.log`, `reports/001-camera/07-final-sdkconfig.txt`, đọc và đối chiếu FR/SC tại `reports/001-camera/07-final-check.md`; xác nhận không xuất ảnh, SD, mạng hoặc còi.
+- [X] T029 Cập nhật `README.md`, `specs/001-bringup-ov3660-camera/quickstart.md` và `docs/DECISIONS.md`: ghi cách build/nạp/thu log, giới hạn chỉ dùng trên bàn thử, phiên bản IDF/component đã xác nhận bằng build ở D-003 và bằng chứng pin/board ở D-001; đối chiếu phạm vi Serial-only đã chốt ở D-007 và constitution v2.0.0 trước khi coi feature hoàn tất.
 
 ---
 

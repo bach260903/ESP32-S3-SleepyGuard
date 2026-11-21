@@ -37,7 +37,8 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
 - **Luồng camera và phục hồi trên board (2026-11-21):** bản firmware feature 001
   chạy OV3660 320×240 qua USB-UART/CH343; log US1 125 giây và các ca US3 có
   khung hợp lệ thật sau deinit → init. Xem `reports/001-camera/04b-us1-tuned-125s.log`
-  và `reports/001-camera/06-us3-check.md`.
+  và `reports/001-camera/06-us3-check.md`. Bản thường cuối có 24 báo cáo,
+  1 796 khung hợp lệ, `invalid=0` trong 125 giây; xem `07-final-check.md`.
 - **Hệ quả:** Phải bật PSRAM chế độ octal và cấu hình flash 16 MB. Các chân GPIO
   mà PSRAM octal chiếm (khoảng GPIO35–37) không dùng được cho việc khác. Khi chọn
   chân cho còi, tránh các chân strapping (GPIO0, 3, 45, 46).
@@ -57,7 +58,8 @@ Trạng thái: **Accepted** (đã chấp nhận) · **Open** (chưa chốt, cầ
   `reports/001-camera/01-build.txt` và `02-camera-probe.log`. Bản thường sau
   US3 build sạch với fault injection tắt và không có chuỗi scenario trong
   `.elf`/`.map`; xem `reports/001-camera/07-production-build.txt` và
-  `07-production-binary-check.txt`.
+  `07-production-binary-check.txt`. Bản thường được nạp và chạy trên board;
+  xem `07-final-check.md`.
   Nguồn: https://github.com/espressif/esp-idf/releases/tag/v5.5.2 và
   https://components.espressif.com/components/espressif/esp32-camera/versions/2.1.9/dependencies.
 - **Lý do:** Hỗ trợ camera, PSRAM và các thư viện AI của Espressif tốt nhất; build

@@ -51,3 +51,10 @@ gốc khác nhau; xem [serial.md](contracts/serial.md) trước khi so thời l�
 
 Lưu log và số liệu thật trong reports/001-camera/ khi triển khai. Log của
 firmware cũ trong thư mục feature chỉ xác minh bảng chân ở 240×240.
+
+Bản thường cuối đã nạp qua CH343 và được đo 125 giây tại
+[`07-final-check.md`](../../reports/001-camera/07-final-check.md): 24 báo cáo,
+1 796 khung hợp lệ, `invalid=0`, không có cảnh báo hoặc FAULT. Đợt đo rò rỉ
+35 phút tùy chọn bị ngắt do CH343 không mở lại được sau 19 chu kỳ; xem
+[`06-us3-check.md`](../../reports/001-camera/06-us3-check.md) trước khi dùng
+kết quả đó để suy về vận hành dài hạn.

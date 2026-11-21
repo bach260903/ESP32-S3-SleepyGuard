@@ -3,7 +3,7 @@
 **Branch**: main (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
-**Status**: Setup, foundation, US1, US2 và US3 T018a–T026 hoàn tất; chờ rà soát log trước Phase 6.
+**Status**: Feature 001 hoàn tất T001–T029; bản thường có log board 125 giây tại `reports/001-camera/07-final-check.md`.
 
 ## Summary
 

@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-19
 
-**Status**: Draft
+**Status**: Implemented; board verified 2026-11-21
 
 **Input**: Bring-up OV3660 trên ESP32-S3 N16R8; xác nhận camera và PSRAM, đo kích thước
 khung hình cùng FPS qua Serial; báo lỗi có mã, thử phục hồi hữu hạn và dừng ở trạng

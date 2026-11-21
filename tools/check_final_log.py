@@ -29,6 +29,13 @@ def main() -> int:
     )
     print(f"boot_sequences={boot_count}")
     print(f"frame_reports={len(reports)} healthy_reports={healthy_reports}")
+    if reports:
+        print(
+            f"valid_total={sum(int(row[2]) for row in reports)} "
+            f"invalid_total={sum(int(row[3]) for row in reports)} "
+            f"fps_min={min(float(row[5]) for row in reports):.2f} "
+            f"fps_max={max(float(row[5]) for row in reports):.2f}"
+        )
     print(f"warnings_errors={warnings_errors} fault_scenarios={scenario_count}")
     print(f"recovery_events={recovery_count} faults={fault_count}")
     passed = (
