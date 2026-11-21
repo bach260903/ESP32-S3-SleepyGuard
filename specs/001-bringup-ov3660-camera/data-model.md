@@ -75,8 +75,13 @@ worker, M > 0 là chỉ worker thứ M của phiên chạy và chỉ một lần
 `FaultScenario.after_first_valid_s` là K giây kể từ khung hợp lệ đầu của
 worker đã chọn; mặc định 0. Kịch bản init lỗi chọn worker M nhưng không cần
 đợi khung đầu. Chỉ các build bật `CONFIG_BRINGUP_FAULT_INJECTION` mới có điểm
-giả lập. Thời lượng giữ frame, ngừng gửi frame hoặc trì hoãn worker là
+giả lập. Thời lượng ngừng gửi frame hoặc trì hoãn worker là
 `Configuration.BRINGUP_FAULT_DELAY_MS` = 6 000 ms trong cấu hình chung.
+Riêng ca giữ framebuffer dùng `CONFIG_BRINGUP_FAULT_HOLD_MS` (Kconfig, chỉ có
+khi bật fault injection và chọn HOLD_FRAME), mặc định 6 000 ms, phạm vi
+1 000–60 000 ms. Ca chờ dài dùng 17 000 ms để thấy RECOVERY_WAIT lặp sau
+5 và 10 giây kể từ stop request; ca quá hạn dùng 23 000 ms để vượt giới hạn
+chờ dừng 15 000 ms tính từ stop request.
 
 Mỗi lời gọi `fb_get` được đo thời gian thực và log ở ca thử deadline trên board;
 không suy thời gian chặn thực từ timeout nội bộ 4 giây của driver. Kịch bản

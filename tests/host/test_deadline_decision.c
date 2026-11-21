@@ -35,7 +35,11 @@ int main(void)
     assert(bringup_recovery_on_tick(&r, 19999) != BRINGUP_RECOVERY_ACTION_FAULT);
     assert(bringup_recovery_on_tick(&r, 20000) & BRINGUP_RECOVERY_ACTION_FAULT);
     assert(strcmp(r.fault_code, "WORKER_STOP_TIMEOUT") == 0);
+    assert(r.phase == BRINGUP_RECOVERY_PHASE_FAULT);
     assert(bringup_recovery_on_worker_done(&r, BRINGUP_WORKER_DONE_STOPPED, 20001) == BRINGUP_RECOVERY_ACTION_NONE);
+    assert(r.phase == BRINGUP_RECOVERY_PHASE_FAULT);
+    assert(r.remaining == 3);
+    assert(bringup_recovery_on_tick(&r, 25000) == BRINGUP_RECOVERY_ACTION_NONE);
 
     bringup_recovery_init(&r, &c, 0);
     assert(bringup_recovery_on_tick(&r, 5000) & BRINGUP_RECOVERY_ACTION_REQUEST_STOP);

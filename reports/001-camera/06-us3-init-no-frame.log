@@ -1,0 +1,153 @@
+# capture port=COM5 baud=115200 seconds=30.0 started_utc=2026-11-21T12:14:59+00:00
+2026-11-21T12:14:59.034+00:00 | ESP-ROM:esp32s3-20210327
+2026-11-21T12:14:59.043+00:00 | Build:Mar 27 2021
+2026-11-21T12:14:59.048+00:00 | rst:0x1 (POWERON),boot:0x2a (SPI_FAST_FLASH_BOOT)
+2026-11-21T12:14:59.048+00:00 | SPIWP:0xee
+2026-11-21T12:14:59.048+00:00 | mode:DIO, clock div:1
+2026-11-21T12:14:59.054+00:00 | load:0x3fce2820,len:0x158c
+2026-11-21T12:14:59.054+00:00 | load:0x403c8700,len:0xd24
+2026-11-21T12:14:59.054+00:00 | load:0x403cb700,len:0x2f34
+2026-11-21T12:14:59.055+00:00 | entry 0x403c8924
+2026-11-21T12:14:59.061+00:00 | I (24) boot: ESP-IDF v5.5.2 2nd stage bootloader
+2026-11-21T12:14:59.067+00:00 | I (25) boot: compile time Nov 19 2026 23:47:53
+2026-11-21T12:14:59.072+00:00 | I (25) boot: Multicore bootloader
+2026-11-21T12:14:59.072+00:00 | I (25) boot: chip revision: v0.2
+2026-11-21T12:14:59.078+00:00 | I (28) boot: efuse block revision: v1.4
+2026-11-21T12:14:59.078+00:00 | I (31) boot.esp32s3: Boot SPI Speed : 80MHz
+2026-11-21T12:14:59.083+00:00 | I (35) boot.esp32s3: SPI Mode       : DIO
+2026-11-21T12:14:59.089+00:00 | I (39) boot.esp32s3: SPI Flash Size : 16MB
+2026-11-21T12:14:59.094+00:00 | I (43) boot: Enabling RNG early entropy source...
+2026-11-21T12:14:59.095+00:00 | I (47) boot: Partition Table:
+2026-11-21T12:14:59.100+00:00 | I (50) boot: ## Label            Usage          Type ST Offset   Length
+2026-11-21T12:14:59.106+00:00 | I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+2026-11-21T12:14:59.117+00:00 | I (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+2026-11-21T12:14:59.122+00:00 | I (69) boot:  2 factory          factory app      00 00 00010000 00100000
+2026-11-21T12:14:59.122+00:00 | I (76) boot: End of partition table
+2026-11-21T12:14:59.129+00:00 | I (79) esp_image: segment 0: paddr=00010020 vaddr=3c030020 size=0f6fch ( 63228) map
+2026-11-21T12:14:59.140+00:00 | I (98) esp_image: segment 1: paddr=0001f724 vaddr=3fc94800 size=008f4h (  2292) load
+2026-11-21T12:14:59.144+00:00 | I (98) esp_image: segment 2: paddr=00020020 vaddr=42000020 size=27fa4h (163748) map
+2026-11-21T12:14:59.173+00:00 | I (130) esp_image: segment 3: paddr=00047fcc vaddr=3fc950f4 size=05010h ( 20496) load
+2026-11-21T12:14:59.177+00:00 | I (135) esp_image: segment 4: paddr=0004cfe4 vaddr=40374000 size=106f4h ( 67316) load
+2026-11-21T12:14:59.192+00:00 | I (150) esp_image: segment 5: paddr=0005d6e0 vaddr=50000000 size=00020h (    32) load
+2026-11-21T12:14:59.197+00:00 | I (157) boot: Loaded app from partition at offset 0x10000
+2026-11-21T12:14:59.198+00:00 | I (157) boot: Disabling RNG early entropy source...
+2026-11-21T12:14:59.204+00:00 | I (167) octal_psram: vendor id    : 0x0d (AP)
+2026-11-21T12:14:59.210+00:00 | I (168) octal_psram: dev id       : 0x02 (generation 3)
+2026-11-21T12:14:59.215+00:00 | I (168) octal_psram: density      : 0x03 (64 Mbit)
+2026-11-21T12:14:59.221+00:00 | I (170) octal_psram: good-die     : 0x01 (Pass)
+2026-11-21T12:14:59.221+00:00 | I (174) octal_psram: Latency      : 0x01 (Fixed)
+2026-11-21T12:14:59.226+00:00 | I (178) octal_psram: VCC          : 0x01 (3V)
+2026-11-21T12:14:59.232+00:00 | I (182) octal_psram: SRF          : 0x01 (Fast Refresh)
+2026-11-21T12:14:59.238+00:00 | I (187) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+2026-11-21T12:14:59.243+00:00 | I (192) octal_psram: BurstLen     : 0x01 (32 Byte)
+2026-11-21T12:14:59.249+00:00 | I (197) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+2026-11-21T12:14:59.249+00:00 | I (202) octal_psram: DriveStrength: 0x00 (1/1)
+2026-11-21T12:14:59.254+00:00 | I (206) MSPI Timing: Enter psram timing tuning
+2026-11-21T12:14:59.260+00:00 | I (211) esp_psram: Found 8MB PSRAM device
+2026-11-21T12:14:59.260+00:00 | I (214) esp_psram: Speed: 80MHz
+2026-11-21T12:14:59.263+00:00 | I (217) cpu_start: Multicore app
+2026-11-21T12:14:59.274+00:00 | I (231) cpu_start: GPIO 44 and 43 are used as console UART I/O pins
+2026-11-21T12:14:59.274+00:00 | I (232) cpu_start: Pro cpu start user code
+2026-11-21T12:14:59.279+00:00 | I (232) cpu_start: cpu freq: 160000000 Hz
+2026-11-21T12:14:59.285+00:00 | I (234) app_init: Application information:
+2026-11-21T12:14:59.285+00:00 | I (237) app_init: Project name:     ov3660_bringup
+2026-11-21T12:14:59.290+00:00 | I (242) app_init: App version:      9290674-dirty
+2026-11-21T12:14:59.296+00:00 | I (246) app_init: Compile time:     Nov 21 2026 19:12:08
+2026-11-21T12:14:59.301+00:00 | I (251) app_init: ELF file SHA256:  cdc1bcc35...
+2026-11-21T12:14:59.307+00:00 | I (256) app_init: ESP-IDF:          v5.5.2
+2026-11-21T12:14:59.307+00:00 | I (259) efuse_init: Min chip rev:     v0.0
+2026-11-21T12:14:59.313+00:00 | I (263) efuse_init: Max chip rev:     v0.99
+2026-11-21T12:14:59.318+00:00 | I (267) efuse_init: Chip rev:         v0.2
+2026-11-21T12:14:59.324+00:00 | I (271) heap_init: Initializing. RAM available for dynamic allocation:
+2026-11-21T12:14:59.329+00:00 | I (277) heap_init: At 3FC9B308 len 0004E408 (313 KiB): RAM
+2026-11-21T12:14:59.335+00:00 | I (283) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+2026-11-21T12:14:59.340+00:00 | I (288) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+2026-11-21T12:14:59.346+00:00 | I (293) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+2026-11-21T12:14:59.351+00:00 | I (298) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+2026-11-21T12:14:59.351+00:00 | I (306) spi_flash: detected chip: boya
+2026-11-21T12:14:59.357+00:00 | I (308) spi_flash: flash io: dio
+2026-11-21T12:14:59.362+00:00 | I (311) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+2026-11-21T12:14:59.368+00:00 | I (318) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+2026-11-21T12:14:59.374+00:00 | I (324) main_task: Started on CPU0
+2026-11-21T12:14:59.374+00:00 | I (334) main_task: Calling app_main()
+2026-11-21T12:14:59.389+00:00 | I (334) bringup: BOOT_INFO psram_initialized=1 psram_size_raw_bytes=8388608 psram_expected_bytes=8388608 psram_heap_free_bytes=8386196 flash_physical=16777216 flash_expected=16777216
+2026-11-21T12:14:59.513+00:00 | I (474) bringup: PSRAM_TEST test_bytes=153600 patterns=address,inverse result=PASS
+2026-11-21T12:14:59.519+00:00 | I (474) bringup: FAULT_SCENARIO worker=1 selected=0 after_first_valid_s=0
+2026-11-21T12:14:59.524+00:00 | I (474) s3 ll_cam: DMA Channel=0
+2026-11-21T12:14:59.525+00:00 | I (474) cam_hal: cam init ok
+2026-11-21T12:14:59.530+00:00 | I (474) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:14:59.530+00:00 | I (484) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:14:59.536+00:00 | I (494) ov3640: Mismatch PID=0x3660
+2026-11-21T12:14:59.541+00:00 | I (494) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:14:59.541+00:00 | I (494) camera: Detected OV3660 camera
+2026-11-21T12:14:59.545+00:00 | I (494) camera: Detected camera at address=0x3c
+2026-11-21T12:14:59.837+00:00 | I (804) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:14:59.842+00:00 | I (804) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:14:59.853+00:00 | I (804) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:14:59.864+00:00 | I (804) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:14:59.870+00:00 | I (814) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:14:59.875+00:00 | I (824) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:14:59.875+00:00 | I (834) cam_hal: cam config ok
+2026-11-21T12:14:59.887+00:00 | I (844) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:14:59.906+00:00 | I (864) bringup: CAMERA_INIT attempt=1 result=success sensor=OV3660
+2026-11-21T12:14:59.910+00:00 | I (864) bringup: HEAP stage=init_success worker=1 psram_heap_free_bytes=8077744 internal_heap_free_bytes=323144
+2026-11-21T12:15:00.252+00:00 | W (1214) bringup: FAULT_SCENARIO name=RECOVERY_TRIGGER worker=1 delay_ms=6000
+2026-11-21T12:15:04.949+00:00 | I (5914) bringup: FRAME_REPORT width=320 height=240 valid=2 invalid=0 elapsed_ms=5042 fps=0.40
+2026-11-21T12:15:05.352+00:00 | W (6314) bringup: RECOVERY stage=start remaining=3 reason=frame_timeout
+2026-11-21T12:15:05.357+00:00 | I (6314) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322924
+2026-11-21T12:15:05.363+00:00 | I (6314) bringup: WORKER_EVENT stop_requested at_ms=6015
+2026-11-21T12:15:05.368+00:00 | W (6314) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=3
+2026-11-21T12:15:06.252+00:00 | I (7214) bringup: WORKER_EVENT deinit_done at_ms=6911 result=ESP_OK
+2026-11-21T12:15:06.258+00:00 | I (7214) bringup: WORKER_EVENT terminal=STOPPED at_ms=6912
+2026-11-21T12:15:06.264+00:00 | W (7214) bringup: RECOVERY stage=attempt_start remaining=2 reason=worker_stopped
+2026-11-21T12:15:06.269+00:00 | I (7214) bringup: FAULT_SCENARIO worker=2 selected=1 after_first_valid_s=0
+2026-11-21T12:15:06.275+00:00 | I (7224) s3 ll_cam: DMA Channel=0
+2026-11-21T12:15:06.275+00:00 | I (7224) cam_hal: cam init ok
+2026-11-21T12:15:06.280+00:00 | I (7234) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:15:06.280+00:00 | I (7234) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:15:06.286+00:00 | I (7244) ov3640: Mismatch PID=0x3660
+2026-11-21T12:15:06.291+00:00 | I (7244) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:15:06.291+00:00 | I (7244) camera: Detected OV3660 camera
+2026-11-21T12:15:06.295+00:00 | I (7244) camera: Detected camera at address=0x3c
+2026-11-21T12:15:06.586+00:00 | I (7554) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:15:06.592+00:00 | I (7554) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:15:06.603+00:00 | I (7554) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:15:06.614+00:00 | I (7554) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:15:06.619+00:00 | I (7564) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:15:06.625+00:00 | I (7574) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:15:06.625+00:00 | I (7584) cam_hal: cam config ok
+2026-11-21T12:15:06.637+00:00 | I (7594) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:15:06.656+00:00 | I (7614) bringup: CAMERA_INIT attempt=1 result=success sensor=OV3660
+2026-11-21T12:15:06.662+00:00 | I (7614) bringup: HEAP stage=init_success worker=2 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322924
+2026-11-21T12:15:06.666+00:00 | W (7614) bringup: FAULT_SCENARIO name=INIT_NO_FRAME worker=2
+2026-11-21T12:15:11.662+00:00 | W (12624) bringup: RECOVERY stage=failure remaining=2 reason=first_frame_timeout
+2026-11-21T12:15:11.667+00:00 | W (12624) bringup: RECOVERY stage=start remaining=2 reason=first_frame_timeout
+2026-11-21T12:15:11.678+00:00 | I (12624) bringup: HEAP stage=recovery_start psram_heap_free_bytes=8077744 internal_heap_free_bytes=322924
+2026-11-21T12:15:11.684+00:00 | I (12634) bringup: WORKER_EVENT stop_requested at_ms=12333
+2026-11-21T12:15:11.686+00:00 | W (12634) bringup: RECOVERY_WAIT phase=stopping waited_ms=0 budget_remaining=2
+2026-11-21T12:15:12.662+00:00 | I (13624) bringup: WORKER_EVENT deinit_done at_ms=13321 result=ESP_OK
+2026-11-21T12:15:12.668+00:00 | I (13624) bringup: WORKER_EVENT terminal=STOPPED at_ms=13322
+2026-11-21T12:15:12.673+00:00 | W (13624) bringup: RECOVERY stage=attempt_start remaining=1 reason=worker_stopped
+2026-11-21T12:15:12.679+00:00 | I (13624) bringup: FAULT_SCENARIO worker=3 selected=0 after_first_valid_s=0
+2026-11-21T12:15:12.684+00:00 | I (13634) s3 ll_cam: DMA Channel=0
+2026-11-21T12:15:12.684+00:00 | I (13634) cam_hal: cam init ok
+2026-11-21T12:15:12.690+00:00 | I (13644) sccb-ng: pin_sda 4 pin_scl 5
+2026-11-21T12:15:12.690+00:00 | I (13644) sccb-ng: sccb_i2c_port=1
+2026-11-21T12:15:12.695+00:00 | I (13654) ov3640: Mismatch PID=0x3660
+2026-11-21T12:15:12.701+00:00 | I (13654) camera: Camera PID=0x3660 VER=0x00 MIDL=0x00 MIDH=0x00
+2026-11-21T12:15:12.706+00:00 | I (13654) camera: Detected OV3660 camera
+2026-11-21T12:15:12.706+00:00 | I (13664) camera: Detected camera at address=0x3c
+2026-11-21T12:15:12.996+00:00 | I (13964) cam_hal: PSRAM DMA mode disabled
+2026-11-21T12:15:13.002+00:00 | I (13964) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+2026-11-21T12:15:13.012+00:00 | I (13964) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 30720
+2026-11-21T12:15:13.024+00:00 | I (13974) cam_hal: buffer_size: 30720, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 8, total_cnt: 10
+2026-11-21T12:15:13.029+00:00 | I (13984) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:15:13.035+00:00 | I (13984) cam_hal: Allocating 153600 Byte frame buffer in PSRAM
+2026-11-21T12:15:13.036+00:00 | I (13994) cam_hal: cam config ok
+2026-11-21T12:15:13.047+00:00 | I (14004) ov3660: Calculated VCO: 192000000 Hz, PLLCLK: 96000000 Hz, SYSCLK: 24000000 Hz, PCLK: 12000000 Hz
+2026-11-21T12:15:13.066+00:00 | I (14024) bringup: CAMERA_INIT attempt=2 result=success sensor=OV3660
+2026-11-21T12:15:13.071+00:00 | I (14024) bringup: HEAP stage=init_success worker=3 psram_heap_free_bytes=8077744 internal_heap_free_bytes=322924
+2026-11-21T12:15:13.342+00:00 | W (14304) bringup: RECOVERY stage=success remaining=1 reason=valid_frame
+2026-11-21T12:15:18.409+00:00 | I (19374) bringup: FRAME_REPORT width=320 height=240 valid=76 invalid=0 elapsed_ms=5065 fps=15.00
+2026-11-21T12:15:23.474+00:00 | I (24434) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81
+2026-11-21T12:15:28.539+00:00 | I (29504) bringup: FRAME_REPORT width=320 height=240 valid=75 invalid=0 elapsed_ms=5065 fps=14.81

@@ -3,7 +3,7 @@
 **Branch**: main (feature 001-bringup-ov3660-camera)
 **Date**: 2026-11-19
 **Spec**: [spec.md](spec.md)
-**Status**: Setup, foundation, US1 và US2 (T001–T018) hoàn tất; US3 chưa làm.
+**Status**: Setup, foundation, US1, US2 và US3 T018a–T026 hoàn tất; chờ rà soát log trước Phase 6.
 
 ## Summary
 
@@ -12,7 +12,7 @@ Kiểm tra PSRAM trước camera; lấy khung 320 × 240 và báo số khung h�
 qua USB-UART. Phục hồi có ngân sách hữu hạn và trạng thái lỗi vẫn báo định kỳ.
 Firmware probe và US1 đã build, chạy trên board; bằng chứng tại
 `reports/001-camera/02-phase1-check.md` và `04-us1-check.md`. Logic phục hồi
-còn ở phase sau.
+US3 đã cài và có log kiểm chứng board tại `reports/001-camera/06-us3-check.md`.
 
 **Thứ tự triển khai:** cài ESP-IDF v5.5.2, build/nạp khung tối thiểu có
 esp32-camera 2.1.9 và in PSRAM/flash trước; sau đó kiểm chứng lại bảng chân
@@ -141,8 +141,10 @@ sẽ thuộc board_pins.h riêng, không chứa ngưỡng hành vi.
    lượt kế tiếp sau sự kiện kết thúc. Chờ quá 15 giây thì FAULT
    `WORKER_STOP_TIMEOUT`, không deinit hoặc reboot. Đo thời gian `fb_get` thật
    trên board, tách khỏi ca trì hoãn
-   worker giả lập 6 giây. `fb_get` NULL có nghỉ 20 ms và được log khác khung
-   sai kích thước. Tạo task thử riêng deadline khi worker còn đang chặn.
+    worker giả lập 6 giây. Ca giữ framebuffer dùng thời gian Kconfig riêng:
+    17 giây để quan sát hai lần RECOVERY_WAIT lặp và 23 giây để vượt giới hạn
+    chờ dừng. `fb_get` NULL có nghỉ 20 ms và được log khác khung sai kích thước.
+    Tạo task thử riêng deadline khi worker còn đang chặn.
 
 Chi tiết nghiên cứu trong [research.md](research.md).
 

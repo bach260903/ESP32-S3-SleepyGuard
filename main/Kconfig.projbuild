@@ -65,4 +65,10 @@ config BRINGUP_FAULT_AFTER_FIRST_VALID_S
     range 0 3600
     default 0
 
+config BRINGUP_FAULT_HOLD_MS
+    int "Hold a captured framebuffer for this many milliseconds"
+    depends on BRINGUP_FAULT_INJECTION && BRINGUP_FAULT_SCENARIO_HOLD_FRAME
+    range 1000 60000
+    default 6000
+
 endmenu

@@ -5,6 +5,7 @@
 
 #include "esp_camera.h"
 #include "esp_log.h"
+#include "esp_heap_caps.h"
 #include "esp_timer.h"
 #include "freertos/task.h"
 #include "sdkconfig.h"
@@ -21,6 +22,14 @@ static unsigned active_worker_index;
 static uint64_t now_ms(void)
 {
     return (uint64_t)(esp_timer_get_time() / 1000);
+}
+
+static void log_heap(const char *stage, unsigned worker_index)
+{
+    ESP_LOGI("bringup", "HEAP stage=%s worker=%u psram_heap_free_bytes=%u internal_heap_free_bytes=%u",
+             stage, worker_index,
+             (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM),
+             (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
 }
 
 static void send_event(const bringup_camera_event_t *event)
@@ -116,17 +125,19 @@ static void camera_worker(void *argument)
 #if CONFIG_BRINGUP_FAULT_INJECTION && CONFIG_BRINGUP_FAULT_SCENARIO_RECOVERY_INIT
     if (fault_selected && worker_index > 1U) {
         ESP_LOGW("bringup", "FAULT_SCENARIO name=RECOVERY_INIT worker=%u", worker_index);
+        log_heap("driver_init_before_injected_failure", worker_index);
         bringup_log_camera_init(attempt, false, NULL, ESP_FAIL);
         worker_finish(BRINGUP_CAMERA_INIT_FAILED, ESP_FAIL, true);
         return;
     }
 #endif
     bringup_log_camera_init(attempt, true, "OV3660", 0);
+    log_heap("init_success", worker_index);
     const bringup_camera_event_t ready = { .kind = BRINGUP_CAMERA_READY, .at_ms = now_ms() };
     send_event(&ready);
 
 #if CONFIG_BRINGUP_FAULT_INJECTION && CONFIG_BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
-    if (fault_selected) {
+    if (fault_selected && worker_index > 1U) {
         ESP_LOGW("bringup", "FAULT_SCENARIO name=INIT_NO_FRAME worker=%u", worker_index);
         vTaskDelay(pdMS_TO_TICKS(BRINGUP_FAULT_DELAY_MS));
     }
@@ -169,8 +180,8 @@ static void camera_worker(void *argument)
                     (uint64_t)CONFIG_BRINGUP_FAULT_AFTER_FIRST_VALID_S * 1000U) {
                 delayed_once = true;
                 ESP_LOGW("bringup", "FAULT_SCENARIO name=HOLD_FRAME worker=%u hold_ms=%u",
-                         worker_index, BRINGUP_FAULT_DELAY_MS);
-                vTaskDelay(pdMS_TO_TICKS(BRINGUP_FAULT_DELAY_MS));
+                         worker_index, CONFIG_BRINGUP_FAULT_HOLD_MS);
+                vTaskDelay(pdMS_TO_TICKS(CONFIG_BRINGUP_FAULT_HOLD_MS));
             }
 #endif
             esp_camera_fb_return(frame);
@@ -185,12 +196,16 @@ static void camera_worker(void *argument)
             break;
         }
 #if CONFIG_BRINGUP_FAULT_INJECTION
+        bool initial_recovery_trigger = false;
+#if CONFIG_BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
+        initial_recovery_trigger = worker_index == 1U;
+#endif
         const bool had_first_valid = first_valid_seen;
-        if (fault_selected && event.valid && !first_valid_seen) {
+        if ((fault_selected || initial_recovery_trigger) && event.valid && !first_valid_seen) {
             first_valid_seen = true;
             first_valid_ms = event.at_ms;
         }
-        const bool fault_due = fault_selected && had_first_valid &&
+        const bool fault_due = (fault_selected || initial_recovery_trigger) && had_first_valid &&
             event.at_ms >= first_valid_ms &&
             event.at_ms - first_valid_ms >=
                 (uint64_t)CONFIG_BRINGUP_FAULT_AFTER_FIRST_VALID_S * 1000U;
@@ -203,12 +218,18 @@ static void camera_worker(void *argument)
                      worker_index, invalid_remaining);
         }
 #endif
-#if CONFIG_BRINGUP_FAULT_SCENARIO_NO_FRAMES || CONFIG_BRINGUP_FAULT_SCENARIO_WORKER_DELAY
-        if (fault_due && event.valid && !delayed_once) {
+#if CONFIG_BRINGUP_FAULT_SCENARIO_NO_FRAMES || CONFIG_BRINGUP_FAULT_SCENARIO_WORKER_DELAY || CONFIG_BRINGUP_FAULT_SCENARIO_RECOVERY_INIT || CONFIG_BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
+        if (fault_due && event.valid && !delayed_once
+#if CONFIG_BRINGUP_FAULT_SCENARIO_RECOVERY_INIT || CONFIG_BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
+            && worker_index == 1U
+#endif
+        ) {
             delayed_once = true;
             ESP_LOGW("bringup", "FAULT_SCENARIO name=%s worker=%u delay_ms=%u",
 #if CONFIG_BRINGUP_FAULT_SCENARIO_NO_FRAMES
                      "NO_FRAMES",
+#elif CONFIG_BRINGUP_FAULT_SCENARIO_RECOVERY_INIT || CONFIG_BRINGUP_FAULT_SCENARIO_INIT_NO_FRAME
+                     "RECOVERY_TRIGGER",
 #else
                      "WORKER_DELAY",
 #endif

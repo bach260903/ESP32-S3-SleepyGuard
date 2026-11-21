@@ -32,15 +32,33 @@ static const bringup_recovery_config_t recovery_config = {
     .recovery_wait_period_ms = BRINGUP_RECOVERY_WAIT_PERIOD_MS,
 };
 
+static void report_interrupted_window(bringup_measurement_t *window,
+                                      uint64_t at_ms)
+{
+    if (window->valid == 0U && window->invalid == 0U) {
+        return;
+    }
+    bringup_measurement_t report;
+    if (bringup_measurement_finish(window, at_ms, &report)) {
+        bringup_log_frame_report(report.width, report.height, report.valid,
+                                 report.invalid, report.elapsed_ms, report.fps);
+    }
+}
+
 static void apply_recovery_action(bringup_recovery_t *recovery,
                                   bringup_recovery_action_t action,
                                   uint64_t at_ms, const char *reason)
 {
     if (action & BRINGUP_RECOVERY_ACTION_FAILURE) {
-        bringup_log_recovery("failure", recovery->remaining, reason);
+        const unsigned result_remaining = recovery->remaining +
+            ((action & BRINGUP_RECOVERY_ACTION_START_WORKER) ? 1U : 0U);
+        bringup_log_recovery("failure", result_remaining, reason);
     }
     if (action & BRINGUP_RECOVERY_ACTION_REQUEST_STOP) {
         bringup_log_recovery("start", recovery->remaining, reason);
+        ESP_LOGI(TAG, "HEAP stage=recovery_start psram_heap_free_bytes=%u internal_heap_free_bytes=%u",
+                 (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM),
+                 (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
         bringup_camera_request_stop();
     }
     if (action & BRINGUP_RECOVERY_ACTION_REPORT_WAIT) {
@@ -49,6 +67,7 @@ static void apply_recovery_action(bringup_recovery_t *recovery,
                  recovery->remaining);
     }
     if (action & BRINGUP_RECOVERY_ACTION_START_WORKER) {
+        bringup_log_recovery("attempt_start", recovery->remaining, reason);
         const unsigned attempt = recovery->config.recovery_attempts -
                                  recovery->remaining;
         QueueHandle_t started = bringup_camera_start(attempt);
@@ -182,6 +201,10 @@ void app_main(void)
                     }
                     const bringup_recovery_action_t action =
                         bringup_recovery_on_frame(&recovery, event.valid, event.at_ms);
+                    if (action & BRINGUP_RECOVERY_ACTION_REQUEST_STOP &&
+                        prior_phase == BRINGUP_RECOVERY_PHASE_RUNNING) {
+                        report_interrupted_window(&window, event.at_ms);
+                    }
                     if (action & BRINGUP_RECOVERY_ACTION_SUCCESS) {
                         bringup_measurement_start(&window, event.at_ms,
                                                   BRINGUP_FRAME_WIDTH, BRINGUP_FRAME_HEIGHT);
@@ -206,6 +229,9 @@ void app_main(void)
             const uint64_t tick_ms = now_ms();
             const bringup_recovery_action_t action =
                 bringup_recovery_on_tick(&recovery, tick_ms);
+            if (action & BRINGUP_RECOVERY_ACTION_REQUEST_STOP) {
+                report_interrupted_window(&window, tick_ms);
+            }
             apply_recovery_action(&recovery, action, tick_ms,
                                   recovery.phase == BRINGUP_RECOVERY_PHASE_STOPPING &&
                                           recovery.worker_ready_ms > recovery.running_since_ms

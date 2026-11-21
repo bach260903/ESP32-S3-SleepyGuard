@@ -15,7 +15,7 @@ trường tên=giá trị để người thử dễ đọc và máy có thể đ
 | CAMERA_INIT | attempt, result, sensor nếu thành công, raw_error nếu lỗi |
 | FRAME_REPORT | width, height, valid, invalid, elapsed_ms, fps |
 | FRAME_UNAVAILABLE | stage, reason, raw_error nếu có |
-| RECOVERY | stage=start/success/failure/exhausted, remaining, reason |
+| RECOVERY | stage=start/attempt_start/success/failure/exhausted/budget_reset, remaining, reason |
 | RECOVERY_WAIT | phase=stopping, waited_ms, budget_remaining; ngay khi bắt đầu chờ dừng và mỗi 5 giây, kể cả khi worker đang chặn |
 | FAULT | code, reason, remaining; lặp mỗi 5 giây ở trạng thái cuối |
 
@@ -25,3 +25,9 @@ PSRAM_TEST_FAILED, CAM_INIT_FAILED, FRAME_UNAVAILABLE, RECOVERY_EXHAUSTED.
 trong 15 000 ms; supervisor không deinit hoặc reboot khi báo mã này.
 Mỗi lượt phục hồi có đúng một sự kiện kết quả cuối và số lượt còn lại. Lỗi đơn
 lẻ được tính trong FRAME_REPORT dù chưa kích hoạt phục hồi.
+Khi mất khung vì lỗi liên tiếp giữa khoảng đo, firmware phát một FRAME_REPORT
+cuối ngắn hơn 5 giây ngay **trước** RECOVERY stage=start để không mất số khung
+lỗi. Khoảng đo mới chỉ bắt đầu tại khung hợp lệ đầu tiên sau phục hồi; không
+có FRAME_REPORT giữa lúc chốt mất khung và khung đầu tiên này. `attempt_start`
+ghi ngân sách sau khi trừ cho lượt mới; `failure` ghi ngân sách của lượt vừa
+kết thúc, trước khi bắt đầu lượt kế tiếp.
