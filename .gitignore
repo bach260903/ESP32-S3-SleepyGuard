@@ -3,4 +3,5 @@
 /sdkconfig
 /sdkconfig.old
 /tests/host/.build/
+/testdata/
 !dependencies.lock
