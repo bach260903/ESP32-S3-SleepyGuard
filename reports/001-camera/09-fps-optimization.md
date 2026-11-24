@@ -1,5 +1,11 @@
 # OV3660 QVGA RGB565 FPS investigation — 2026-11-20
 
+> Correction (2026-11-22): XCLK values below are requested frequencies.
+> The pinned S3 driver uses an integer divider from 160 MHz. The 24 MHz
+> request selects divider 6, implying nominal 26.667 MHz XCLK, not 24 MHz.
+> Sensor "Calculated PCLK" messages use the request and are not pin
+> measurements. See `14-fps-followup.md`. Raw FPS observations are unchanged.
+
 Board: ESP32-S3 N16R8 with OV3660 on CH343 COM5. Firmware uses ESP-IDF
 5.5.2 and `espressif/esp32-camera` 2.1.9. Every variant kept 320×240 RGB565,
 returned each frame immediately, and reported valid frames over actual elapsed
@@ -34,7 +40,8 @@ The 20 MHz, 125-second run in `09-optimized-stream-125s.log` yielded 24
 five-second reports, 1,341 valid frames, zero invalid frames, and no camera
 warnings or faults. After the first window, every report was 11.10–11.11 FPS.
 Following the OV2640 tuning example's suggestion to vary XCLK, a 24 MHz test
-on this OV3660 raised PCLK from 10 to 12 MHz. Its 125-second run yielded 24
+on this OV3660 changed the driver's calculated PCLK log from 10 to 12 MHz
+(not a physical PCLK measurement). Its 125-second run yielded 24
 reports, 1,796 valid frames, zero invalid frames, and no camera warnings or
 faults. After the first window, every report was 14.81 FPS, about 33% faster
 than 20 MHz and 5.3 times the original 2.78 FPS.

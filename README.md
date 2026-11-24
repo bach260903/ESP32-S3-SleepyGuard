@@ -33,6 +33,14 @@ Board thực tế có khe microSD nhưng feature 001 không dùng. Bảng chân 
 
 ## Chạy feature 001 trên bàn thử
 
+Theo lựa chọn của người dùng, firmware hiện dùng cấu hình khoảng **29,6 FPS**:
+QVGA RGB565, toàn vùng cảm biến, binning 2x như bản gốc, PLL SYSCLK khoảng
+53,33 MHz, PCLK khoảng 17,78 MHz, HTS 2300/VTS 783. Mức 85,03 FPS là kết quả
+thử nghiệm giảm mẫu mạnh hơn, không phải cấu hình dùng thường.
+Chưa đánh giá độ chính xác nhận diện mắt. Xem [báo cáo FPS](reports/001-camera/20-fps-result.md).
+Bản đo qua COM4 dùng USB Serial/JTAG làm console chính;
+với cổng này thêm `--usb-jtag` vào lệnh capture. Mặc định repo vẫn dùng UART.
+
 - ESP-IDF **v5.5.2**, target `esp32s3`; `espressif/esp32-camera` **2.1.9**
   được ghim trong `main/idf_component.yml` và `dependencies.lock`.
 - Gắn sẵn FFC khi chưa cấp điện. Dùng cổng **USB-UART/CH343** để nạp và đọc
@@ -51,6 +59,13 @@ Thay `COM5` bằng cổng hiện tại. Bản thường phải có
 `CONFIG_BRINGUP_FAULT_INJECTION` tắt. Kỳ vọng thứ tự
 `BOOT_INFO` → `PSRAM_TEST result=PASS` → `CAMERA_INIT phase=boot` →
 `FRAME_REPORT` mỗi khoảng 5 giây. Log chỉ ghi metadata, không ghi ảnh.
+Ở cấu hình trước khi tối ưu, QVGA RGB565, XCLK yêu cầu 24 MHz, hai framebuffer
+và PSRAM 80 MHz, board đã đo ổn định **14,81 FPS** trong 125 giây
+([kết quả đo](reports/001-camera/09-fps-optimization.md)).
+Thử CPU 240 MHz cùng PSRAM DMA vẫn cho 14,81 FPS. Yêu cầu XCLK 24 và 26 MHz
+đều chọn bộ chia 6 từ nguồn 160 MHz, tức cùng xung danh định khoảng 26,67 MHz;
+phép thử này chưa xác định FPS tối đa. Xem
+[báo cáo đính chính](reports/001-camera/14-fps-followup.md).
 Hướng dẫn kiểm tra và giải thích các trường Serial ở
 [`quickstart.md`](specs/001-bringup-ov3660-camera/quickstart.md) và
 [`serial.md`](specs/001-bringup-ov3660-camera/contracts/serial.md).

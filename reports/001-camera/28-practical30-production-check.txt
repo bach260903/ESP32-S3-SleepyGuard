@@ -1,0 +1,6 @@
+boot_sequences=1
+frame_reports=24 healthy_reports=True
+valid_total=3574 invalid_total=0 fps_min=29.25 fps_max=29.62
+warnings_errors=0 fault_scenarios=0
+recovery_events=0 faults=0
+FINAL_LOG PASS

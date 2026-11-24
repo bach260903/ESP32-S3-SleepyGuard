@@ -9,6 +9,7 @@
 #include "esp_timer.h"
 #include "freertos/task.h"
 #include "sdkconfig.h"
+#include "soc/lcd_cam_struct.h"
 #include "board_pins.h"
 #include "bringup_config.h"
 #include "bringup_log.h"
@@ -133,6 +134,39 @@ static void camera_worker(void *argument)
         return;
     }
 #endif
+    /* Use the measured benchmark's complete timing preset on every init,
+     * including recovery. Keep the full sensor window selected by QVGA. */
+    int tuning_error = 0;
+    if (LCD_CAM.cam_ctrl.cam_clk_sel != 3 || LCD_CAM.cam_ctrl.cam_clkm_div_num != 6 ||
+        LCD_CAM.cam_ctrl.cam_clkm_div_a != 0 || LCD_CAM.cam_ctrl.cam_clkm_div_b != 0) {
+        tuning_error = ESP_ERR_INVALID_STATE;
+    } else {
+        sensor->xclk_freq_hz = 160000000U / 6U;
+        tuning_error = sensor->set_pll(sensor, 0, BRINGUP_CAMERA_PLL_MULTIPLIER,
+                1, 0, BRINGUP_CAMERA_PLL_PREDIV, 0, 1, BRINGUP_CAMERA_PCLK_DIV)
+            || sensor->set_reg(sensor, 0x3814, 0xff, BRINGUP_CAMERA_SUBSAMPLE)
+            || sensor->set_reg(sensor, 0x3815, 0xff, BRINGUP_CAMERA_SUBSAMPLE)
+            || sensor->set_reg(sensor, 0x380c, 0xffff, BRINGUP_CAMERA_HTS)
+            || sensor->set_reg(sensor, 0x380e, 0xffff, BRINGUP_CAMERA_VTS);
+    }
+    if (tuning_error) {
+        bringup_log_camera_init(phase, worker_index, attempt, false, "OV3660", tuning_error);
+        worker_finish(BRINGUP_CAMERA_INIT_FAILED, tuning_error, true);
+        return;
+    }
+    ESP_LOGI("bringup", "CAMERA_TIMING hts=%d vts=%d xinc=%02x yinc=%02x psram_dma=%d",
+             sensor->get_reg(sensor, 0x380c, 0xffff), sensor->get_reg(sensor, 0x380e, 0xffff),
+             sensor->get_reg(sensor, 0x3814, 0xff), sensor->get_reg(sensor, 0x3815, 0xff),
+             esp_camera_get_psram_mode());
+    /* Read back the clock registers: the S3 driver truncates the requested
+     * XCLK to an integer divider. Sensor 'Calculated PCLK' logs use the
+     * request instead and are not a measurement of the pin frequency. */
+    ESP_LOGI("bringup", "CAMERA_CLOCK requested_xclk_hz=%u source_sel=%u div_num=%u div_a=%u div_b=%u",
+             BRINGUP_CAMERA_XCLK_HZ,
+             (unsigned)LCD_CAM.cam_ctrl.cam_clk_sel,
+             (unsigned)LCD_CAM.cam_ctrl.cam_clkm_div_num,
+             (unsigned)LCD_CAM.cam_ctrl.cam_clkm_div_a,
+             (unsigned)LCD_CAM.cam_ctrl.cam_clkm_div_b);
     bringup_log_camera_init(phase, worker_index, attempt, true, "OV3660", 0);
     log_heap("init_success", worker_index);
     const bringup_camera_event_t ready = { .kind = BRINGUP_CAMERA_READY, .at_ms = now_ms() };
